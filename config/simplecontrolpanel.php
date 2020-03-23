@@ -35,7 +35,7 @@ return [
     ],
 
     'crud_paths' => [
-        'stubs' => 'vendor/wikichua/simplecontrolpanel/resources/stubs/crud/default',
+        'stubs' => 'vendor/khludev/kularapanel/resources/stubs/crud/default',
         'controller' => 'app/Http/Controllers/Admin',
         'model' => 'app',
         'migrations' => 'database/migrations',

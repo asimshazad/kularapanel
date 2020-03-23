@@ -34,7 +34,7 @@ Assets used:
 
 Require via composer:
 
-    composer require wikichua/simplecontrolpanel master-dev
+    composer require khludev/kularapanel master-dev
 
 Publish install files:
 
@@ -107,18 +107,18 @@ Install laravel:
 
 Create directories in terminal:
 
-    cd appName; mkdir packages; cd packages; mkdir wikichua; cd wikichua; git clone https://github.com/wikichua/simplecontrolpanel.git
+    cd appName; mkdir packages; cd packages; mkdir wikichua; cd wikichua; git clone https://github.com/khludev/kularapanel.git
 
 Add this in your composer.json under scripts section:
 
     "require-dev": {
-        "wikichua/simplecontrolpanel": "*"
+        "khludev/kularapanel": "*"
     },
 
     "repositories": {
-        "wikichua/simplecontrolpanel": {
+        "khludev/kularapanel": {
             "type": "path",
-            "url": "/path/to/your/appName/packages/wikichua/simplecontrolpanel"
+            "url": "/path/to/your/appName/packages/khludev/kularapanel"
         }
     }
 
@@ -130,12 +130,12 @@ Need packager to ease your work
 
 Import package from github
 
-    $ php artisan packager:git git@github.com:wikichua/simplecontrolpanel.git
+    $ php artisan packager:git git@github.com:khludev/kularapanel.git
 
 Add this in your composer.json under scripts section:
 
     "require-dev": {
-        "wikichua/simplecontrolpanel": "*"
+        "khludev/kularapanel": "*"
     },
 
 Run composer update
