@@ -1,6 +1,6 @@
 <?php
 
-namespace Wikichua\Simplecontrolpanel;
+namespace Khludev\KuLaraPanel;
 
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Gate;
@@ -20,13 +20,13 @@ class SimpleControlPanelServiceProvider extends ServiceProvider
     public function boot()
     {
         // alias middleware
-        $this->app['router']->aliasMiddleware('auth_admin', 'Wikichua\Simplecontrolpanel\Middleware\AuthAdmin');
-        $this->app['router']->aliasMiddleware('guest_admin', 'Wikichua\Simplecontrolpanel\Middleware\GuestAdmin');
-        $this->app['router']->aliasMiddleware('intend_url', 'Wikichua\Simplecontrolpanel\Middleware\IntendUrl');
-        $this->app['router']->aliasMiddleware('not_admin_role', 'Wikichua\Simplecontrolpanel\Middleware\NotAdminRole');
-        $this->app['router']->aliasMiddleware('not_system_doc', 'Wikichua\Simplecontrolpanel\Middleware\NotSystemDoc');
-        $this->app['router']->aliasMiddleware('api_logger', 'Wikichua\Simplecontrolpanel\Middleware\ApiLogger');
-        $this->app['router']->aliasMiddleware('https_protocol', 'Wikichua\Simplecontrolpanel\Middleware\HttpsProtocol');
+        $this->app['router']->aliasMiddleware('auth_admin', 'Khludev\KuLaraPanel\Middleware\AuthAdmin');
+        $this->app['router']->aliasMiddleware('guest_admin', 'Khludev\KuLaraPanel\Middleware\GuestAdmin');
+        $this->app['router']->aliasMiddleware('intend_url', 'Khludev\KuLaraPanel\Middleware\IntendUrl');
+        $this->app['router']->aliasMiddleware('not_admin_role', 'Khludev\KuLaraPanel\Middleware\NotAdminRole');
+        $this->app['router']->aliasMiddleware('not_system_doc', 'Khludev\KuLaraPanel\Middleware\NotSystemDoc');
+        $this->app['router']->aliasMiddleware('api_logger', 'Khludev\KuLaraPanel\Middleware\ApiLogger');
+        $this->app['router']->aliasMiddleware('https_protocol', 'Khludev\KuLaraPanel\Middleware\HttpsProtocol');
 
         $this->mergeConfigFrom(__DIR__.'/../config/simplecontrolpanel.php', 'lap');
         $this->loadViewsFrom(__DIR__ . '/../resources/views', 'lap');
@@ -53,7 +53,7 @@ class SimpleControlPanelServiceProvider extends ServiceProvider
         $this->app->singleton('simplecontrolpanel', function ($app) {
             return new SimpleControlPanel;
         });
-        $this->app->register(\Wikichua\Simplecontrolpanel\WidgetServiceProvider::class);
+        $this->app->register(\Khludev\KuLaraPanel\WidgetServiceProvider::class);
     }
 
     /**
@@ -88,7 +88,7 @@ class SimpleControlPanelServiceProvider extends ServiceProvider
 
         // in case want to customized the routes
         $this->publishes([__DIR__ . '/routes.php' => resource_path('../'.config('lap.crud_paths.route').'/routes.php')], 'lap.admin.route');
-        
+
         // advanced. if u know what to do, install 1 by 1
         $this->publishes([__DIR__.'/../config/simplecontrolpanel.php' => config_path('lap.php')], 'lap.config');
         $this->publishes([__DIR__.'/../config/seotools.php' => config_path('seotools.php')], 'lap.seo.config');

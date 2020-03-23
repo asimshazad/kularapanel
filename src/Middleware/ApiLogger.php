@@ -1,6 +1,6 @@
 <?php
 
-namespace Wikichua\Simplecontrolpanel\Middleware;
+namespace Khludev\KuLaraPanel\Middleware;
 
 use Closure;
 
@@ -15,9 +15,9 @@ class ApiLogger
     {
     	config(['filesystems.disks.local.root' => storage_path('logs/api')]);
         \Storage::append('log-'.date('Y-m').'.log', date('Y-m-d H:i:s')."\t:\t". json_encode([
-        		'endpoint' => $request->url(), 
-        		'header' => $request->header(), 
-        		'ip' => $request->ip(), 
+        		'endpoint' => $request->url(),
+        		'header' => $request->header(),
+        		'ip' => $request->ip(),
 	        	'request' => $request->all(),
 	        ]));
     }

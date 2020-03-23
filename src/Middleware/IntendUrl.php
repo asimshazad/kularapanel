@@ -1,6 +1,6 @@
 <?php
 
-namespace Wikichua\Simplecontrolpanel\Middleware;
+namespace Khludev\KuLaraPanel\Middleware;
 
 class IntendUrl
 {

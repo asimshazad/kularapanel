@@ -1,8 +1,8 @@
 <?php
 
-namespace Wikichua\Simplecontrolpanel;
+namespace Khludev\KuLaraPanel;
 
 class SimpleControlPanel
 {
-	
+
 }

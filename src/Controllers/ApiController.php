@@ -1,6 +1,6 @@
 <?php
 
-namespace Wikichua\Simplecontrolpanel\Controllers;
+namespace Khludev\KuLaraPanel\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -28,7 +28,7 @@ class ApiController extends Controller
 	}
 	public function register(Request $request)
 	{
-		$failed_response = ['status' => 'failed', 'error' => 'Email has been taken.']; 
+		$failed_response = ['status' => 'failed', 'error' => 'Email has been taken.'];
 		$user = app(config('auth.providers.users.model'))->query()->where('email',$request->get('email'))->first();
 		if (!$user) {
 			app(config('auth.providers.users.model'))->query()->create([
@@ -45,7 +45,7 @@ class ApiController extends Controller
 	}
     public function auth(Request $request)
 	{
-		$failed_response = ['status' => 'failed', 'error' => 'Invalid login credential.']; 
+		$failed_response = ['status' => 'failed', 'error' => 'Invalid login credential.'];
 		if (!$request->header('authorization')) {
 			return response()->json($failed_response);
 		}

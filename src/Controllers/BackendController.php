@@ -1,6 +1,6 @@
 <?php
 
-namespace Wikichua\Simplecontrolpanel\Controllers;
+namespace Khludev\KuLaraPanel\Controllers;
 
 use App\Http\Controllers\Controller;
 
@@ -38,14 +38,14 @@ class BackendController extends Controller
     public function test()
     {
         pushered([
-            'title' => 'General Notification', 
+            'title' => 'General Notification',
             'message' => 'Hello World!',
             'icon' => '',
             'link' => '',
             'timeout' => '',
         ]);
         pushered([
-            'title' => 'Backend Notification', 
+            'title' => 'Backend Notification',
             'message' => 'Hello World!',
             'icon' => '',
             'link' => '',

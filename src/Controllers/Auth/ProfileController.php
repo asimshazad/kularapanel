@@ -1,6 +1,6 @@
 <?php
 
-namespace Wikichua\Simplecontrolpanel\Controllers\Auth;
+namespace Khludev\KuLaraPanel\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 

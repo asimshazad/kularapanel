@@ -1,10 +1,10 @@
 <?php
 
-namespace Wikichua\Simplecontrolpanel\Models;
+namespace Khludev\KuLaraPanel\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Wikichua\Simplecontrolpanel\Traits\DynamicFillable;
-use Wikichua\Simplecontrolpanel\Traits\UserTimezone;
+use Khludev\KuLaraPanel\Traits\DynamicFillable;
+use Khludev\KuLaraPanel\Traits\UserTimezone;
 
 class ActivityLog extends Model
 {

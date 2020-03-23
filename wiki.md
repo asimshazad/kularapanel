@@ -46,21 +46,21 @@ Publish admin route files:
 
 Add the `AdminUser`, `DynamicFillable`, and `UserTimezone` traits to your `User` model:
 
-    use Wikichua\Simplecontrolpanel\Traits\AdminUser;
-    use Wikichua\Simplecontrolpanel\Traits\DynamicFillable;
-    use Wikichua\Simplecontrolpanel\Traits\UserTimezone;
+    use Khludev\KuLaraPanel\Traits\AdminUser;
+    use Khludev\KuLaraPanel\Traits\DynamicFillable;
+    use Khludev\KuLaraPanel\Traits\UserTimezone;
     
     class User extends Authenticatable
     {
         use Notifiable, AdminUser, DynamicFillable, UserTimezone;
 
 Add this in your controller.php
-    use \Wikichua\Simplecontrolpanel\Traits\Controller;
+    use \Khludev\KuLaraPanel\Traits\Controller;
 
     class Controller extends BaseController
     {
         use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
-        use \Wikichua\Simplecontrolpanel\Traits\Controller;
+        use \Khludev\KuLaraPanel\Traits\Controller;
 
 Run the migrations:
 
@@ -413,7 +413,7 @@ artisan crud:generate NameNewModel --force
 
 In case using API, just add this into Exceptions/Handler.php,
 
-    use \Wikichua\Simplecontrolpanel\Traits\ApiException;
+    use \Khludev\KuLaraPanel\Traits\ApiException;
     
     public function render($request, Exception $exception)
     {
@@ -441,7 +441,7 @@ Add this into boot method in Providers/AppServiceProvider.php
 
 This is optional. Bootstrapped for my own usage.
 
-    YourAPIControllerName extends \Wikichua\Simplecontrolpanel\Controllers\ApiController {
+    YourAPIControllerName extends \Khludev\KuLaraPanel\Controllers\ApiController {
         // api route name
         public $noNeedAuthorization = [
             'api.auth',

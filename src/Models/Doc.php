@@ -1,11 +1,11 @@
 <?php
 
-namespace Wikichua\Simplecontrolpanel\Models;
+namespace Khludev\KuLaraPanel\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Kalnoy\Nestedset\NodeTrait;
-use Wikichua\Simplecontrolpanel\Traits\DynamicFillable;
-use Wikichua\Simplecontrolpanel\Traits\UserTimezone;
+use Khludev\KuLaraPanel\Traits\DynamicFillable;
+use Khludev\KuLaraPanel\Traits\UserTimezone;
 use Parsedown;
 
 class Doc extends Model

@@ -1,6 +1,6 @@
 <?php
 
-namespace Wikichua\Simplecontrolpanel\Middleware;
+namespace Khludev\KuLaraPanel\Middleware;
 
 use Closure;
 use Illuminate\Support\Facades\App;
@@ -13,6 +13,6 @@ class HttpsProtocol
             return redirect()->secure($request->getRequestUri());
         }
 
-        return $next($request); 
+        return $next($request);
     }
 }

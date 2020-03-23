@@ -1,6 +1,6 @@
 <?php
 
-namespace Wikichua\Simplecontrolpanel;
+namespace Khludev\KuLaraPanel;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Blade;
@@ -39,7 +39,7 @@ class WidgetServiceProvider extends ServiceProvider
             return new Widget;
         });
         AliasLoader::getInstance([
-            'Widget' => '\Wikichua\Simplecontrolpanel\Widget'
+            'Widget' => '\Khludev\KuLaraPanel\Widget'
         ]);
     }
 

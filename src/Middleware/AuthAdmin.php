@@ -1,6 +1,6 @@
 <?php
 
-namespace Wikichua\Simplecontrolpanel\Middleware;
+namespace Khludev\KuLaraPanel\Middleware;
 
 use Illuminate\Auth\Middleware\Authenticate;
 

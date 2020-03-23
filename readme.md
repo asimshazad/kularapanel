@@ -78,21 +78,21 @@ Publish admin route files:
 
 Add the `AdminUser`, `DynamicFillable`, and `UserTimezone` traits to your `User` model:
 
-    use Wikichua\Simplecontrolpanel\Traits\AdminUser;
-    use Wikichua\Simplecontrolpanel\Traits\DynamicFillable;
-    use Wikichua\Simplecontrolpanel\Traits\UserTimezone;
+    use Khludev\KuLaraPanel\Traits\AdminUser;
+    use Khludev\KuLaraPanel\Traits\DynamicFillable;
+    use Khludev\KuLaraPanel\Traits\UserTimezone;
     
     class User extends Authenticatable
     {
         use Notifiable, AdminUser, DynamicFillable, UserTimezone;
 
 Add this in your controller.php
-    use \Wikichua\Simplecontrolpanel\Traits\Controller;
+    use \Khludev\KuLaraPanel\Traits\Controller;
 
     class Controller extends BaseController
     {
         use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
-        use \Wikichua\Simplecontrolpanel\Traits\Controller;
+        use \Khludev\KuLaraPanel\Traits\Controller;
 
 Run the migrations:
 

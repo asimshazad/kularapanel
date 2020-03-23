@@ -1,6 +1,6 @@
 <?php
 
-namespace Wikichua\Simplecontrolpanel\Controllers;
+namespace Khludev\KuLaraPanel\Controllers;
 
 use App\Http\Controllers\Controller;
 use Yajra\DataTables\Html\Builder;

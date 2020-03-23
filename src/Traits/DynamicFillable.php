@@ -1,6 +1,6 @@
 <?php
 
-namespace Wikichua\Simplecontrolpanel\Traits;
+namespace Khludev\KuLaraPanel\Traits;
 
 use Illuminate\Support\Facades\Schema;
 

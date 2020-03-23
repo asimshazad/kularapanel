@@ -1,6 +1,6 @@
 <?php
 
-namespace Wikichua\Simplecontrolpanel\Traits;
+namespace Khludev\KuLaraPanel\Traits;
 
 use Artesaos\SEOTools\Facades\SEOTools;
 use Artesaos\SEOTools\Facades\SEOMeta;

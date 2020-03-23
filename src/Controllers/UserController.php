@@ -1,6 +1,6 @@
 <?php
 
-namespace Wikichua\Simplecontrolpanel\Controllers;
+namespace Khludev\KuLaraPanel\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
@@ -66,7 +66,7 @@ class UserController extends Controller
 
         activity('Created User: ' . $user->name, array_except($data, ['password', 'password_confirmation']), $user);
         flash(['success', 'User created!']);
-        
+
         if (request()->input('_submit') == 'redirect') {
             return response()->json(['redirect' => session()->pull('url.intended', route('admin.users'))]);
         }
@@ -91,7 +91,7 @@ class UserController extends Controller
 
         activity('Updated User: ' . $user->name, request()->all(), $user);
         flash(['success', 'User updated!']);
-        
+
         if (request()->input('_submit') == 'redirect') {
             return response()->json(['redirect' => session()->pull('url.intended', route('admin.users'))]);
         }

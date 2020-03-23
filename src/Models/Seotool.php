@@ -1,17 +1,17 @@
 <?php
 
-namespace Wikichua\Simplecontrolpanel\Models;
+namespace Khludev\KuLaraPanel\Models;
 
 use Illuminate\Database\Eloquent\Model as Eloquent;
-use Wikichua\Simplecontrolpanel\Traits\DynamicFillable;
-use Wikichua\Simplecontrolpanel\Traits\UserTimezone;
+use Khludev\KuLaraPanel\Traits\DynamicFillable;
+use Khludev\KuLaraPanel\Traits\UserTimezone;
 
 class Seotool extends Eloquent
 {
     use DynamicFillable, UserTimezone;
     protected $dates = [];
 
-    
+
 
     protected $casts = ['metas' => 'array', 'keywords' => 'array', 'og_properties' => 'array', 'og_images' => 'array', 'og_model' => 'array', 'jsonld_images' => 'array'];
 
@@ -25,7 +25,7 @@ class Seotool extends Eloquent
         return $this->belongsTo('App\User', 'updated_by', 'id');
     }
 
-    
 
-    
+
+
 }

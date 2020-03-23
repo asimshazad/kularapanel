@@ -1,17 +1,17 @@
 {
-    "name": "wikichua/simplecontrolpanel",
-    "description": "A simple admin control panel for Laravel 6. Forked from kejodion/laravel-admin-panel",
+    "name": "khludev/kularapanel",
+    "description": "A simple admin control panel for Laravel 6. Forked from wikichua/simplecontrolpanel",
     "license": "MIT",
     "authors": [
         {
-            "name": "Wiki Chua",
-            "email": "wikichua@gmail.com",
-            "homepage": "https://github.com/wikichua/",
+            "name": "Vasil Khlud",
+            "email": "khludev@gmail.com",
+            "homepage": "https://github.com/khludev/",
             "role": "Forker"
         }
     ],
-    "homepage": "https://github.com/wikichua/simplecontrolpanel",
-    "keywords": ["Laravel", "SimpleControlPanel"],
+    "homepage": "https://github.com/Khludev/kularapanel",
+    "keywords": ["Laravel", "KuLaraPanel"],
     "require": {
         "erusev/parsedown": "^1.7",
         "yajra/laravel-datatables-oracle": "^9.6",
@@ -34,7 +34,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Wikichua\\Simplecontrolpanel\\": "src/"
+            "Khludev\\KuLaraPanel\\": "src/"
         },
         "files": [
             "src/helpers.php"
@@ -42,18 +42,18 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Wikichua\\Simplecontrolpanel\\Tests\\": "tests"
+            "Khludev\\KuLaraPanel\\Tests\\": "tests"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "Wikichua\\Simplecontrolpanel\\SimpleControlPanelServiceProvider",
-                "Wikichua\\Simplecontrolpanel\\WidgetServiceProvider"
+                "Khludev\\KuLaraPanel\\SimpleControlPanelServiceProvider",
+                "Khludev\\KuLaraPanel\\WidgetServiceProvider"
             ],
             "aliases": {
-                "SimpleControlPanel": "Wikichua\\Simplecontrolpanel\\Facades\\SimpleControlPanel",
-                "Widget": "Wikichua\\Simplecontrolpanel\\Facades\\Widget"
+                "SimpleControlPanel": "Khludev\\KuLaraPanel\\Facades\\SimpleControlPanel",
+                "Widget": "Khludev\\KuLaraPanel\\Facades\\Widget"
             }
         }
     }

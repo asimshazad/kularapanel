@@ -1,6 +1,6 @@
 <?php
 
-namespace Wikichua\Simplecontrolpanel\Facades;
+namespace Khludev\KuLaraPanel\Facades;
 
 use Illuminate\Support\Facades\Facade;
 

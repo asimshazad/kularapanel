@@ -1,6 +1,6 @@
 <?php
 
-namespace Wikichua\Simplecontrolpanel\Controllers;
+namespace Khludev\KuLaraPanel\Controllers;
 
 use App\Http\Controllers\Controller;
 use Yajra\DataTables\Html\Builder;
@@ -112,7 +112,7 @@ class SettingController extends Controller
         flash(['success', 'Setting updated!']);
 
         $setting->update(request()->all());
-        
+
         if (request()->input('_submit') == 'redirect') {
             return response()->json(['redirect' => session()->pull('url.intended', route('admin.settings'))]);
         }
