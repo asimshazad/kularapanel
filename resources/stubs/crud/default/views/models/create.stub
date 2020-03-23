@@ -1,4 +1,4 @@
-@extends('lap::layouts.auth')
+@extends('kulara::layouts.auth')
 
 @section('title', __l('create', 'Create') .' '. {l_model_string})
 @section('child-content')

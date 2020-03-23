@@ -1,4 +1,4 @@
-@extends('lap::layouts.auth')
+@extends('kulara::layouts.auth')
 
 @section('title', 'User')
 @section('child-content')
@@ -45,7 +45,7 @@
                 <div class="col-md-8">{{ $user->email }}</div>
             </div>
         </div>
-        
+
         <div class="list-group-item">
             <div class="row">
                 <div class="col-md-2">API Token</div>

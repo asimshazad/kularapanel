@@ -5,19 +5,19 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link rel="shortcut icon" href="{{ asset('lap/favicon.ico') }}" type="image/x-icon">
-    <link rel="icon" href="{{ asset('lap/favicon.ico') }}" type="image/x-icon">
+    <link rel="shortcut icon" href="{{ asset('kulara/favicon.ico') }}" type="image/x-icon">
+    <link rel="icon" href="{{ asset('kulara/favicon.ico') }}" type="image/x-icon">
     <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Nunito:regular,bold">
     <link rel="stylesheet" href="//stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="{{ asset('lap/css/fontawesome.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('kulara/css/fontawesome.min.css') }}">
     <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.10.20/af-2.3.4/b-1.6.0/b-colvis-1.6.0/b-flash-1.6.0/b-html5-1.6.0/b-print-1.6.0/cr-1.5.2/fc-3.3.0/fh-3.1.6/kt-2.5.1/r-2.2.3/rg-1.1.1/rr-1.2.6/sc-2.0.1/sl-1.3.1/datatables.min.css"/>
-    <link rel="stylesheet" href="{{ asset('lap/css/easymde.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('kulara/css/easymde.min.css') }}">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0-alpha14/css/tempusdominus-bootstrap-4.min.css" />
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/css/bootstrap-select.min.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.css" />
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.css">
-    <link rel="stylesheet" href="{{ asset('lap/css/lap.css') }}">
+    <link rel="stylesheet" href="{{ asset('kulara/css/kulara.css') }}">
 
     <title>@yield('title') | {{ config('app.name') }}</title>
     @stack('styles')
@@ -35,7 +35,7 @@
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
 <script type="text/javascript" src="//cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.10.20/af-2.3.4/b-1.6.0/b-colvis-1.6.0/b-flash-1.6.0/b-html5-1.6.0/b-print-1.6.0/cr-1.5.2/fc-3.3.0/fh-3.1.6/kt-2.5.1/r-2.2.3/rg-1.1.1/rr-1.2.6/sc-2.0.1/sl-1.3.1/datatables.min.js"></script>
-<script type="text/javascript" src="{{ asset('lap/js/easymde.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('kulara/js/easymde.min.js') }}"></script>
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.1.1/handlebars.min.js"></script>
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 <script type="text/javascript" src="//cdn.jsdelivr.net/npm/sweetalert2@8"></script>
@@ -50,7 +50,7 @@
 <script type="text/javascript" src="//js.pusher.com/5.0/pusher.min.js"></script>
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/push.js/1.0.12/push.min.js"></script>
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/push.js/1.0.12/serviceWorker.min.js"></script>
-<script type="text/javascript" src="{{ asset('lap/js/lap.js') }}"></script>
+<script type="text/javascript" src="{{ asset('kulara/js/kulara.js') }}"></script>
 @routes
 <script type="text/javascript">
 $(function() {
@@ -60,7 +60,7 @@ $(function() {
       forceTLS: true
     });
     let pusher_callback = function(data) {
-        let icon = '{{ asset('lap/logo.png') }}';
+        let icon = '{{ asset('kulara/logo.png') }}';
         if (data.icon != '') {
             icon = data.icon;
         }

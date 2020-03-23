@@ -1,4 +1,4 @@
-@extends('lap::layouts.auth')
+@extends('kulara::layouts.auth')
 
 @section('title', 'Update User')
 @section('child-content')

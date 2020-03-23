@@ -10,19 +10,19 @@ trait AdminUser
     // roles relationship
     public function roles()
     {
-        return $this->belongsToMany(config('lap.models.role'));
+        return $this->belongsToMany(config('kulara.models.role'));
     }
 
     // permissions relationship
     public function permissions()
     {
-        return $this->belongsToMany(config('lap.models.permission'));
+        return $this->belongsToMany(config('kulara.models.permission'));
     }
 
     // activity logs relationship
     public function activity_logs()
     {
-        return $this->hasMany(config('lap.models.activity_log'));
+        return $this->hasMany(config('kulara.models.activity_log'));
     }
 
     // combined user + role permissions

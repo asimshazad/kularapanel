@@ -20,14 +20,14 @@ class RoleController extends Controller
     public function index(Builder $builder)
     {
         if (request()->ajax()) {
-            $permissions_count = app(config('lap.models.permission'))->count();
-            $roles = app(config('lap.models.role'))->withCount('permissions');
+            $permissions_count = app(config('kulara.models.permission'))->count();
+            $roles = app(config('kulara.models.role'))->withCount('permissions');
             $datatable = datatables($roles)
                 ->editColumn('permissions', function ($role) use ($permissions_count) {
                     return ($role->admin ? $permissions_count : $role->permissions_count) . ' / ' . $permissions_count;
                 })
                 ->editColumn('actions', function ($role) {
-                    return view('lap::roles.datatable.actions', compact('role'));
+                    return view('kulara::roles.datatable.actions', compact('role'));
                 })
                 ->rawColumns(['actions']);
 
@@ -41,14 +41,14 @@ class RoleController extends Controller
         ]);
         $html->setTableAttribute('id', 'roles_datatable');
 
-        return view('lap::roles.index', compact('html'));
+        return view('kulara::roles.index', compact('html'));
     }
 
     public function createForm()
     {
-        $group_permissions = app(config('lap.models.permission'))->all()->groupBy('group');
+        $group_permissions = app(config('kulara.models.permission'))->all()->groupBy('group');
 
-        return view('lap::roles.create', compact('group_permissions'));
+        return view('kulara::roles.create', compact('group_permissions'));
     }
 
     public function create()
@@ -57,7 +57,7 @@ class RoleController extends Controller
             'name' => 'required|unique:roles',
         ]);
 
-        $role = app(config('lap.models.role'))->create(request()->all());
+        $role = app(config('kulara.models.role'))->create(request()->all());
         $role->permissions()->sync(request()->input('permissions'));
 
         activity('Created Role: ' . $role->name, request()->all(), $role);
@@ -73,17 +73,17 @@ class RoleController extends Controller
 
     public function read($id)
     {
-        $role = app(config('lap.models.role'))->findOrFail($id);
+        $role = app(config('kulara.models.role'))->findOrFail($id);
 
-        return view('lap::roles.read', compact('role'));
+        return view('kulara::roles.read', compact('role'));
     }
 
     public function updateForm($id)
     {
-        $role = app(config('lap.models.role'))->findOrFail($id);
-        $group_permissions = app(config('lap.models.permission'))->all()->groupBy('group');
+        $role = app(config('kulara.models.role'))->findOrFail($id);
+        $group_permissions = app(config('kulara.models.permission'))->all()->groupBy('group');
 
-        return view('lap::roles.update', compact('role', 'group_permissions'));
+        return view('kulara::roles.update', compact('role', 'group_permissions'));
     }
 
     public function update($id)
@@ -92,7 +92,7 @@ class RoleController extends Controller
             'name' => 'required|unique:roles,name,' . $id,
         ]);
 
-        $role = app(config('lap.models.role'))->findOrFail($id);
+        $role = app(config('kulara.models.role'))->findOrFail($id);
         $role->update(request()->all());
         $role->permissions()->sync(request()->input('permissions'));
 
@@ -109,7 +109,7 @@ class RoleController extends Controller
 
     public function delete($id)
     {
-        $role = app(config('lap.models.role'))->findOrFail($id);
+        $role = app(config('kulara.models.role'))->findOrFail($id);
         $role->delete();
 
         activity('Deleted Role: ' . $role->name, $role->toArray());

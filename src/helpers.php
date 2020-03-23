@@ -64,7 +64,7 @@ if (!function_exists('activity')) {
         }
 
         // create model
-        app(config('lap.models.activity_log'))->create([
+        app(config('kulara.models.activity_log'))->create([
             'user_id' => auth()->check() ? auth()->user()->id : null,
             'model_id' => $model ? $model->id : null,
             'model_class' => $model ? get_class($model) : null,
@@ -74,12 +74,12 @@ if (!function_exists('activity')) {
     }
 }
 
-// Equivalent to trans () function with default value only (Only works for lang.lap file)
+// Equivalent to trans () function with default value only (Only works for lang.kulara file)
 if (!function_exists('__l')) {
     function __l($key, $default = '', $replace = [], $locale = null)
     {
-        if (Lang::has('lap.' . $key, $locale))
-            return __('lap.' . $key, $replace, $locale);
+        if (Lang::has('kulara.' . $key, $locale))
+            return __('kulara.' . $key, $replace, $locale);
 
         if (Lang::has($key, $locale))
             return __($key, $replace, $locale);

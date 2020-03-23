@@ -22,7 +22,7 @@ class BackendController extends Controller
     }
     public function dashboard()
     {
-        return view('lap::backend.dashboard');
+        return view('kulara::backend.dashboard');
     }
     public function summernoteImageUpload()
     {
@@ -56,5 +56,5 @@ class BackendController extends Controller
 
 class LogViewerController extends \Rap2hpoutre\LaravelLogViewer\LogViewerController
 {
-    protected $view_log = 'lap::backend.log';
+    protected $view_log = 'kulara::backend.log';
 }

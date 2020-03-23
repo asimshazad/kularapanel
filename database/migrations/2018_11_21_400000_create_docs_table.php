@@ -21,13 +21,13 @@ class CreateDocsTable extends Migration
         });
 
         // create system docs
-        app(config('lap.models.doc'))->create([
+        app(config('kulara.models.doc'))->create([
             'type' => 'Index',
             'title' => 'Documentation',
             'content' => 'Welcome to the documentation!',
             'system' => true,
         ]);
-        app(config('lap.models.doc'))->create([
+        app(config('kulara.models.doc'))->create([
             'type' => '404',
             'title' => 'Page Not Found',
             'content' => 'Sorry, the page was not found.',
@@ -35,7 +35,7 @@ class CreateDocsTable extends Migration
         ]);
 
         // add permissions
-        app(config('lap.models.permission'))->createGroup('Docs', ['Create Docs', 'Read Docs', 'Update Docs', 'Delete Docs']);
+        app(config('kulara.models.permission'))->createGroup('Docs', ['Create Docs', 'Read Docs', 'Update Docs', 'Delete Docs']);
     }
 
     public function down()
@@ -44,6 +44,6 @@ class CreateDocsTable extends Migration
         Schema::dropIfExists('docs');
 
         // delete permissions
-        app(config('lap.models.permission'))->where('group', 'Docs')->delete();
+        app(config('kulara.models.permission'))->where('group', 'Docs')->delete();
     }
 }

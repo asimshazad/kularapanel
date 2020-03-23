@@ -2,11 +2,11 @@
 
 Forked from [GitHub](https://github.com/kjjdion/laravel-admin-panel)
 
-Laravel Admin Panel ("LAP") is a drop-in admin panel package for Laravel which promotes rapid scaffolding & development.
+Laravel Admin Panel ("kulara") is a drop-in admin panel package for Laravel which promotes rapid scaffolding & development.
 
-- [Demo](https://lap.kjjdion.com/admin)
+- [Demo](https://kulara.kjjdion.com/admin)
 - [Screenshots](https://imgur.com/a/12mGWNW)
-- [Documentation](https://lap.kjjdion.com/docs)
+- [Documentation](https://kulara.kjjdion.com/docs)
 - [GitHub](https://github.com/kjjdion/laravel-admin-panel)
 
 Features:
@@ -38,7 +38,7 @@ Require via composer:
 
 Publish install files:
 
-    php artisan vendor:publish --tag=lap.general
+    php artisan vendor:publish --tag=kulara.general
 
 General install including:
 
@@ -51,30 +51,30 @@ General install including:
 
 Publish advanced files (1 by 1):
 
-    php artisan vendor:publish --tag=lap.config
-    php artisan vendor:publish --tag=lap.seo.config
-    php artisan vendor:publish --tag=lap.public
-    php artisan vendor:publish --tag=lap.lang
-    php artisan vendor:publish --tag=lap.layouts
-    php artisan vendor:publish --tag=lap.auth.view
-    php artisan vendor:publish --tag=lap.backend.view
-    php artisan vendor:publish --tag=lap.users.view
+    php artisan vendor:publish --tag=kulara.config
+    php artisan vendor:publish --tag=kulara.seo.config
+    php artisan vendor:publish --tag=kulara.public
+    php artisan vendor:publish --tag=kulara.lang
+    php artisan vendor:publish --tag=kulara.layouts
+    php artisan vendor:publish --tag=kulara.auth.view
+    php artisan vendor:publish --tag=kulara.backend.view
+    php artisan vendor:publish --tag=kulara.users.view
 
 Publish all migrations files:
 
-    php artisan vendor:publish --tag=lap.migrations
+    php artisan vendor:publish --tag=kulara.migrations
 
 Publish all stubs files:
 
-    php artisan vendor:publish --tag=lap.stubs
+    php artisan vendor:publish --tag=kulara.stubs
 
 Publish all views files:
 
-    php artisan vendor:publish --tag=lap.all.view
+    php artisan vendor:publish --tag=kulara.all.view
 
 Publish admin route files:
 
-    php artisan vendor:publish --tag=lap.admin.route
+    php artisan vendor:publish --tag=kulara.admin.route
 
 Add the `AdminUser`, `DynamicFillable`, and `UserTimezone` traits to your `User` model:
 

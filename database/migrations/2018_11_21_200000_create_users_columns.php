@@ -26,10 +26,10 @@ class CreateUsersColumns extends Migration
         ]);
 
         // give default admin user default admin role
-        $user->roles()->attach(app(config('lap.models.role'))->where('admin', true)->first()->id);
+        $user->roles()->attach(app(config('kulara.models.role'))->where('admin', true)->first()->id);
 
         // create permissions
-        app(config('lap.models.permission'))->createGroup('Users', ['Create Users', 'Read Users', 'Update Users', 'Delete Users']);
+        app(config('kulara.models.permission'))->createGroup('Users', ['Create Users', 'Read Users', 'Update Users', 'Delete Users']);
     }
 
     public function down()
@@ -41,6 +41,6 @@ class CreateUsersColumns extends Migration
         });
 
         // delete permissions
-        app(config('lap.models.permission'))->where('group', 'Users')->delete();
+        app(config('kulara.models.permission'))->where('group', 'Users')->delete();
     }
 }

@@ -1,4 +1,4 @@
-@extends('lap::layouts.app')
+@extends('kulara::layouts.app')
 
 @section('body-class', 'bg-light')
 @section('parent-content')
@@ -7,7 +7,7 @@
             <div class="col-md-4">
                 <h2 class="text-center mb-3">
                     <a href="{{ route('admin') }}" class="text-dark text-decoration-none">
-                        <img src="{{ asset('lap/logo_login.png') }}">
+                        <img src="{{ asset('kulara/logo_login.png') }}">
                     </a>
                 </h2>
                 <div class="card mb-5 shadow">

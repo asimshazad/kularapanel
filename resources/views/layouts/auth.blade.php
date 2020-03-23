@@ -1,10 +1,10 @@
-@extends('lap::layouts.app')
+@extends('kulara::layouts.app')
 
 @section('body-class', 'bg-light')
 @section('parent-content')
     <nav class="navbar navbar-expand navbar-dark bg-dark shadow">
         <a class="sidebar-toggle mr-3" href="#"><i class="far fa-fw fa-bars"></i></a>
-        <a class="navbar-brand" href="{{ route('admin') }}"><img src="{{ asset('lap/logo.png') }}" height="30"></a>
+        <a class="navbar-brand" href="{{ route('admin') }}"><img src="{{ asset('kulara/logo.png') }}" height="30"></a>
 
         <div class="navbar-collapse collapse">
             <ul class="navbar-nav ml-auto">
@@ -38,7 +38,7 @@
     <div class="wrapper d-flex">
         <div class="sidebar sidebar-light bg-light shadow">
             <ul class="list-unstyled list-admin mb-0">
-                @include('lap::layouts.menu')
+                @include('kulara::layouts.menu')
             </ul>
         </div>
 

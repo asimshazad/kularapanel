@@ -14,7 +14,7 @@ class ChangePasswordController extends Controller
 
     public function changeForm()
     {
-        return view('lap::auth.passwords.change');
+        return view('kulara::auth.passwords.change');
     }
 
     protected function change()

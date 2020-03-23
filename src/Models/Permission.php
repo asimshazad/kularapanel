@@ -13,7 +13,7 @@ class Permission extends Model
     // roles relationship
     public function roles()
     {
-        return $this->belongsToMany(config('lap.models.role'));
+        return $this->belongsToMany(config('kulara.models.role'));
     }
 
     // users relationship

@@ -8,7 +8,7 @@ class RestrictDemo
 {
     public function handle($request, $next)
     {
-        if (config('lap.demo.enabled') && (!$this->methodAllowed() && !$this->routeAllowed())) {
+        if (config('kulara.demo.enabled') && (!$this->methodAllowed() && !$this->routeAllowed())) {
             if ($request->expectsJson()) {
                 return response()->json([
                     'message' => 'Feature disabled in demo mode.',
@@ -25,14 +25,14 @@ class RestrictDemo
     public function methodAllowed()
     {
         $request_method = strtolower(request()->method());
-        $whitelisted_methods = array_map('strtolower', config('lap.demo.whitelist.methods'));
+        $whitelisted_methods = array_map('strtolower', config('kulara.demo.whitelist.methods'));
 
         return in_array($request_method, $whitelisted_methods);
     }
 
     public function routeAllowed()
     {
-        foreach (config('lap.demo.whitelist.routes') as $route) {
+        foreach (config('kulara.demo.whitelist.routes') as $route) {
             if (request()->is($route)) {
                 return true;
             }

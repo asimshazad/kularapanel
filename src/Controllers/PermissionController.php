@@ -20,10 +20,10 @@ class PermissionController extends Controller
     public function index(Builder $builder)
     {
         if (request()->ajax()) {
-            $permissions = app(config('lap.models.permission'))->query();
+            $permissions = app(config('kulara.models.permission'))->query();
             $datatable = datatables($permissions)
                 ->editColumn('actions', function ($permission) {
-                    return view('lap::permissions.datatable.actions', compact('permission'));
+                    return view('kulara::permissions.datatable.actions', compact('permission'));
                 })
                 ->rawColumns(['actions']);
 
@@ -37,12 +37,12 @@ class PermissionController extends Controller
         ]);
         $html->setTableAttribute('id', 'permissions_datatable');
 
-        return view('lap::permissions.index', compact('html'));
+        return view('kulara::permissions.index', compact('html'));
     }
 
     public function createForm()
     {
-        return view('lap::permissions.create');
+        return view('kulara::permissions.create');
     }
 
     public function create()
@@ -52,7 +52,7 @@ class PermissionController extends Controller
             'name' => 'required',
         ]);
 
-        $permission = app(config('lap.models.permission'))->create(request()->all());
+        $permission = app(config('kulara.models.permission'))->create(request()->all());
 
         activity('Created Permission: ' . $permission->id, request()->all(), $permission);
         flash(['success', 'Permission created!']);
@@ -67,19 +67,19 @@ class PermissionController extends Controller
 
     public function read($id)
     {
-        $permission = app(config('lap.models.permission'))->find($id);
-        return view('lap::permissions.read', compact('permission'));
+        $permission = app(config('kulara.models.permission'))->find($id);
+        return view('kulara::permissions.read', compact('permission'));
     }
 
     public function updateForm($id)
     {
-        $permission = app(config('lap.models.permission'))->find($id);
-        return view('lap::permissions.update', compact('permission'));
+        $permission = app(config('kulara.models.permission'))->find($id);
+        return view('kulara::permissions.update', compact('permission'));
     }
 
     public function update($id)
     {
-        $permission = app(config('lap.models.permission'))->find($id);
+        $permission = app(config('kulara.models.permission'))->find($id);
         $this->validate(request(), [
             'group' => 'required',
             'name' => 'required',
@@ -100,7 +100,7 @@ class PermissionController extends Controller
 
     public function delete($id)
     {
-        $permission = app(config('lap.models.permission'))->find($id);
+        $permission = app(config('kulara.models.permission'))->find($id);
         $permission->delete();
 
         activity('Deleted Permission: ' . $permission->id, $permission->toArray());

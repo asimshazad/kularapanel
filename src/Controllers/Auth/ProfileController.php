@@ -13,7 +13,7 @@ class ProfileController extends Controller
 
     public function updateForm()
     {
-        return view('lap::auth.profile');
+        return view('kulara::auth.profile');
     }
 
     protected function update()

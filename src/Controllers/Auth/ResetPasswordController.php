@@ -17,7 +17,7 @@ class ResetPasswordController extends Controller
 
     public function resetForm($token = null)
     {
-        return view('lap::auth.passwords.reset', compact('token'));
+        return view('kulara::auth.passwords.reset', compact('token'));
     }
 
     protected function sendResetResponse(Request $request, $response)

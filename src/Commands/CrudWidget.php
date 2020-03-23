@@ -32,7 +32,7 @@ class CrudWidget extends Command
 
         // set class values
         $this->config = include $config_file;
-        $this->lap = config('lap.crud_paths');
+        $this->kulara = config('kulara.crud_paths');
         $this->setSimpleReplaces();
 
         // generate crud
@@ -48,14 +48,14 @@ class CrudWidget extends Command
 
         // set simple replacement searches for stubs
         $this->replaces = [
-            '{widgets_namespace}' => $controller_namespace = ltrim(config('lap.widgets_namespace'),'\\'),
-            '{model_namespace}' => $model_namespace = ucfirst(str_replace('/', '\\', $this->lap['model'])),
+            '{widgets_namespace}' => $controller_namespace = ltrim(config('kulara.widgets_namespace'),'\\'),
+            '{model_namespace}' => $model_namespace = ucfirst(str_replace('/', '\\', $this->kulara['model'])),
             '{model_class}' => $model_class = $this->argument('model'),
             '{model_string}' => $model_string = trim(preg_replace('/(?!^)[A-Z]{2,}(?=[A-Z][a-z])|[A-Z][a-z]/', ' $0', $model_class)),
             '{model_strings}' => $model_strings = str_plural($model_string),
             '{model_variable}' => $model_variable = strtolower(str_replace(' ', '_', $model_string)),
             '{model_variables}' => $model_variables = strtolower(str_replace(' ', '_', $model_strings)),
-            '{view_prefix_url}' => $view_prefix_url = ltrim(str_replace('resources/views', '', $this->lap['views']) . '/', '/'),
+            '{view_prefix_url}' => $view_prefix_url = ltrim(str_replace('resources/views', '', $this->kulara['views']) . '/', '/'),
             '{view_prefix_name}' => $view_prefix_name = str_replace('/', '.', $view_prefix_url),
         ];
     }
@@ -74,8 +74,8 @@ class CrudWidget extends Command
     {
         // create directories recursively if they don't already exist
         $directories = [
-            config('lap.widgets_path'),
-            $this->lap['views'] . '/' . $this->replaces['{model_variables}'] . '/datatable',
+            config('kulara.widgets_path'),
+            $this->kulara['views'] . '/' . $this->replaces['{model_variables}'] . '/datatable',
         ];
 
         foreach ($directories as $directory) {
@@ -88,8 +88,8 @@ class CrudWidget extends Command
     public function createViewFile()
     {
         // create view files
-        $view_path = $this->lap['views'] . '/' . $this->replaces['{model_variables}'];
-        foreach ($this->files->allFiles($this->lap['stubs'] . '/views/models') as $file) {
+        $view_path = $this->kulara['views'] . '/' . $this->replaces['{model_variables}'];
+        foreach ($this->files->allFiles($this->kulara['stubs'] . '/views/models') as $file) {
             if ($file->getFilename() == 'widget.stub') {
                 $new_file = $view_path . '/' . ltrim($file->getRelativePath() . '/' . str_replace('.stub', '.blade.php', $file->getFilename()), '/');
                 if ($this->prompt($new_file)) {
@@ -103,9 +103,9 @@ class CrudWidget extends Command
     public function createWidgetFile()
     {
         // create widget file
-        $widget_file = config('lap.widgets_path') . '/' . $this->replaces['{model_class}'] . 'Widget.php';
+        $widget_file = config('kulara.widgets_path') . '/' . $this->replaces['{model_class}'] . 'Widget.php';
         if ($this->prompt($widget_file)) {
-            $widget_stub = $this->files->get($this->lap['stubs'] . '/widget.stub');
+            $widget_stub = $this->files->get($this->kulara['stubs'] . '/widget.stub');
             $this->files->put($widget_file, $this->replace($widget_stub));
             $this->line('Widget file created: <info>' . $widget_file . '</info>');
         }

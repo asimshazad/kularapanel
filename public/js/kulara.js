@@ -68,7 +68,7 @@ $(document).ready(function () {
         event.preventDefault();
         $(this).ekkoLightbox();
     });
-    
+
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -291,7 +291,7 @@ $(document).ready(function () {
         singleDatePicker: true,
         autoUpdateInput: false,
         locale: {
-          format: 'YYYY-MM-DD'
+            format: 'YYYY-MM-DD'
         }
     });
     $('.datepicker').on('apply.daterangepicker', function(ev, picker) {
@@ -306,7 +306,7 @@ $(document).ready(function () {
         timePicker: true,
         autoApply: true,
         locale: {
-          format: 'YYYY-MM-DD hh:mm A'
+            format: 'YYYY-MM-DD hh:mm A'
         }
     });
     $('.datetimepicker').on('apply.daterangepicker', function(ev, picker) {
@@ -318,11 +318,11 @@ $(document).ready(function () {
     $('.rangedatepicker').daterangepicker({
         autoUpdateInput: false,
         ranges: {
-           'Today': [moment(), moment()],
-           '1 Week': [moment(), moment().add(7, 'days')]
+            'Today': [moment(), moment()],
+            '1 Week': [moment(), moment().add(7, 'days')]
         },
         locale: {
-          format: 'YYYY-MM-DD'
+            format: 'YYYY-MM-DD'
         }
     });
     $('.rangedatepicker').on('apply.daterangepicker', function(ev, picker) {
@@ -334,15 +334,15 @@ $(document).ready(function () {
     $('.date_filter_range').daterangepicker({
         autoUpdateInput: false,
         ranges: {
-           'Today': [moment(), moment()],
-           'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-           'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-           'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-           'This Month': [moment().startOf('month'), moment().endOf('month')],
-           'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+            'Today': [moment(), moment()],
+            'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+            'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+            'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+            'This Month': [moment().startOf('month'), moment().endOf('month')],
+            'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
         },
         locale: {
-          format: 'YYYY-MM-DD'
+            format: 'YYYY-MM-DD'
         }
     });
     $('.date_filter_range').on('apply.daterangepicker', function(ev, picker) {
@@ -450,8 +450,8 @@ function post_form(form, form_data, button_clicked) {
 function flash(alert_class, alert_message) {
     if (alert_class == 'danger') { alert_class = 'error'; }
     Swal.fire({
-      title: alert_class.toUpperCase() + '!',
-      text: alert_message,
-      type: alert_class
+        title: alert_class.toUpperCase() + '!',
+        text: alert_message,
+        type: alert_class
     });
 }

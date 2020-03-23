@@ -17,7 +17,7 @@ class ForgotPasswordController extends Controller
 
     public function emailForm()
     {
-        return view('lap::auth.passwords.email');
+        return view('kulara::auth.passwords.email');
     }
 
     protected function sendResetLinkResponse(Request $request, $response)

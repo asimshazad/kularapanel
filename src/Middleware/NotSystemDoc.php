@@ -9,7 +9,7 @@ class NotSystemDoc
     public function handle($request, $next)
     {
         // check if doc is system
-        if (app(config('lap.models.doc'))->where('id', $request->route()->parameter('id'))->where('system', true)->first()) {
+        if (app(config('kulara.models.doc'))->where('id', $request->route()->parameter('id'))->where('system', true)->first()) {
             throw new AuthorizationException();
         }
 

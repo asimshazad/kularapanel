@@ -1,4 +1,4 @@
-@extends('lap::layouts.auth')
+@extends('kulara::layouts.auth')
 @section('title', 'Log Viewer')
 @section('child-content')
 <div class="row mb-3">

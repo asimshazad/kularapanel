@@ -48,7 +48,7 @@ trait Controller
     }
     protected function initSeo($model_name,$model_id)
     {
-        $seotool = app(config('lap.models.seotool'))
+        $seotool = app(config('kulara.models.seotool'))
                     ->query()->where('model',$model_name)
                     ->where('model_id',$model_id)->first();
         $model = app($model_name)->find($model_id);

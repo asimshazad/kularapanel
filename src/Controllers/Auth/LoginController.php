@@ -17,7 +17,7 @@ class LoginController extends Controller
 
     public function loginForm()
     {
-        return view('lap::auth.login');
+        return view('kulara::auth.login');
     }
 
     protected function authenticated(Request $request, $user)

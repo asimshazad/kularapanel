@@ -1,4 +1,4 @@
-@extends('lap::layouts.auth')
+@extends('kulara::layouts.auth')
 
 @section('title', 'Update Setting')
 @section('child-content')
@@ -46,7 +46,7 @@
                                     <button type="button" class="addRow btn btn-primary btn-sm"><i class="fa fa-plus"></i></button>
                                     <button type="button" class="minusRow btn btn-danger btn-sm"><i class="fa fa-minus"></i></button>
                                 </div>
-                            </div> 
+                            </div>
                             @empty
                             <div class="row">
                                 <div class="col-md-4">
@@ -60,7 +60,7 @@
                                     <button type="button" class="minusRow btn btn-danger btn-sm"><i class="fa fa-minus"></i></button>
                                 </div>
                             </div>
-                            @endforelse 
+                            @endforelse
                         </div>
                         @endif
                     </div>
@@ -76,5 +76,5 @@
 @endsection
 
 @push('scripts')
-@include('lap::settings.multipleTypes')
+@include('kulara::settings.multipleTypes')
 @endpush

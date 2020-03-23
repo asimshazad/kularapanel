@@ -34,7 +34,7 @@ class CrudGenerate extends Command
 
         // set class values
         $this->config = include $config_file;
-        $this->lap = config('lap.crud_paths');
+        $this->kulara = config('kulara.crud_paths');
         $this->setSimpleReplaces();
         $this->setAttributeReplaces();
 
@@ -51,7 +51,7 @@ class CrudGenerate extends Command
 
         // ask to migrate
         // if ($this->confirm('Migrate now?')) {
-        //     Artisan::call('migrate', ['--path' => $this->lap['migrations']]);
+        //     Artisan::call('migrate', ['--path' => $this->kulara['migrations']]);
         //     $this->info('Migration complete!');
         // }
     }
@@ -61,9 +61,9 @@ class CrudGenerate extends Command
 
         // set simple replacement searches for stubs
         $this->replaces = [
-            '{controller_namespace}' => $controller_namespace = ucfirst(str_replace('/', '\\', $this->lap['controller'])),
+            '{controller_namespace}' => $controller_namespace = ucfirst(str_replace('/', '\\', $this->kulara['controller'])),
             '{controller_route}' => ltrim(str_replace('App\\Http\\Controllers', '', $controller_namespace) . '\\', '\\'),
-            '{model_namespace}' => $model_namespace = ucfirst(str_replace('/', '\\', $this->lap['model'])),
+            '{model_namespace}' => $model_namespace = ucfirst(str_replace('/', '\\', $this->kulara['model'])),
             '{model_class}' => $model_class = $this->argument('model'),
             '{model_string}' => $model_string = trim(preg_replace('/(?!^)[A-Z]{2,}(?=[A-Z][a-z])|[A-Z][a-z]/', ' $0', $model_class)),
             '{model_strings}' => $model_strings = str_plural($model_string),
@@ -73,7 +73,7 @@ class CrudGenerate extends Command
             '{l_model_strings}' => "__l('" . $model_variable . "', '" . $model_strings . "')",
             '{model_primary_attribute}' => 'id',
             '{model_icon}' => isset($this->config['icon']) ? $this->config['icon'] : 'fa-link',
-            '{view_prefix_url}' => $view_prefix_url = ltrim(str_replace('resources/views', '', $this->lap['views']) . '/', '/'),
+            '{view_prefix_url}' => $view_prefix_url = ltrim(str_replace('resources/views', '', $this->kulara['views']) . '/', '/'),
             '{view_prefix_name}' => $view_prefix_name = str_replace('/', '.', $view_prefix_url),
             '{seo_action}' => isset($this->config['need_seo']) && $this->config['need_seo'] ? "@include('{$view_prefix_name}{$model_variables}.datatable.seo_action')" : '',
             '{seo_init}' => isset($this->config['need_seo']) && $this->config['need_seo'] ? '$this->initSeo(\'' . $model_namespace . '\\' . $model_class . '\', $' . $model_variable . '->id);' : '',
@@ -187,7 +187,7 @@ class CrudGenerate extends Command
             // read attributes
             $attribute_label = ucwords(str_replace('_', ' ', $attribute));
             $attribute_value = '$' . $this->replaces['{model_variable}'] . '->' . $attribute;
-            $read_stub = $this->files->get($this->lap['stubs'] . '/views/layouts/read.stub');
+            $read_stub = $this->files->get($this->kulara['stubs'] . '/views/layouts/read.stub');
             $read_stub = str_replace('{attribute_label}', "__l('{$attribute}','{$attribute_label}')", $read_stub);
 
             $read_stub = str_replace('{attribute_value}', '{{ ' . (isset($values['casts']) && $values['casts'] == 'array' ? "is_array($attribute_value)? implode(', ', $attribute_value):''" : $attribute_value) . ' }}', $read_stub);
@@ -196,7 +196,7 @@ class CrudGenerate extends Command
 
             // form inputs
             if (!empty($values['input'])) {
-                $input_stub = $this->files->get($this->lap['stubs'] . '/views/layouts/input.stub');
+                $input_stub = $this->files->get($this->kulara['stubs'] . '/views/layouts/input.stub');
                 $input_stub = str_replace('{attribute}', $attribute, $input_stub);
                 $input_stub = str_replace('{attribute_label}', "__l('{$attribute}','{$attribute_label}')", $input_stub);
 
@@ -233,11 +233,11 @@ class CrudGenerate extends Command
         $replaces = [];
         $replaces['{input_label}'] = ucwords(str_replace('_', ' ', $attribute));
         if (in_array($filter['type'], ['text', 'date', 'date_range'])) {
-            $stub = $this->files->get($this->lap['stubs'] . '/views/filters/' . trim(strtolower($filter['type'])) . '.stub');
+            $stub = $this->files->get($this->kulara['stubs'] . '/views/filters/' . trim(strtolower($filter['type'])) . '.stub');
             $replaces['{input_name}'] = $attribute;
             $replaces['{input_id}'] = $attribute;
         } elseif ($filter['type'] == 'select') {
-            $stub = $this->files->get($this->lap['stubs'] . '/views/filters/select.stub');
+            $stub = $this->files->get($this->kulara['stubs'] . '/views/filters/select.stub');
             if (!empty($input['multiple'])) {
                 $replaces['{input_name_sign}'] = '[]';
             }
@@ -256,7 +256,7 @@ class CrudGenerate extends Command
         $replaces = [];
 
         if (in_array($input['type'], ['checkbox', 'radio'])) {
-            $stub = $this->files->get($this->lap['stubs'] . '/views/inputs/checkbox_radio.stub');
+            $stub = $this->files->get($this->kulara['stubs'] . '/views/inputs/checkbox_radio.stub');
             $replaces['{input_type}'] = $input['type'];
             $replaces['{input_name}'] = $attribute . ($input['type'] == 'checkbox' && !empty($input['options']) ? '[]' : '');
             $replaces['{input_id}'] = $attribute . '_{{ $loop->index }}';
@@ -264,14 +264,14 @@ class CrudGenerate extends Command
         } else if ($input['type'] == 'file') {
             $form_enctype = ' enctype="multipart/form-data"';
             if ($method == 'update') {
-                $stub = $this->files->get($this->lap['stubs'] . '/views/inputs/file_update_single.stub');
+                $stub = $this->files->get($this->kulara['stubs'] . '/views/inputs/file_update_single.stub');
                 if (!empty($input['multiple'])) {
-                    $stub = $this->files->get($this->lap['stubs'] . '/views/inputs/file_update_multiple.stub');
+                    $stub = $this->files->get($this->kulara['stubs'] . '/views/inputs/file_update_multiple.stub');
                 }
             } else {
-                $stub = $this->files->get($this->lap['stubs'] . '/views/inputs/file_create_single.stub');
+                $stub = $this->files->get($this->kulara['stubs'] . '/views/inputs/file_create_single.stub');
                 if (!empty($input['multiple'])) {
-                    $stub = $this->files->get($this->lap['stubs'] . '/views/inputs/file_create_multiple.stub');
+                    $stub = $this->files->get($this->kulara['stubs'] . '/views/inputs/file_create_multiple.stub');
                 }
             }
             $replaces['{input_name}'] = $attribute;
@@ -308,7 +308,7 @@ EOT;
             }
 
         } else if ($input['type'] == 'select') {
-            $stub = $this->files->get($this->lap['stubs'] . '/views/inputs/select.stub');
+            $stub = $this->files->get($this->kulara['stubs'] . '/views/inputs/select.stub');
             if (!empty($input['multiple'])) {
                 $replaces['{input_name_sign}'] = '[]';
             }
@@ -316,15 +316,15 @@ EOT;
             $replaces['{input_id}'] = $attribute;
             $replaces = $this->inputSelectOptions($attribute, $input, $method, $replaces);
         } else if ($input['type'] == 'textarea') {
-            $stub = $this->files->get($this->lap['stubs'] . '/views/inputs/textarea.stub');
+            $stub = $this->files->get($this->kulara['stubs'] . '/views/inputs/textarea.stub');
             $replaces['{input_name}'] = $attribute;
             $replaces['{input_id}'] = $attribute;
             $replaces['{input_value}'] = $method == 'update' ? '{{ $' . $this->replaces['{model_variable}'] . '->' . $attribute . ' }}' : '';
             $replaces['{input_class}'] = isset($input['class']) && $input['class'] != '' ? ' ' . $input['class'] : '';
         } else {
-            $stub = $this->files->get($this->lap['stubs'] . '/views/inputs/text.stub');
+            $stub = $this->files->get($this->kulara['stubs'] . '/views/inputs/text.stub');
             if (isset($input['tags']) && $input['tags']) {
-                $stub = $this->files->get($this->lap['stubs'] . '/views/inputs/tags.stub');
+                $stub = $this->files->get($this->kulara['stubs'] . '/views/inputs/tags.stub');
             }
             $replaces['{input_type}'] = $input['type'];
             $replaces['{input_name}'] = $attribute;
@@ -467,12 +467,12 @@ EOT;
     {
         // create directories recursively if they don't already exist
         $directories = [
-            $this->lap['controller'],
-            $this->lap['model'],
-            $this->lap['migrations'],
-            $this->lap['menu'],
-            $this->lap['route'],
-            $this->lap['views'] . '/' . $this->replaces['{model_variables}'] . '/datatable',
+            $this->kulara['controller'],
+            $this->kulara['model'],
+            $this->kulara['migrations'],
+            $this->kulara['menu'],
+            $this->kulara['route'],
+            $this->kulara['views'] . '/' . $this->replaces['{model_variables}'] . '/datatable',
         ];
 
         foreach ($directories as $directory) {
@@ -485,9 +485,9 @@ EOT;
     public function createControllerFile()
     {
         // create controller file
-        $controller_file = $this->lap['controller'] . '/' . $this->replaces['{model_class}'] . 'Controller.php';
+        $controller_file = $this->kulara['controller'] . '/' . $this->replaces['{model_class}'] . 'Controller.php';
         if ($this->prompt($controller_file)) {
-            $controller_stub = $this->files->get($this->lap['stubs'] . '/controller.stub');
+            $controller_stub = $this->files->get($this->kulara['stubs'] . '/controller.stub');
             $this->files->put($controller_file, $this->replace($controller_stub));
             $this->line('Controller file created: <info>' . $controller_file . '</info>');
         }
@@ -496,9 +496,9 @@ EOT;
     public function createModelFile()
     {
         // create model file
-        $model_file = $this->lap['model'] . '/' . $this->replaces['{model_class}'] . '.php';
+        $model_file = $this->kulara['model'] . '/' . $this->replaces['{model_class}'] . '.php';
         if ($this->prompt($model_file)) {
-            $model_stub = $this->files->get($this->lap['stubs'] . '/model.stub');
+            $model_stub = $this->files->get($this->kulara['stubs'] . '/model.stub');
             $this->files->put($model_file, $this->replace($model_stub));
             $this->line('Model file created: <info>' . $model_file . '</info>');
         }
@@ -507,9 +507,9 @@ EOT;
     public function createMigrationFile()
     {
         // create migration file
-        $migrations_file = $this->lap['migrations'] . '/' . date('Y_00_00_000000') . '_create_' . $this->replaces['{model_variable}'] . '_table.php';
+        $migrations_file = $this->kulara['migrations'] . '/' . date('Y_00_00_000000') . '_create_' . $this->replaces['{model_variable}'] . '_table.php';
         if ($this->prompt($migrations_file)) {
-            $migrations_stub = $this->files->get($this->lap['stubs'] . '/migrations.stub');
+            $migrations_stub = $this->files->get($this->kulara['stubs'] . '/migrations.stub');
             $this->files->put($migrations_file, $this->replace($migrations_stub));
             $this->line('Migration file created: <info>' . $migrations_file . '</info>');
         }
@@ -518,8 +518,8 @@ EOT;
     public function createViewFiles()
     {
         // create view files
-        $view_path = $this->lap['views'] . '/' . $this->replaces['{model_variables}'];
-        foreach ($this->files->allFiles($this->lap['stubs'] . '/views/models') as $file) {
+        $view_path = $this->kulara['views'] . '/' . $this->replaces['{model_variables}'];
+        foreach ($this->files->allFiles($this->kulara['stubs'] . '/views/models') as $file) {
             if ($file->getFilename() != 'widget.stub') {
                 $new_file = $view_path . '/' . ltrim($file->getRelativePath() . '/' . str_replace('.stub', '.blade.php', $file->getFilename()), '/');
                 if ($file->getFilename() == 'seo_action.stub') {
@@ -542,19 +542,19 @@ EOT;
     public function insertMenuItem()
     {
         // create menu item file
-        $menu_file = $this->lap['menu'] . '/' . $this->replaces['{model_variable}'] . '.blade.php';
+        $menu_file = $this->kulara['menu'] . '/' . $this->replaces['{model_variable}'] . '.blade.php';
         if ($this->prompt($menu_file)) {
-            $menu_stub = $this->files->get($this->lap['stubs'] . '/views/layouts/menu.stub');
+            $menu_stub = $this->files->get($this->kulara['stubs'] . '/views/layouts/menu.stub');
             $this->files->put($menu_file, $this->replace($menu_stub));
             $this->line('Menu item file created: <info>' . $menu_file . '</info>');
 
-            $layout_menu = $this->files->get($this->lap['layout_menu']);
-            $menu_content = PHP_EOL . '@include(\'lap::layouts.menu.' . $this->replaces['{model_variable}'] . '\')';
+            $layout_menu = $this->files->get($this->kulara['layout_menu']);
+            $menu_content = PHP_EOL . '@include(\'kulara::layouts.menu.' . $this->replaces['{model_variable}'] . '\')';
             if (strpos($layout_menu, $menu_content) === false) {
                 $search = '{{-- menu inject start --}}';
                 $index = strpos($layout_menu, $search);
-                $this->files->put($this->lap['layout_menu'], substr_replace($layout_menu, $search . $menu_content, $index, strlen($search)));
-                $this->line('Menu item included: <info>' . $this->lap['layout_menu'] . '</info>');
+                $this->files->put($this->kulara['layout_menu'], substr_replace($layout_menu, $search . $menu_content, $index, strlen($search)));
+                $this->line('Menu item included: <info>' . $this->kulara['layout_menu'] . '</info>');
             }
         }
 
@@ -563,17 +563,17 @@ EOT;
     public function insertRoutes()
     {
         // create menu item file
-        $route_file = $this->lap['route'] . '/' . $this->replaces['{model_variable}'] . '.php';
+        $route_file = $this->kulara['route'] . '/' . $this->replaces['{model_variable}'] . '.php';
         if ($this->prompt($route_file)) {
-            $routes_stub = $this->files->get($this->lap['stubs'] . '/routes.stub');
+            $routes_stub = $this->files->get($this->kulara['stubs'] . '/routes.stub');
             $this->files->put($route_file, $this->replace($routes_stub));
             $this->line('Route file created: <info>' . $route_file . '</info>');
 
-            $routes = $this->files->get($this->lap['routes']);
+            $routes = $this->files->get($this->kulara['routes']);
             $route_content = PHP_EOL . "include_once(resource_path('../{$route_file}'));";
             if (strpos($routes, $route_content) === false) {
-                $this->files->append($this->lap['routes'], $route_content);
-                $this->line('Route included: <info>' . $this->lap['routes'] . '</info>');
+                $this->files->append($this->kulara['routes'], $route_content);
+                $this->line('Route included: <info>' . $this->kulara['routes'] . '</info>');
             }
         }
 

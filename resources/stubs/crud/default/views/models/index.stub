@@ -1,4 +1,4 @@
-@extends('lap::layouts.auth')
+@extends('kulara::layouts.auth')
 
 @section('title', {l_model_strings})
 @section('child-content')
@@ -52,5 +52,5 @@
 
 @push('scripts')
 {!! $html->scripts() !!}
-@include('lap::layouts.datatable_scripts',compact('dtid','export_url'))
+@include('kulara::layouts.datatable_scripts',compact('dtid','export_url'))
 @endpush

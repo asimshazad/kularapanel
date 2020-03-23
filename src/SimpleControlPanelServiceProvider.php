@@ -28,8 +28,8 @@ class SimpleControlPanelServiceProvider extends ServiceProvider
         $this->app['router']->aliasMiddleware('api_logger', 'Khludev\KuLaraPanel\Middleware\ApiLogger');
         $this->app['router']->aliasMiddleware('https_protocol', 'Khludev\KuLaraPanel\Middleware\HttpsProtocol');
 
-        $this->mergeConfigFrom(__DIR__.'/../config/simplecontrolpanel.php', 'lap');
-        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'lap');
+        $this->mergeConfigFrom(__DIR__.'/../config/simplecontrolpanel.php', 'kulara');
+        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'kulara');
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
         $this->loadRoutesFrom(__DIR__.'/routes.php');
         $this->gatePermissions();
@@ -75,44 +75,44 @@ class SimpleControlPanelServiceProvider extends ServiceProvider
     {
         // install general
         $this->publishes([
-            __DIR__ . '/../public' => public_path('lap'),
+            __DIR__ . '/../public' => public_path('kulara'),
             __DIR__ . '/../resources/lang' => resource_path('lang'),
-            __DIR__ . '/../resources/views/layouts' => resource_path('views/vendor/lap/layouts'),
-            __DIR__ . '/../resources/views/auth' => resource_path('views/vendor/lap/auth'),
-            __DIR__ . '/../resources/views/backend' => resource_path('views/vendor/lap/backend'),
-            __DIR__ . '/../resources/views/users' => resource_path('views/vendor/lap/users'),
-        ], 'lap.general');
+            __DIR__ . '/../resources/views/layouts' => resource_path('views/vendor/kulara/layouts'),
+            __DIR__ . '/../resources/views/auth' => resource_path('views/vendor/kulara/auth'),
+            __DIR__ . '/../resources/views/backend' => resource_path('views/vendor/kulara/backend'),
+            __DIR__ . '/../resources/views/users' => resource_path('views/vendor/kulara/users'),
+        ], 'kulara.general');
 
         // install all views
-        $this->publishes([__DIR__ . '/../resources/views' => resource_path('views/vendor/lap')], 'lap.all.view');
+        $this->publishes([__DIR__ . '/../resources/views' => resource_path('views/vendor/kulara')], 'kulara.all.view');
 
         // in case want to customized the routes
-        $this->publishes([__DIR__ . '/routes.php' => resource_path('../'.config('lap.crud_paths.route').'/routes.php')], 'lap.admin.route');
+        $this->publishes([__DIR__ . '/routes.php' => resource_path('../'.config('kulara.crud_paths.route').'/routes.php')], 'kulara.admin.route');
 
         // advanced. if u know what to do, install 1 by 1
-        $this->publishes([__DIR__.'/../config/simplecontrolpanel.php' => config_path('lap.php')], 'lap.config');
-        $this->publishes([__DIR__.'/../config/seotools.php' => config_path('seotools.php')], 'lap.seo.config');
-        $this->publishes([__DIR__ . '/../public' => public_path('lap')], 'lap.public');
-        $this->publishes([__DIR__ . '/../resources/lang' => resource_path('lang')], 'lap.lang');
-        $this->publishes([__DIR__ . '/../resources/views/layouts' => resource_path('views/vendor/lap/layouts')], 'lap.layouts');
-        $this->publishes([__DIR__ . '/../resources/views/auth' => resource_path('views/vendor/lap/auth')], 'lap.auth.view');
-        $this->publishes([__DIR__ . '/../resources/views/backend' => resource_path('views/vendor/lap/backend')], 'lap.backend.view');
-        $this->publishes([__DIR__ . '/../resources/views/users' => resource_path('views/vendor/lap/users')], 'lap.users.view');
+        $this->publishes([__DIR__.'/../config/simplecontrolpanel.php' => config_path('kulara.php')], 'kulara.config');
+        $this->publishes([__DIR__.'/../config/seotools.php' => config_path('seotools.php')], 'kulara.seo.config');
+        $this->publishes([__DIR__ . '/../public' => public_path('kulara')], 'kulara.public');
+        $this->publishes([__DIR__ . '/../resources/lang' => resource_path('lang')], 'kulara.lang');
+        $this->publishes([__DIR__ . '/../resources/views/layouts' => resource_path('views/vendor/kulara/layouts')], 'kulara.layouts');
+        $this->publishes([__DIR__ . '/../resources/views/auth' => resource_path('views/vendor/kulara/auth')], 'kulara.auth.view');
+        $this->publishes([__DIR__ . '/../resources/views/backend' => resource_path('views/vendor/kulara/backend')], 'kulara.backend.view');
+        $this->publishes([__DIR__ . '/../resources/views/users' => resource_path('views/vendor/kulara/users')], 'kulara.users.view');
 
         $files = new Filesystem;
-        if (!$files->exists(config('lap.crud_paths.route'))) {
-            $files->makeDirectory(config('lap.crud_paths.route'), 0755, true);
+        if (!$files->exists(config('kulara.crud_paths.route'))) {
+            $files->makeDirectory(config('kulara.crud_paths.route'), 0755, true);
         }
-        if (file_exists(resource_path('../'.config('lap.crud_paths.route').'/routes.php'))) {
-            $routes = $files->get(config('lap.crud_paths.routes'));
-            $route_content = PHP_EOL . "include_once(resource_path('../".config('lap.crud_paths.route')."/routes.php'));";
+        if (file_exists(resource_path('../'.config('kulara.crud_paths.route').'/routes.php'))) {
+            $routes = $files->get(config('kulara.crud_paths.routes'));
+            $route_content = PHP_EOL . "include_once(resource_path('../".config('kulara.crud_paths.route')."/routes.php'));";
             if (strpos($routes, $route_content) === false) {
-                $files->append(config('lap.crud_paths.routes'), $route_content);
+                $files->append(config('kulara.crud_paths.routes'), $route_content);
             }
         }
 
-        $this->publishes([__DIR__ . '/../database/migrations' => database_path('migrations')], 'lap.migrations');
-        $this->publishes([__DIR__ . '/../resources/stubs/crud/default' => resource_path('stubs/crud/default')], 'lap.stubs');
+        $this->publishes([__DIR__ . '/../database/migrations' => database_path('migrations')], 'kulara.migrations');
+        $this->publishes([__DIR__ . '/../resources/stubs/crud/default' => resource_path('stubs/crud/default')], 'kulara.stubs');
 
         // Registering package commands.
         $this->commands([
@@ -141,7 +141,7 @@ class SimpleControlPanelServiceProvider extends ServiceProvider
     public function configSettings()
     {
         if (Schema::hasTable('settings')) {
-            foreach (app(config('lap.models.setting'))->all() as $setting) {
+            foreach (app(config('kulara.models.setting'))->all() as $setting) {
                 Config::set('settings.' . $setting->key, $setting->value);
             }
         }

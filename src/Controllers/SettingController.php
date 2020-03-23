@@ -20,7 +20,7 @@ class SettingController extends Controller
     public function index(Builder $builder)
     {
         if (request()->ajax()) {
-            $settings = app(config('lap.models.setting'))->query();
+            $settings = app(config('kulara.models.setting'))->query();
             $datatable = datatables($settings)
                 ->editColumn('value', function ($setting) {
                     if (is_array(settings($setting->key))) {
@@ -32,7 +32,7 @@ class SettingController extends Controller
                     return 'settings(\''.$setting->key.'\');';
                 })
                 ->editColumn('actions', function ($setting) {
-                    return view('lap::settings.datatable.actions', compact('setting'));
+                    return view('kulara::settings.datatable.actions', compact('setting'));
                 })
                 ->rawColumns(['actions']);
 
@@ -47,12 +47,12 @@ class SettingController extends Controller
         ]);
         $html->setTableAttribute('id', 'settings_datatable');
 
-        return view('lap::settings.index', compact('html'));
+        return view('kulara::settings.index', compact('html'));
     }
 
     public function createForm()
     {
-        return view('lap::settings.create');
+        return view('kulara::settings.create');
     }
 
     public function create()
@@ -68,7 +68,7 @@ class SettingController extends Controller
             }
             request()->merge(['value' => $values]);
         }
-        $setting = app(config('lap.models.setting'))->create(request()->all());
+        $setting = app(config('kulara.models.setting'))->create(request()->all());
 
         activity('Created Setting: ' . $setting->id, request()->all(), $setting);
         flash(['success', 'Setting created!']);
@@ -83,19 +83,19 @@ class SettingController extends Controller
 
     public function read($id)
     {
-        $setting = app(config('lap.models.setting'))->find($id);
-        return view('lap::settings.read', compact('setting'));
+        $setting = app(config('kulara.models.setting'))->find($id);
+        return view('kulara::settings.read', compact('setting'));
     }
 
     public function updateForm($id)
     {
-        $setting = app(config('lap.models.setting'))->find($id);
-        return view('lap::settings.update', compact('setting'));
+        $setting = app(config('kulara.models.setting'))->find($id);
+        return view('kulara::settings.update', compact('setting'));
     }
 
     public function update($id)
     {
-        $setting = app(config('lap.models.setting'))->find($id);
+        $setting = app(config('kulara.models.setting'))->find($id);
         $this->validate(request(), [
             'key' => 'required',
         ]);
@@ -123,7 +123,7 @@ class SettingController extends Controller
 
     public function delete($id)
     {
-        $setting = app(config('lap.models.setting'))->find($id);
+        $setting = app(config('kulara.models.setting'))->find($id);
         $setting->delete();
 
         activity('Deleted Setting: ' . $setting->id, $setting->toArray());

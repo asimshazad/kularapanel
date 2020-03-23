@@ -39,7 +39,7 @@ class {model_class}Controller extends Controller
                 ->setRowAttr(['data-id' => '{{ $id }}', 'data-seq' => '{{ $seq }}'])
                 ->setRowClass('sortable_row')
                 ->editColumn('actions', function (${model_variable}) {
-                    $seotool = app(config('lap.models.seotool'))
+                    $seotool = app(config('kulara.models.seotool'))
                         ->query()->where('model','{model_namespace}\{model_class}')
                         ->where('model_id',${model_variable}->id)->first();
                     return view('{view_prefix_name}{model_variables}.datatable.actions', compact('{model_variable}','seotool'));
@@ -162,6 +162,6 @@ class {model_class}Controller extends Controller
         }
         return response()->json([
             'reload_datatables' => true,
-        ]);        
+        ]);
     }
 }
