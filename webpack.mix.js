@@ -20,8 +20,7 @@ mix.combine([
     'resources/css/daterangepicker.css',
     'resources/css/ekko-lightbox.css',
     'resources/css/summernote.css',
-
-    'resourcesjs/css/easymde.min.css',
+    'resources/css/easymde.min.css',
     'resources/lib/datatimepicker/jquery.datetimepicker.css',
     'bower_components/kdev-sendform/dist/css/kdev-sendForm.css',
 
