@@ -8,15 +8,6 @@
     <link rel="shortcut icon" href="{{ asset('kulara/favicon.ico') }}" type="image/x-icon">
     <link rel="icon" href="{{ asset('kulara/favicon.ico') }}" type="image/x-icon">
     <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Nunito:regular,bold">
-    <link rel="stylesheet" href="//stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-{{--    <link rel="stylesheet" href="{{ asset('kulara/css/fontawesome.min.css') }}">--}}
-    <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.10.20/af-2.3.4/b-1.6.0/b-colvis-1.6.0/b-flash-1.6.0/b-html5-1.6.0/b-print-1.6.0/cr-1.5.2/fc-3.3.0/fh-3.1.6/kt-2.5.1/r-2.2.3/rg-1.1.1/rr-1.2.6/sc-2.0.1/sl-1.3.1/datatables.min.css"/>
-{{--    <link rel="stylesheet" href="{{ asset('kulara/css/easymde.min.css') }}">--}}
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0-alpha14/css/tempusdominus-bootstrap-4.min.css" />
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/css/bootstrap-select.min.css">
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.css" />
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.css">
     <link rel="stylesheet" href="{{ asset('kulara/css/kulara-all.min.css') }}">
     <link rel="stylesheet" href="{{ asset('kulara/css/kulara-custom.css') }}">
 

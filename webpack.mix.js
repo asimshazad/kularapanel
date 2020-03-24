@@ -13,6 +13,14 @@ const mix = require('laravel-mix');
 
 mix.combine([
     'resources/css/fontawesome.min.css',
+    'resources/css/bootstrap.min.css',
+    'resources/css/datatables.min.css',
+    'resources/css/tempusdominus-bootstrap-4.min.css',
+    'resources/css/bootstrap-select.min.css',
+    'resources/css/daterangepicker.css',
+    'resources/css/ekko-lightbox.css',
+    'resources/css/summernote.css',
+
     'resourcesjs/css/easymde.min.css',
     'resources/lib/datatimepicker/jquery.datetimepicker.css',
     'bower_components/kdev-sendform/dist/css/kdev-sendForm.css',
