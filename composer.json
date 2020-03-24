@@ -37,7 +37,8 @@
             "Khludev\\KuLaraPanel\\": "src/"
         },
         "files": [
-            "src/helpers.php"
+            "src/helpers.php",
+            "config/kulara_const.php"
         ]
     },
     "autoload-dev": {

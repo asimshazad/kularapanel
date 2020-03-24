@@ -91,6 +91,7 @@ class SimpleControlPanelServiceProvider extends ServiceProvider
 
         // advanced. if u know what to do, install 1 by 1
         $this->publishes([__DIR__.'/../config/simplecontrolpanel.php' => config_path('kulara.php')], 'kulara.config');
+        $this->publishes([__DIR__ . '/../config/kulara_const.php' => config_path('kulara_const.php')], 'kulara.config');
         $this->publishes([__DIR__.'/../config/seotools.php' => config_path('seotools.php')], 'kulara.seo.config');
         $this->publishes([__DIR__ . '/../public' => public_path('kulara')], 'kulara.public');
         $this->publishes([__DIR__ . '/../resources/lang' => resource_path('lang')], 'kulara.lang');

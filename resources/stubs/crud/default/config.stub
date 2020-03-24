@@ -50,7 +50,7 @@ return [
         'status' => [
             'primary' => false,
             'migrations' => [
-                'string:status|nullable|default:A',
+                'string:status|nullable|default:null',
             ],
             'datatable' => [
                 'title' => 'Status',
@@ -60,22 +60,15 @@ return [
             'input' => [
                 'type' => 'select',
                 'option_return' => 'array', // array / object
-                'options' => [
-                    'settings:{model_variable}_status' => [
-                        'key' => 'val',
-                    ],
-                ],
+                'options' =>'config:kulara_const.status',
             ],
             'appends' => 'status_name',
-            'mutators' => [
-                'get' => 'return settings(\'{model_variable}_status\')[$this->attributes[\'status\']];',
-            ]
         ],
 
         'created_by' => [
             'primary' => false,
             'migrations' => [
-                'string:created_by|default:1|nullable',
+                'integer:created_by|default:1|nullable',
             ],
             'datatable' => [
                 'title' => 'Created By',
@@ -89,7 +82,7 @@ return [
         'updated_by' => [
             'primary' => false,
             'migrations' => [
-                'string:updated_by|default:1|nullable',
+                'integer:updated_by|default:1|nullable',
             ],
             'exporttable' => 'updated_by',
             'relationship' => [

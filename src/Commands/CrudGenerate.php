@@ -27,6 +27,7 @@ class CrudGenerate extends Command
     {
         // ensure config file exists
         $config_file = 'config/crud/' . $this->argument('model') . '.php';
+
         if (!$this->files->exists($config_file)) {
             $this->error('Config file not found: <info>' . $config_file . '</info>');
             return;
@@ -35,6 +36,7 @@ class CrudGenerate extends Command
         // set class values
         $this->config = include $config_file;
         $this->kulara = config('kulara.crud_paths');
+
         $this->setSimpleReplaces();
         $this->setAttributeReplaces();
 
