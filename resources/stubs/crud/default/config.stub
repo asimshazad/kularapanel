@@ -52,23 +52,27 @@ return [
             'migrations' => [
                 'string:status|nullable|default:null',
             ],
+            'validations' => [
+                'create' => 'required|in:" . implode(\',\', array_flip(config(\'kulara_const.status\'))) . "',
+                'update' => 'required|in:" . implode(\',\', array_flip(config(\'kulara_const.status\'))) . "',
+            ],
             'datatable' => [
                 'title' => 'Status',
-                'data' => 'status_name',
+                'data' => 'status',
             ],
             'exporttable' => 'status',
             'input' => [
                 'type' => 'select',
+                'required'=>false,
                 'option_return' => 'array', // array / object
-                'options' =>'config:kulara_const.status',
+                'options' =>'config("kulara_const.status")',
             ],
-            'appends' => 'status_name',
         ],
 
         'created_by' => [
             'primary' => false,
             'migrations' => [
-                'integer:created_by|default:1|nullable',
+                'integer:created_by|default:null|nullable',
             ],
             'datatable' => [
                 'title' => 'Created By',
@@ -82,7 +86,7 @@ return [
         'updated_by' => [
             'primary' => false,
             'migrations' => [
-                'integer:updated_by|default:1|nullable',
+                'integer:updated_by|default:null|nullable',
             ],
             'exporttable' => 'updated_by',
             'relationship' => [

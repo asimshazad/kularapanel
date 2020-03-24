@@ -1,6 +1,8 @@
-                        <select name="{input_name}{input_name_sign}" id="{input_id}" class="selectpicker form-control{input_class}" data-style="border bg-white" data-live-search="{live_search}" {input_multiple}>
-                            <option value=""></option>
-                            @foreach({input_options} as {input_option})
-                                <option value="{input_option_value}"{input_option_selected}>{input_option_label}</option>
-                            @endforeach
+                    <select name="{input_name}{input_name_sign}" id="{input_id}"
+                            class="selectpicker form-control{input_class}" data-style="border bg-white"
+                            data-live-search="{live_search}"  {input_multiple}>
+                                    {empty_option}
+                                @foreach({input_options} as {input_option})
+                                    <option value="{input_option_value}" {input_option_selected}>{input_option_label}</option>
+                                @endforeach
                         </select>

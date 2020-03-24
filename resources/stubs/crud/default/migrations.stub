@@ -18,14 +18,12 @@ class Create{model_class}Table extends Migration
 
         // add permissions
         app(config('kulara.models.permission'))->createGroup('{model_strings}', ['Create {model_strings}', 'Read {model_strings}', 'Update {model_strings}', 'Delete {model_strings}']);
-        app(config('kulara.models.setting'))->create(['key' => '{model_variable}_status','value' => ["P" => "Pending", "A" => "Confirmed", "C" => "Cancelled"]]);
     }
 
     public function down()
     {
         // drop table
         Schema::dropIfExists('{model_variables}');
-        app(config('kulara.models.setting'))->where('key','{model_variable}_status')->forceDelete();
         // delete permissions
         app(config('kulara.models.permission'))->where('group', '{model_strings}')->delete();
     }

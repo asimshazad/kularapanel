@@ -314,6 +314,9 @@ EOT;
             if (!empty($input['multiple'])) {
                 $replaces['{input_name_sign}'] = '[]';
             }
+
+            $replaces['{empty_option}'] = (!empty($input['required']) && $input['required']) ? '' : '<option value="">{{__l(\'no_select\',\'Not chosen\')}}</option>';
+
             $replaces['{input_name}'] = $attribute;
             $replaces['{input_id}'] = $attribute;
             $replaces = $this->inputSelectOptions($attribute, $input, $method, $replaces);
