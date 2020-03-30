@@ -8,7 +8,7 @@
         </div>
         <div class="col-md-auto mt-2 mt-md-0">
             @can('Create {model_strings}')
-                <a href="{{ route('{view_prefix_name}{model_variables}.create') }}" class="btn btn-primary">{{__l('create_{model_variable}', 'Create {l_model_string}')}} </a>
+                <a href="{{ route('{view_prefix_name}{model_variables}.create') }}" class="btn btn-primary">{{__l('create_{model_variable}', 'Create {model_string}')}} </a>
             @endcan
         </div>
     </div>
