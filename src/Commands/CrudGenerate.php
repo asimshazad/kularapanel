@@ -78,7 +78,9 @@ class CrudGenerate extends Command
             '{model_fillable_attribute}'=> isset($this->config['fillable']) && is_array($this->config['fillable']) ? '\'' . implode('\', \'', $this->config['fillable']) . '\'' : '',
             '{use_dinamicfilable_trait}'=> isset($this->config['fillable']) && !is_array($this->config['fillable']) ? 'use Khludev\KuLaraPanel\Traits\DynamicFillable;' : '',
             '{dinamicfilable_class_name}'=> isset($this->config['fillable']) && !is_array($this->config['fillable']) ? ', DynamicFillable' : '',
-            // model fillable attribute
+            '{use_softdeletes_trait}'=> isset($this->config['soft_deletes']) && $this->config['soft_deletes'] ? 'use Illuminate\Database\Eloquent\SoftDeletes;' : '',
+            '{softdeletes_class_name}'=> isset($this->config['soft_deletes']) && $this->config['soft_deletes'] ? ', SoftDeletes' : '',
+
             '{view_prefix_url}' => $view_prefix_url = ltrim(str_replace('resources/views', '', $this->kulara['views']) . '/', '/'),
             '{view_prefix_name}' => $view_prefix_name = str_replace('/', '.', $view_prefix_url),
             '{seo_action}' => isset($this->config['need_seo']) && $this->config['need_seo'] ? "@include('{$view_prefix_name}{$model_variables}.datatable.seo_action')" : '',
