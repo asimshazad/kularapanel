@@ -11,7 +11,7 @@ class {model_class} extends Eloquent
 {
     use  UserTimezone{dinamicfilable_class_name}{softdeletes_class_name};
 
-    protected $dates = ['deleted_at'];
+    protected $dates = [{dates_attributes}];
     protected $fillable = [{model_fillable_attribute}];
 
     {model_appends}

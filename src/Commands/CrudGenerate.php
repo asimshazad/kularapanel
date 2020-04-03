@@ -75,17 +75,22 @@ class CrudGenerate extends Command
             '{l_model_strings}' => "__l('" . $model_variable . "', '" . $model_strings . "')",
             '{model_primary_attribute}' => 'id',
             '{model_icon}' => isset($this->config['icon']) ? $this->config['icon'] : 'fa-link',
-            '{model_fillable_attribute}'=> isset($this->config['fillable']) && is_array($this->config['fillable']) ? '\'' . implode('\', \'', $this->config['fillable']) . '\'' : '',
-            '{use_dinamicfilable_trait}'=> isset($this->config['fillable']) && !is_array($this->config['fillable']) ? 'use Khludev\KuLaraPanel\Traits\DynamicFillable;' : '',
-            '{dinamicfilable_class_name}'=> isset($this->config['fillable']) && !is_array($this->config['fillable']) ? ', DynamicFillable' : '',
-            '{use_softdeletes_trait}'=> isset($this->config['soft_deletes']) && $this->config['soft_deletes'] ? 'use Illuminate\Database\Eloquent\SoftDeletes;' : '',
-            '{softdeletes_class_name}'=> isset($this->config['soft_deletes']) && $this->config['soft_deletes'] ? ', SoftDeletes' : '',
+            '{model_fillable_attribute}' => isset($this->config['fillable']) && is_array($this->config['fillable']) ? '\'' . implode('\', \'', $this->config['fillable']) . '\'' : '',
+            '{use_dinamicfilable_trait}' => isset($this->config['fillable']) && !is_array($this->config['fillable']) ? 'use Khludev\KuLaraPanel\Traits\DynamicFillable;' : '',
+            '{dinamicfilable_class_name}' => isset($this->config['fillable']) && !is_array($this->config['fillable']) ? ', DynamicFillable' : '',
+            '{use_softdeletes_trait}' => isset($this->config['soft_deletes']) && $this->config['soft_deletes'] ? 'use Illuminate\Database\Eloquent\SoftDeletes;' : '',
+            '{softdeletes_class_name}' => isset($this->config['soft_deletes']) && $this->config['soft_deletes'] ? ', SoftDeletes' : '',
+            '{dates_attributes}' => isset($this->config['soft_deletes']) && $this->config['soft_deletes'] ? '\'deleted_at\'' : '',
 
             '{view_prefix_url}' => $view_prefix_url = ltrim(str_replace('resources/views', '', $this->kulara['views']) . '/', '/'),
             '{view_prefix_name}' => $view_prefix_name = str_replace('/', '.', $view_prefix_url),
             '{seo_action}' => isset($this->config['need_seo']) && $this->config['need_seo'] ? "@include('{$view_prefix_name}{$model_variables}.datatable.seo_action')" : '',
             '{seo_init}' => isset($this->config['need_seo']) && $this->config['need_seo'] ? '$this->initSeo(\'' . $model_namespace . '\\' . $model_class . '\', $' . $model_variable . '->id);' : '',
         ];
+
+        $dates =  isset($this->config['dates']) && is_array($this->config['dates']) ? '\'' . implode('\', \'', $this->config['dates']) . '\'' : '';
+        $this->replaces['{dates_attributes}'] = ($this->replaces['{dates_attributes}'] && $dates) ? $dates . ',' . $this->replaces['{dates_attributes}'] : $dates;
+
     }
 
     public function setAttributeReplaces()
