@@ -3,6 +3,6 @@
                             data-live-search="{live_search}"  {input_multiple}>
                                     {empty_option}
                                 @foreach({input_options} as {input_option})
-                                    <option value="{input_option_value}" {input_option_selected}>{input_option_label}</option>
+                                    <option value="{input_option_value}" {input_option_selected}>{{__l({input_option_label}, {input_option_label})}}</option>
                                 @endforeach
                         </select>

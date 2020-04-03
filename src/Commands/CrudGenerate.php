@@ -75,6 +75,10 @@ class CrudGenerate extends Command
             '{l_model_strings}' => "__l('" . $model_variable . "', '" . $model_strings . "')",
             '{model_primary_attribute}' => 'id',
             '{model_icon}' => isset($this->config['icon']) ? $this->config['icon'] : 'fa-link',
+            '{model_fillable_attribute}'=> isset($this->config['fillable']) && is_array($this->config['fillable']) ? '\'' . implode('\', \'', $this->config['fillable']) . '\'' : '',
+            '{use_dinamicfilable_trait}'=> isset($this->config['fillable']) && !is_array($this->config['fillable']) ? 'use Khludev\KuLaraPanel\Traits\DynamicFillable;' : '',
+            '{dinamicfilable_class_name}'=> isset($this->config['fillable']) && !is_array($this->config['fillable']) ? ', DynamicFillable' : '',
+            // model fillable attribute
             '{view_prefix_url}' => $view_prefix_url = ltrim(str_replace('resources/views', '', $this->kulara['views']) . '/', '/'),
             '{view_prefix_name}' => $view_prefix_name = str_replace('/', '.', $view_prefix_url),
             '{seo_action}' => isset($this->config['need_seo']) && $this->config['need_seo'] ? "@include('{$view_prefix_name}{$model_variables}.datatable.seo_action')" : '',
@@ -311,10 +315,8 @@ EOT;
 
         } else if ($input['type'] == 'select') {
             $stub = $this->files->get($this->kulara['stubs'] . '/views/inputs/select.stub');
-            if (!empty($input['multiple'])) {
-                $replaces['{input_name_sign}'] = '[]';
-            }
 
+            $replaces['{input_name_sign}'] = (!empty($input['multiple']) && $input['multiple']) ? '[]' : '';
             $replaces['{empty_option}'] = (!empty($input['required']) && $input['required']) ? '' : '<option value="">{{__l(\'no_select\',\'Not chosen\')}}</option>';
 
             $replaces['{input_name}'] = $attribute;
@@ -414,7 +416,7 @@ EOT;
             $replaces['{input_options}'] = $input['options'];
             $replaces['{input_option}'] = '$value => $label';
             $replaces['{input_option_value}'] = '{{ $value }}';
-            $replaces['{input_option_label}'] = '{{ $label }}';
+            $replaces['{input_option_label}'] = '$label';
             $replaces['{input_option_selected}'] = $method == 'update' ? '{{ $value == $' . $this->replaces['{model_variable}'] . '->' . $attribute . " ? ' selected' : '' }}" : '';
 
         } else if (is_array(array_values($input['options'])[0])) {

@@ -4,13 +4,15 @@ namespace {model_namespace};
 
 use Illuminate\Database\Eloquent\Model as Eloquent;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Khludev\KuLaraPanel\Traits\DynamicFillable;
 use Khludev\KuLaraPanel\Traits\UserTimezone;
+{use_dinamicfilable_trait}
 
 class {model_class} extends Eloquent
 {
-    use SoftDeletes, DynamicFillable, UserTimezone;
+    use SoftDeletes, UserTimezone{dinamicfilable_class_name};
+
     protected $dates = ['deleted_at'];
+    protected $fillable = [{model_fillable_attribute}];
 
     {model_appends}
 
