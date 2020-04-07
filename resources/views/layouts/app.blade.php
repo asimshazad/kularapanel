@@ -20,7 +20,9 @@
 
 <div class="overlay"></div>
 <script type="text/javascript" src="{{ asset('kulara/js/kulara-all.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('kulara/js/kulara-components.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('kulara/js/kulara-custom.js') }}"></script>
+
 @routes
 <script type="text/javascript">
 $(function() {

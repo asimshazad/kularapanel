@@ -10,12 +10,28 @@
         "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
     },
     "devDependencies": {
-        "axios": "^0.19",
-        "cross-env": "^7.0",
-        "laravel-mix": "^5.0.1",
+        "@voerro/vue-tagsinput": "^2.1.0",
+        "axios": "^0.19.0",
+        "browser-sync": "^2.26.7",
+        "browser-sync-webpack-plugin": "^2.2.2",
+        "cross-env": "^5.1",
+        "laravel-mix": "^4.0.7",
         "lodash": "^4.17.13",
-        "resolve-url-loader": "^3.1.0",
-        "sass": "^1.15.2",
-        "sass-loader": "^8.0.0"
+        "node-sass": "^4.13.0",
+        "resolve-url-loader": "^2.3.1",
+        "sass": "^1.23.7",
+        "sass-loader": "^7.3.1",
+        "vue": "^2.5.7",
+        "vue-template-compiler": "^2.6.11"
+    },
+    "dependencies": {
+        "@tinymce/tinymce-vue": "^3.0.1",
+        "kdev-sendform": "0.0.16",
+        "mdbootstrap": "^4.10.1",
+        "rx-js": "0.0.0",
+        "vue-loader": "^15.8.3",
+        "vue-rx": "^6.2.0",
+        "vue2-dropzone": "^3.6.0",
+        "vuejs-clipper": "^1.1.5"
     }
 }
