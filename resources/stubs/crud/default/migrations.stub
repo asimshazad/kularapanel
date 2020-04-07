@@ -13,7 +13,8 @@ class Create{model_class}Table extends Migration
             $table->increments('id');
             {migrations}
             $table->timestamps();
-            $table->softDeletes();
+            {softdeletes_migration}
+
         });
 
         // add permissions

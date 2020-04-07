@@ -80,6 +80,7 @@ class CrudGenerate extends Command
             '{dinamicfilable_class_name}' => isset($this->config['fillable']) && !is_array($this->config['fillable']) ? ', DynamicFillable' : '',
             '{use_softdeletes_trait}' => isset($this->config['soft_deletes']) && $this->config['soft_deletes'] ? 'use Illuminate\Database\Eloquent\SoftDeletes;' : '',
             '{softdeletes_class_name}' => isset($this->config['soft_deletes']) && $this->config['soft_deletes'] ? ', SoftDeletes' : '',
+            '{softdeletes_migration}' => isset($this->config['soft_deletes']) && $this->config['soft_deletes'] ? '$table->softDeletes();' : '',
             '{dates_attributes}' => isset($this->config['soft_deletes']) && $this->config['soft_deletes'] ? '\'deleted_at\'' : '',
 
             '{view_prefix_url}' => $view_prefix_url = ltrim(str_replace('resources/views', '', $this->kulara['views']) . '/', '/'),
@@ -88,8 +89,9 @@ class CrudGenerate extends Command
             '{seo_init}' => isset($this->config['need_seo']) && $this->config['need_seo'] ? '$this->initSeo(\'' . $model_namespace . '\\' . $model_class . '\', $' . $model_variable . '->id);' : '',
         ];
 
-        $dates =  isset($this->config['dates']) && is_array($this->config['dates']) ? '\'' . implode('\', \'', $this->config['dates']) . '\'' : '';
-        $this->replaces['{dates_attributes}'] = ($this->replaces['{dates_attributes}'] && $dates) ? $dates . ',' . $this->replaces['{dates_attributes}'] : $dates;
+        $dates = (is_array($this->config['dates']) && count($this->config['dates'])) ? '\'' . implode('\', \'', $this->config['dates']) . '\'' : '';
+        $this->replaces['{dates_attributes}'] = ($dates && $this->replaces['{dates_attributes}']) ? $dates . ',' . $this->replaces['{dates_attributes}'] : $this->replaces['{dates_attributes}'];
+        $this->replaces['{dates_attributes}'] = ($dates && !$this->replaces['{dates_attributes}']) ? $dates : $this->replaces['{dates_attributes}'];
 
     }
 
