@@ -115,8 +115,11 @@ class CrudGenerate extends Command
         $inputs_create = [];
         $inputs_update = [];
         $inputs_filter = [];
+        $fillable = [];
 
         foreach ($attributes as $attribute => $values) {
+            dd($attribute);
+            exit(__FILE__ . ' LINE -> ' . __LINE__);
             // model primary attribute
             if (!empty($values['primary'])) {
                 $this->replaces['{model_primary_attribute}'] = $attribute;
