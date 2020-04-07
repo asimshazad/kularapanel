@@ -75,7 +75,7 @@ class CrudGenerate extends Command
             '{l_model_strings}' => "__l('" . $model_variable . "', '" . $model_strings . "')",
             '{model_primary_attribute}' => 'id',
             '{model_icon}' => isset($this->config['icon']) ? $this->config['icon'] : 'fa-link',
-            '{model_fillable_attribute}' => isset($this->config['fillable']) && is_array($this->config['fillable']) ? '\'' . implode('\', \'', $this->config['fillable']) . '\'' : '',
+            '{model_fillable_attribute}' => is_array($this->config['fillable']) ? '\'' . implode('\', \'', $this->config['fillable']) . '\'' : '',
             '{use_dinamicfilable_trait}' => isset($this->config['fillable']) && !is_array($this->config['fillable']) ? 'use Khludev\KuLaraPanel\Traits\DynamicFillable;' : '',
             '{dinamicfilable_class_name}' => isset($this->config['fillable']) && !is_array($this->config['fillable']) ? ', DynamicFillable' : '',
             '{use_softdeletes_trait}' => isset($this->config['soft_deletes']) && $this->config['soft_deletes'] ? 'use Illuminate\Database\Eloquent\SoftDeletes;' : '',
@@ -94,6 +94,8 @@ class CrudGenerate extends Command
         $dates = (is_array($this->config['dates']) && count($this->config['dates'])) ? '\'' . implode('\', \'', $this->config['dates']) . '\'' : '';
         $this->replaces['{dates_attributes}'] = ($dates && $this->replaces['{dates_attributes}']) ? $dates . ',' . $this->replaces['{dates_attributes}'] : $this->replaces['{dates_attributes}'];
         $this->replaces['{dates_attributes}'] = ($dates && !$this->replaces['{dates_attributes}']) ? $dates : $this->replaces['{dates_attributes}'];
+
+        $this->replaces['{model_fillable_attribute}'] = $this->config['fillable'] === true ? '\'' . implode('\', \'', array_keys($this->config['attributes'])) . '\'' : $this->replaces['{model_fillable_attribute}'];
 
     }
 
@@ -115,11 +117,8 @@ class CrudGenerate extends Command
         $inputs_create = [];
         $inputs_update = [];
         $inputs_filter = [];
-        $fillable = [];
 
         foreach ($attributes as $attribute => $values) {
-            dd($attribute);
-            exit(__FILE__ . ' LINE -> ' . __LINE__);
             // model primary attribute
             if (!empty($values['primary'])) {
                 $this->replaces['{model_primary_attribute}'] = $attribute;
@@ -233,7 +232,7 @@ class CrudGenerate extends Command
         $this->replaces['{relationships}'] = $relationships ? trim(implode(PHP_EOL, $relationships)) : '';
         $this->replaces['{relationships_query}'] = $relationships_query ? "->with('" . implode("', '", $relationships_query) . "')" : '';
         $this->replaces['{user_timezones}'] = $user_timezones ? trim(implode(PHP_EOL, $user_timezones)) : '';
-        $this->replaces['{use_user_timezones}'] = $this->replaces['{user_timezones}'] ? 'use Khludev\KuLaraPanel\Traits\UserTimezone;' : '';
+        $this->replaces['{use_user_timezones}'] = $user_timezones ? 'use Khludev\KuLaraPanel\Traits\UserTimezone;' : '';
         $this->replaces['{mutators}'] = str_replace(array_keys($this->replaces), $this->replaces, ($mutators ? trim(implode(PHP_EOL, $mutators)) : ''));
         $this->replaces['{migrations}'] = $validations ? trim(implode(PHP_EOL, $migrations)) : '';
         $this->replaces['{validations_create}'] = isset($validations['create']) ? trim(implode(PHP_EOL, $validations['create'])) : '';
