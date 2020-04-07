@@ -12,7 +12,7 @@ class Create{model_class}Table extends Migration
         Schema::create('{model_variables}', function (Blueprint $table) {
             $table->increments('id');
             {migrations}
-            $table->timestamps();
+            {timestamps_migration}
             {softdeletes_migration}
 
         });

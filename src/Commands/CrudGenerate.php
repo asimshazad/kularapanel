@@ -82,6 +82,8 @@ class CrudGenerate extends Command
             '{softdeletes_class_name}' => isset($this->config['soft_deletes']) && $this->config['soft_deletes'] ? ', SoftDeletes' : '',
             '{softdeletes_migration}' => isset($this->config['soft_deletes']) && $this->config['soft_deletes'] ? '$table->softDeletes();' : '',
             '{dates_attributes}' => isset($this->config['soft_deletes']) && $this->config['soft_deletes'] ? '\'deleted_at\'' : '',
+            '{timestamps_model}' => isset($this->config['timestamps']) && $this->config['timestamps'] ? '' : 'public $timestamps = false;',
+            '{timestamps_migration}' => isset($this->config['timestamps']) && $this->config['timestamps'] ? '$table->timestamps();' : '',
 
             '{view_prefix_url}' => $view_prefix_url = ltrim(str_replace('resources/views', '', $this->kulara['views']) . '/', '/'),
             '{view_prefix_name}' => $view_prefix_name = str_replace('/', '.', $view_prefix_url),
@@ -224,7 +226,7 @@ class CrudGenerate extends Command
         }
 
         $this->replaces['{model_casts}'] = $model_casts ? 'protected $casts = [' . implode(', ', $model_casts) . '];' : '';
-        $this->replaces['{model_appends}'] = $model_appends ? 'protected $appends = [' . implode(', ', $model_appends) . '];' : '';
+        $this->replaces['{model_appends}'] = $model_appends ? "\r\n\t" . 'protected $appends = [' . implode(', ', $model_appends) . '];' : '';
         $this->replaces['{relationships}'] = $relationships ? trim(implode(PHP_EOL, $relationships)) : '';
         $this->replaces['{relationships_query}'] = $relationships_query ? "->with('" . implode("', '", $relationships_query) . "')" : '';
         $this->replaces['{user_timezones}'] = $user_timezones ? trim(implode(PHP_EOL, $user_timezones)) : '';

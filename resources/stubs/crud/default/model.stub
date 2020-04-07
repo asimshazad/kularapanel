@@ -13,7 +13,7 @@ class {model_class} extends Eloquent
 
     protected $dates = [{dates_attributes}];
     protected $fillable = [{model_fillable_attribute}];
-
+    {timestamps_model}
     {model_appends}
 
     {model_casts}
