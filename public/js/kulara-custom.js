@@ -455,3 +455,10 @@ function flash(alert_class, alert_message) {
         type: alert_class
     });
 }
+
+
+$.datetimepicker.setLocale('uk');
+$('.datetime').datetimepicker({
+    // timepicker: false,
+    format: 'Y-m-d H:i:s'
+});
