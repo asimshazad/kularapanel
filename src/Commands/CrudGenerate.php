@@ -507,6 +507,7 @@ EOT;
         if ($this->prompt($controller_file)) {
             $controller_stub = $this->files->get($this->kulara['stubs'] . '/controller.stub');
             $this->files->put($controller_file, $this->replace($controller_stub));
+            $this->deleteBlankLines($controller_file);
             $this->line('Controller file created: <info>' . $controller_file . '</info>');
         }
     }
@@ -518,6 +519,7 @@ EOT;
         if ($this->prompt($model_file)) {
             $model_stub = $this->files->get($this->kulara['stubs'] . '/model.stub');
             $this->files->put($model_file, $this->replace($model_stub));
+            $this->deleteBlankLines($model_file);
             $this->line('Model file created: <info>' . $model_file . '</info>');
         }
     }
@@ -530,6 +532,8 @@ EOT;
             $migrations_stub = $this->files->get($this->kulara['stubs'] . '/migrations.stub');
             $this->files->put($migrations_file, $this->replace($migrations_stub));
             $this->line('Migration file created: <info>' . $migrations_file . '</info>');
+
+            $this->deleteBlankLines($migrations_file);
         }
     }
 
@@ -593,6 +597,8 @@ EOT;
                 $this->files->append($this->kulara['routes'], $route_content);
                 $this->line('Route included: <info>' . $this->kulara['routes'] . '</info>');
             }
+
+            $this->deleteBlankLines($route_file);
         }
 
     }
@@ -658,5 +664,30 @@ EOT;
             }
         }
         return true;
+    }
+
+    protected function deleteBlankLines($file_path)
+    {
+        $files_lines = file($file_path);
+        $emptyLine = false;
+        $base = '';
+        foreach ($files_lines as $line_num => $line) {
+            if (trim(preg_replace('/[\r\n]+/m', "\n", $line))) {
+                $emptyLine = false;
+                $base .= $line;
+                $emptyLine = false;
+            } else {
+                if ($emptyLine !== true)
+                    $base .= $line;
+
+                $emptyLine = true;
+            }
+
+        }
+
+        $fp = fopen($file_path, "w");
+        fwrite($fp, "$base");
+        fclose($fp);
+
     }
 }
