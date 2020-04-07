@@ -230,6 +230,7 @@ class CrudGenerate extends Command
         $this->replaces['{relationships}'] = $relationships ? trim(implode(PHP_EOL, $relationships)) : '';
         $this->replaces['{relationships_query}'] = $relationships_query ? "->with('" . implode("', '", $relationships_query) . "')" : '';
         $this->replaces['{user_timezones}'] = $user_timezones ? trim(implode(PHP_EOL, $user_timezones)) : '';
+        $this->replaces['{use_user_timezones}'] = $this->replaces['{user_timezones}'] ? 'use Khludev\KuLaraPanel\Traits\UserTimezone;' : '';
         $this->replaces['{mutators}'] = str_replace(array_keys($this->replaces), $this->replaces, ($mutators ? trim(implode(PHP_EOL, $mutators)) : ''));
         $this->replaces['{migrations}'] = $validations ? trim(implode(PHP_EOL, $migrations)) : '';
         $this->replaces['{validations_create}'] = isset($validations['create']) ? trim(implode(PHP_EOL, $validations['create'])) : '';

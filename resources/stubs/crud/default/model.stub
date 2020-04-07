@@ -3,9 +3,9 @@
 namespace {model_namespace};
 
 use Illuminate\Database\Eloquent\Model as Eloquent;
-use Khludev\KuLaraPanel\Traits\UserTimezone;
-{use_dinamicfilable_trait}
 {use_softdeletes_trait}
+{use_user_timezones}
+{use_dinamicfilable_trait}
 
 class {model_class} extends Eloquent
 {
