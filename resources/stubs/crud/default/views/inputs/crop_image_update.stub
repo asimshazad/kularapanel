@@ -1,0 +1,7 @@
+                    <crop-image
+                            image="{{{crop_image_url}}}"
+                            crop-width="{{{crop_width}}}"
+                            ratio="{{{crop_ratio}}}"
+                            input-name="crop_image"
+                            return-base64="true"
+                        ></crop-image>

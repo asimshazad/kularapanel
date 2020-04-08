@@ -84,7 +84,7 @@ if (!function_exists('__l')) {
         if (Lang::has($key, $locale))
             return __($key, $replace, $locale);
 
-        return !empty($default)? $default:$key;
+        return !empty($default) ? $default : $key;
     }
 }
 
@@ -114,6 +114,56 @@ if (!function_exists('pushered')) {
                 'useTLS' => true
             ]
         );
-        $pusher->trigger((sha1($channel != ''? $channel:env("APP_NAME"))), sha1($event), $data);
+        $pusher->trigger((sha1($channel != '' ? $channel : env("APP_NAME"))), sha1($event), $data);
     }
+}
+function class_to_url_str($modelMame)
+{
+    return strtolower(implode('_', explode(' ', trim(preg_replace('/(?!^)[A-Z]{2,}(?=[A-Z][a-z])|[A-Z][a-z]/', ' $0', $modelMame)))));
+
+}
+
+/*
+ * Назва моделі з назви контроллера BlogController - Blog
+ */
+function get_model_from_controller($controller_obg)
+{
+    return substr(class_basename($controller_obg), 0, -10);
+}
+
+
+//Підказка
+function tooltip($text)
+{
+    return "<sup><i class=\"fas fa-info-circle text-info\"  data-toggle=\"tooltip\" title=\"{$text}\"></i></sup>";
+}
+
+//mimes from base 64
+function getBase64Type($str, $extensions = false)
+{
+    //return extensions
+    if ($extensions) {
+        $extensions = strtolower(explode('/', substr($str, 5, strpos($str, ';') - 5))[1]);
+        $extensions = $extensions == 'jpeg' ? 'jpg' : $extensions;
+        return $extensions;
+    }
+    //return mimes
+    return substr($str, 5, strpos($str, ';') - 5);
+
+
+}
+
+function dropImage($item, $delete_url)
+{
+    return [
+        'size' => $item->size,
+        'name' => $item->file_name,
+        'hash_name' => $item->file_name,
+        'mime_type' => $item->mime_type,
+        'url' => $item->getUrl('thumb'),
+        'originalUrl' => $item->getUrl(),
+        'id' => $item->id,
+        'remove_link' => $delete_url,
+        'upload' => ['uuid' => $item->id],
+    ];
 }

@@ -7,8 +7,11 @@ use Artesaos\SEOTools\Facades\SEOMeta;
 use Artesaos\SEOTools\Facades\OpenGraph;
 use Artesaos\SEOTools\Facades\TwitterCard;
 use Artesaos\SEOTools\Facades\JsonLd;
+use Illuminate\Http\Request;
+use Intervention\Image\ImageManagerStatic as Image;
 use Rap2hpoutre\FastExcel\FastExcel;
 use Carbon\Carbon;
+use Spatie\MediaLibrary\Models\Media;
 
 trait Controller
 {
@@ -98,5 +101,68 @@ trait Controller
         TwitterCard::setTitle($seotool->twitter_title);
         TwitterCard::setSite($seotool->twitter_site);
 
+    }
+
+    //Клеїсм водяний знак
+    public function insertWatermark($image_path)
+    {
+        if (!$watermark = config('app.watermark_path'))
+            return info('\'app.watermark_path\' : не вказано посилання на зображення');
+
+        $image = Image::make($image_path)->insert($watermark, 'bottom-right', 10, 10);
+        $image->save($image_path);
+    }
+
+    public function removeImage($img)
+    {
+        if ($static_page = Media::find($img)) {
+            activity('Deleted Static Page Image: ' . $static_page->updated_by);
+
+            return response()->json(['status' => $static_page->delete()]);
+
+        } else
+            return response()->json(['status' => 'no_valid id ' . $img]);
+    }
+
+
+    public function uploadGallery($model_id)
+    {
+        $this->validate(request(), [
+            "file" => "image|mimes:jpeg,png,jpg,svg|max:2048",
+            "collect" => "string",
+        ]);
+        $modelMame = get_model_from_controller($this);
+        $class = 'App\\' . $modelMame;
+        $model = $class::find($model_id);
+        $colection = request()->collect ?? $class;
+        $model_string = class_to_url_str($modelMame);
+
+        if (request()->hasFile('file')) {
+            $img = $model
+                ->addMedia(request()->file)
+                ->usingFileName(uniqid() . '.' . request()->file->getClientOriginalExtension())
+                ->toMediaCollection($colection);
+
+            $response = dropImage($img, route("admin.{$model_string}.remove_image", $img->id));
+
+            return response()->json($response);
+
+        }
+
+
+    }
+
+    public function getImages(Request $request)
+    {
+        $modelMame = get_model_from_controller($this);
+        $class = 'App\\' . $modelMame;
+        $model = $class::find($request->model_id);
+
+        $media = $model->getDropZoneMedia($request->get('collect'));
+
+        return response()->json([
+            'images' => $media->dropzone->toArray(),
+            'paginate' => $media->paginate,
+        ]);
     }
 }

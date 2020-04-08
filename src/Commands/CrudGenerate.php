@@ -97,6 +97,13 @@ class CrudGenerate extends Command
 
         $this->replaces['{model_fillable_attribute}'] = $this->config['fillable'] === true ? '\'' . implode('\', \'', array_keys($this->config['attributes'])) . '\'' : $this->replaces['{model_fillable_attribute}'];
 
+        //Default replaces
+        $this->replaces["{update_crop_image_for_controller}"] = '';
+        $this->replaces["{create_crop_image_for_controller}"] = '';
+        $this->replaces["{use_trait_media_library}"] = '';
+        $this->replaces["{model_const}"] = '';
+        $this->replaces["{model_implements}"] = '';
+        $this->replaces["{use_class_media_library}"] = '';
     }
 
     public function setAttributeReplaces()
@@ -274,8 +281,30 @@ class CrudGenerate extends Command
     public function inputContent($input, $method, $attribute, &$form_enctype)
     {
         $replaces = [];
+        if ($input['type'] == 'crop_image') {
 
-        if (in_array($input['type'], ['checkbox', 'radio'])) {
+            $stub = $this->files->get($this->kulara['stubs'] . "/views/inputs/crop_image_{$method}.stub");
+            $colection = (isset($input['collection']) && !empty($input['collection']) ? "'{$input['collection']}'" : 'MAIN_COLLECTION_IMAGE');
+
+            $this->replaces['{media_collection_name}'] = $colection;
+            $this->replaces['{use_class_media_library}'] = "\nuse Spatie\MediaLibrary\HasMedia\HasMedia;";
+            $this->replaces['{use_class_media_library}'] .= "\nuse Spatie\MediaLibrary\HasMedia\HasMediaTrait;";
+            $this->replaces['{use_class_media_library}'] .= "\nuse Spatie\MediaLibrary\Models\Media;";
+            $this->replaces['{model_implements}'] = 'implements HasMedia';
+            $this->replaces['{use_trait_media_library}'] = 'use HasMediaTrait;';
+            $replaces['{input_name}'] = $attribute;
+            $replaces['{input_id}'] = $attribute;
+            $replaces['{crop_width}'] = $this->replaces['{model_namespace}'] . '\\' . $this->replaces['{model_class}'] . '::MAIN_IMAGE_WIDTH';
+            $replaces['{crop_ratio}'] = $this->replaces['{model_namespace}'] . '\\' . $this->replaces['{model_class}'] . '::MAIN_IMAGE_RATIO';
+            $replaces['{crop_image_url}'] = '$' . "{$this->replaces['{model_variable}']}->getFirstMediaUrl({$colection})";
+            $this->replaces['{model_const}'] = "\n\tconst MAIN_IMAGE_WIDTH = " . (isset($input['width']) ? $input['width'] : 1080) . ';';
+            $this->replaces['{model_const}'] .= "\n\tconst MAIN_IMAGE_RATIO = " . (isset($input['ratio']) ? $input['ratio'] : 1.6) . ';';
+
+            $stub_create_file = $this->files->get($this->kulara['stubs'] . "/views/includes/{$method}_crop_image_for_controller.stub");
+            $this->replaces["{{$method}_crop_image_for_controller}"] = str_replace(array_keys($this->replaces), $this->replaces, str_replace(array_keys($replaces), $replaces, $stub_create_file));
+
+
+        } else if (in_array($input['type'], ['checkbox', 'radio'])) {
             $stub = $this->files->get($this->kulara['stubs'] . '/views/inputs/checkbox_radio.stub');
             $replaces['{input_type}'] = $input['type'];
             $replaces['{input_name}'] = $attribute . ($input['type'] == 'checkbox' && !empty($input['options']) ? '[]' : '');

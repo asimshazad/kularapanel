@@ -1,6 +1,6 @@
 @extends('kulara::layouts.auth')
 
-@section('title', __l('create', 'Create') .' '. {l_model_string})
+@section('title', __l('create_{model_variable}', 'Create {model_string}'))
 @section('child-content')
     <div class="row mb-3">
         <div class="col-md-auto mt-2 mt-md-0">
@@ -10,7 +10,6 @@
             <h2 class="mb-0 text-dark">@yield('title')</h2>
         </div>
     </div>
-
     <form method="POST" action="{{ route('{view_prefix_name}{model_variables}.create') }}"{form_enctype} novalidate data-ajax-form>
         @csrf
 
