@@ -104,6 +104,9 @@ class CrudGenerate extends Command
         $this->replaces["{model_const}"] = '';
         $this->replaces["{model_implements}"] = '';
         $this->replaces["{use_class_media_library}"] = '';
+        $this->replaces["{auto_create_model}"] = '';
+        $this->replaces["{media_conversion}"] = '';
+        $this->replaces["{add_dropzone_to_editor}"] = 'false';
     }
 
     public function setAttributeReplaces()
@@ -282,16 +285,12 @@ class CrudGenerate extends Command
     {
         $replaces = [];
         if ($input['type'] == 'crop_image') {
+            $this->useMediaLibrary();
 
             $stub = $this->files->get($this->kulara['stubs'] . "/views/inputs/crop_image_{$method}.stub");
-            $colection = (isset($input['collection']) && !empty($input['collection']) ? "'{$input['collection']}'" : 'MAIN_COLLECTION_IMAGE');
+            $colection = (isset($input['collection']) && !empty($input['collection']) ? (defined($input['collection']) ? $input['collection'] : "'{$input['collection']}'") : 'MAIN_COLLECTION_NAME');
 
             $this->replaces['{media_collection_name}'] = $colection;
-            $this->replaces['{use_class_media_library}'] = "\nuse Spatie\MediaLibrary\HasMedia\HasMedia;";
-            $this->replaces['{use_class_media_library}'] .= "\nuse Spatie\MediaLibrary\HasMedia\HasMediaTrait;";
-            $this->replaces['{use_class_media_library}'] .= "\nuse Spatie\MediaLibrary\Models\Media;";
-            $this->replaces['{model_implements}'] = 'implements HasMedia';
-            $this->replaces['{use_trait_media_library}'] = 'use HasMediaTrait;';
             $replaces['{input_name}'] = $attribute;
             $replaces['{input_id}'] = $attribute;
             $replaces['{crop_width}'] = $this->replaces['{model_namespace}'] . '\\' . $this->replaces['{model_class}'] . '::MAIN_IMAGE_WIDTH';
@@ -299,6 +298,25 @@ class CrudGenerate extends Command
             $replaces['{crop_image_url}'] = '$' . "{$this->replaces['{model_variable}']}->getFirstMediaUrl({$colection})";
             $this->replaces['{model_const}'] = "\n\tconst MAIN_IMAGE_WIDTH = " . (isset($input['width']) ? $input['width'] : 1080) . ';';
             $this->replaces['{model_const}'] .= "\n\tconst MAIN_IMAGE_RATIO = " . (isset($input['ratio']) ? $input['ratio'] : 1.6) . ';';
+
+            $stub_create_file = $this->files->get($this->kulara['stubs'] . "/views/includes/{$method}_crop_image_for_controller.stub");
+            $this->replaces["{{$method}_crop_image_for_controller}"] = str_replace(array_keys($this->replaces), $this->replaces, str_replace(array_keys($replaces), $replaces, $stub_create_file));
+
+
+        } else if ($input['type'] == 'dropzone') {
+            $this->useMediaLibrary();
+
+            $stub = $this->files->get($this->kulara['stubs'] . "/views/inputs/dropzone_image_{$method}.stub");
+            $colection = (isset($input['collection']) && !empty($input['collection']) ? (defined($input['collection']) ? $input['collection'] : "'{$input['collection']}'") : 'GALLERY_COLLECTION_NAME');
+            $this->replaces['{dropzone_collection_name}'] = $colection;
+            $replaces['{input_name}'] = $attribute;
+            $replaces['{input_id}'] = $attribute;
+
+            if (isset($input['add_to_editor']) AND $input['add_to_editor'] && $method == 'create') {
+                $stub_autocreate_model = $this->files->get($this->kulara['stubs'] . "/views/includes/autocreate_model.stub");
+                $this->replaces['{auto_create_model}'] = str_replace(array_keys($this->replaces), $this->replaces, str_replace(array_keys($replaces), $replaces, $stub_autocreate_model));;
+                $this->replaces['{add_dropzone_to_editor}'] = isset($input['add_to_editor']) && $input['add_to_editor'] ? 'true' : 'false';
+            }
 
             $stub_create_file = $this->files->get($this->kulara['stubs'] . "/views/includes/{$method}_crop_image_for_controller.stub");
             $this->replaces["{{$method}_crop_image_for_controller}"] = str_replace(array_keys($this->replaces), $this->replaces, str_replace(array_keys($replaces), $replaces, $stub_create_file));
@@ -696,6 +714,18 @@ EOT;
             }
         }
         return true;
+    }
+
+    protected function useMediaLibrary()
+    {
+        $this->replaces['{use_class_media_library}'] = "\nuse Spatie\MediaLibrary\HasMedia\HasMedia;";
+        $this->replaces['{use_class_media_library}'] .= "\nuse Spatie\MediaLibrary\HasMedia\HasMediaTrait;";
+        $this->replaces['{use_class_media_library}'] .= "\nuse Spatie\MediaLibrary\Models\Media;";
+        $this->replaces['{model_implements}'] = 'implements HasMedia';
+        $this->replaces['{use_trait_media_library}'] = 'use HasMediaTrait;';
+        $stub_create_file = $this->files->get($this->kulara['stubs'] . "/views/includes/media_conversion_for_model.stub");
+        $this->replaces["{media_conversion}"] = str_replace(array_keys($this->replaces), $this->replaces, str_replace(array_keys($this->replaces), $this->replaces, $stub_create_file));
+
     }
 
     protected function deleteBlankLines($file_path)

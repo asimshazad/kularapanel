@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="list-group-item bg-light text-left btn-group-sm text-md-right pb-1"
-             v-if="addToEditor"
+             v-if="addToEditor === true"
         >
             <button
                 @click.prevent="allImageToEditor"
@@ -115,7 +115,8 @@
                 default: true
             },
             'addToEditor': {
-                default: false
+                default: false,
+                type: Boolean
             },
             'paginate': {
                 default: false
@@ -130,7 +131,7 @@
                 default: false
             },
             'inputName': {
-                default: 'gallery_field'
+                default: 'dropzone_images'
             }
         },
         components: {
@@ -151,7 +152,7 @@
             }
 
 
-            if (this.addToEditor)
+            if (this.addToEditor === true)
                 this.addEventEditor();
 
         },
@@ -261,18 +262,16 @@
 
             },
             fileAddedEvent(file) {
-                if (!this.addToEditor) {
-                    return false;
+                if (this.addToEditor === true) {
+                    file._removeLink.insertAdjacentHTML("beforeBegin",
+                        "<div class=\"custom-control add-editor-check  custom-checkbox\">\n" +
+                        "                    <input type=\"checkbox\" originalUrl=\"" + file.originalUrl + "\" name=\"img_to_editor[]\" id=\"id-" + file.upload.uuid + "\" class=\"custom-control-input to-editor-input\"" +
+                        " value='" + file.hash_name + "'" +
+                        ">\n" +
+                        "                    <label for=\"id-" + file.upload.uuid + "\" class=\"custom-control-label\">В редактор</label>\n" +
+                        "                </div>"
+                    );
                 }
-
-                file._removeLink.insertAdjacentHTML("beforeBegin",
-                    "<div class=\"custom-control add-editor-check  custom-checkbox\">\n" +
-                    "                    <input type=\"checkbox\" originalUrl=\"" + file.originalUrl + "\" name=\"img_to_editor[]\" id=\"id-" + file.upload.uuid + "\" class=\"custom-control-input to-editor-input\"" +
-                    " value='" + file.hash_name + "'" +
-                    ">\n" +
-                    "                    <label for=\"id-" + file.upload.uuid + "\" class=\"custom-control-label\">В редактор</label>\n" +
-                    "                </div>"
-                );
 
             },
             insertImageToLib(imagesList) {

@@ -1,0 +1,9 @@
+${model_variable} = {model_class}::create([
+            'created_by' => auth()->id(),
+            'updated_by' => auth()->id(),
+            'seq' => {model_class}::max('seq') + 1,
+            'status' => STATUS_DRAFT,
+            //Add required field
+        ]);
+
+        return redirect()->route('admin.{model_variables}.update', ${model_variable}->id);

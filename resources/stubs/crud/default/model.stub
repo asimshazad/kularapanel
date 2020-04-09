@@ -2,7 +2,7 @@
 
 namespace {model_namespace};
 
-use Illuminate\Database\Eloquent\Model as Eloquent;
+use Khludev\KuLaraPanel\Models\Kulara as Eloquent;
 {use_softdeletes_trait}
 {use_user_timezones}
 {use_dinamicfilable_trait}
@@ -27,4 +27,6 @@ class {model_class} extends Eloquent {model_implements}
     {user_timezones}
 
     {mutators}
+
+    {media_conversion}
 }

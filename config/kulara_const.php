@@ -2,11 +2,13 @@
 
 if (!defined("STATUS_ON")) define("STATUS_ON", 1);
 if (!defined("STATUS_OFF")) define("STATUS_OFF", 0);
+if (!defined("STATUS_DRAFT")) define("STATUS_DRAFT", 2);
 /*
  * Collection custom name
  */
-if (!defined("MAIN_COLLECTION_IMAGE")) define("MAIN_COLLECTION_IMAGE", "main");
-if (!defined("DEFAULT_IMAGE_COLLECTION")) define("DEFAULT_IMAGE_COLLECTION", "default");
+if (!defined("MAIN_COLLECTION_NAME")) define("MAIN_COLLECTION_NAME", "main");
+if (!defined("GALLERY_COLLECTION_NAME")) define("GALLERY_COLLECTION_NAME", "gallery");
+if (!defined("DEFAULT_COLLECTION_NAME")) define("DEFAULT_COLLECTION_NAME", "default");
 
 /*
  * The key is equal to the key of the translation file kulara.php

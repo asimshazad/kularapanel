@@ -1,20 +1,28 @@
 <?php
 // {model_variables}
-Route::group(['middleware' => ['web','https_protocol'],'prefix' => config('kulara.route_prefix')], function () {
-	//index
-	Route::get('{model_variables}', '{controller_route}{model_class}Controller@index')->name('{view_prefix_name}{model_variables}');
-	//create
-	Route::get('{model_variables}/create', '{controller_route}{model_class}Controller@createForm')->name('{view_prefix_name}{model_variables}.create');
-	Route::post('{model_variables}/create', '{controller_route}{model_class}Controller@create');
-	//read
-	Route::get('{model_variables}/read/{{model_variable}}', '{controller_route}{model_class}Controller@read')->name('{view_prefix_name}{model_variables}.read');
-	//update
-	Route::get('{model_variables}/update/{{model_variable}}', '{controller_route}{model_class}Controller@updateForm')->name('{view_prefix_name}{model_variables}.update');
-	Route::patch('{model_variables}/update/{{model_variable}}', '{controller_route}{model_class}Controller@update');
-	//delete
-	Route::delete('{model_variables}/delete/{{model_variable}}', '{controller_route}{model_class}Controller@delete')->name('{view_prefix_name}{model_variables}.delete');
-	//export
-	Route::any('{model_variables}/export', '{controller_route}{model_class}Controller@export')->name('{view_prefix_name}{model_variables}.export');
-	//reorder
-	Route::any('{model_variables}/reorder', '{controller_route}{model_class}Controller@reorder')->name('{view_prefix_name}{model_variables}.reorder');
+Route::group(['middleware' => ['web', 'https_protocol'], 'prefix' => config('kulara.route_prefix')], function () {
+    //index
+    Route::get('{model_variables}', '{controller_route}{model_class}Controller@index')->name('{view_prefix_name}{model_variables}');
+    //create
+    Route::get('{model_variables}/create', '{controller_route}{model_class}Controller@createForm')->name('{view_prefix_name}{model_variables}.create');
+    Route::post('{model_variables}/create', '{controller_route}{model_class}Controller@create');
+    //read
+    Route::get('{model_variables}/read/{{model_variable}}', '{controller_route}{model_class}Controller@read')->name('{view_prefix_name}{model_variables}.read');
+    //update
+    Route::get('{model_variables}/update/{{model_variable}}', '{controller_route}{model_class}Controller@updateForm')->name('{view_prefix_name}{model_variables}.update');
+    Route::patch('{model_variables}/update/{{model_variable}}', '{controller_route}{model_class}Controller@update');
+    //delete
+    Route::delete('{model_variables}/delete/{{model_variable}}', '{controller_route}{model_class}Controller@delete')->name('{view_prefix_name}{model_variables}.delete');
+    //export
+    Route::any('{model_variables}/export', '{controller_route}{model_class}Controller@export')->name('{view_prefix_name}{model_variables}.export');
+    //reorder
+    Route::any('{model_variables}/reorder', '{controller_route}{model_class}Controller@reorder')->name('{view_prefix_name}{model_variables}.reorder');
+    //upload Images
+    Route::post('{model_variables}/upload-images/{model_id}', '{controller_route}{model_class}Controller@uploadImages')->name('{view_prefix_name}{model_variables}.upload_images');
+    //get Images json
+    Route::get('{model_variables}/get-images/{model_id}', '{controller_route}{model_class}Controller@getImages')->name('{view_prefix_name}{model_variables}.get_images');
+    //Remove image
+    Route::get('{model_variables}remove-image/{id}', '{controller_route}{model_class}Controller@removeImage')->name('{view_prefix_name}{model_variables}.remove_image');
+
+
 });

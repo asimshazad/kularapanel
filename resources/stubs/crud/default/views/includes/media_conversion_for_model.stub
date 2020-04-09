@@ -1,0 +1,5 @@
+public function registerMediaCollections(Media $media = null)
+    {
+        $this->addMediaConversion('thumb')->width(130);
+
+    }

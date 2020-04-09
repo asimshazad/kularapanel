@@ -125,7 +125,7 @@ trait Controller
     }
 
 
-    public function uploadGallery($model_id)
+    public function uploadImages($model_id)
     {
         $this->validate(request(), [
             "file" => "image|mimes:jpeg,png,jpg,svg|max:2048",
@@ -143,7 +143,7 @@ trait Controller
                 ->usingFileName(uniqid() . '.' . request()->file->getClientOriginalExtension())
                 ->toMediaCollection($colection);
 
-            $response = dropImage($img, route("admin.{$model_string}.remove_image", $img->id));
+            $response = dropImage($img, route("admin.{$model_string}s.remove_image", $img->id));
 
             return response()->json($response);
 
