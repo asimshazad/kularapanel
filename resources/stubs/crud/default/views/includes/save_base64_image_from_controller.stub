@@ -1,0 +1,11 @@
+//Save images from base64 format
+        if ($base64Images = request()->base64_dropzone_files) {
+            foreach ($base64Images as $item) {
+                ${model_variable}->addMediaFromBase64($item, getBase64Type($item))
+                ->usingFileName(uniqid() . '.' . getBase64Type($item, true))
+                ->toMediaCollection({dropzone_collection_name});
+            }
+
+            request()->request->remove('base64_dropzone_files');
+
+        }

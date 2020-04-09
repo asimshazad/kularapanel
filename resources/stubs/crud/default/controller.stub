@@ -93,6 +93,8 @@ class {model_class}Controller extends Controller
 
         {create_crop_image_for_controller}
 
+        {return_dropzone_base64_image}
+
         activity('Created {model_string}: ' . ${model_variable}->{model_primary_attribute}, request()->all(), ${model_variable});
         flash(['success', '{model_string} created!']);
 

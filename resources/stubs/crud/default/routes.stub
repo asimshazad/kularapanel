@@ -18,7 +18,7 @@ Route::group(['middleware' => ['web', 'https_protocol'], 'prefix' => config('kul
     //reorder
     Route::any('{model_variables}/reorder', '{controller_route}{model_class}Controller@reorder')->name('{view_prefix_name}{model_variables}.reorder');
     //upload Images
-    Route::post('{model_variables}/upload-images/{model_id}', '{controller_route}{model_class}Controller@uploadImages')->name('{view_prefix_name}{model_variables}.upload_images');
+    Route::post('{model_variables}/upload-images/{model_id?}', '{controller_route}{model_class}Controller@uploadImages')->name('{view_prefix_name}{model_variables}.upload_images');
     //get Images json
     Route::get('{model_variables}/get-images/{model_id}', '{controller_route}{model_class}Controller@getImages')->name('{view_prefix_name}{model_variables}.get_images');
     //Remove image
