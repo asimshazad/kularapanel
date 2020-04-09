@@ -108,6 +108,7 @@ class CrudGenerate extends Command
         $this->replaces["{media_conversion}"] = '';
         $this->replaces["{add_dropzone_to_editor}"] = 'false';
         $this->replaces["{return_dropzone_base64_image}"] = 'false';
+        $this->replaces["{dropzone_add_image_short}"] = 'false';
     }
 
     public function setAttributeReplaces()
@@ -317,6 +318,7 @@ class CrudGenerate extends Command
                 $stub_autocreate_model = $this->files->get($this->kulara['stubs'] . "/views/includes/autocreate_model.stub");
                 $this->replaces['{auto_create_model}'] = str_replace(array_keys($this->replaces), $this->replaces, str_replace(array_keys($replaces), $replaces, $stub_autocreate_model));;
                 $this->replaces['{add_dropzone_to_editor}'] = isset($input['add_to_editor']) && $input['add_to_editor'] ? 'true' : 'false';
+                $this->replaces['{dropzone_add_image_short}'] = isset($input['short']) && $input['short'] ? 'true' : 'false';
             }
 
             $stub_create_file = $this->files->get($this->kulara['stubs'] . "/views/includes/{$method}_crop_image_for_controller.stub");

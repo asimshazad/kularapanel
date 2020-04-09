@@ -3,4 +3,5 @@
                             url="{{route('admin.{model_variables}.upload_images', ['collect'=>{dropzone_collection_name}])}}"
                             :add-to-editor="{add_dropzone_to_editor}"
                             :return-base64="true"
+                            :short="{dropzone_add_image_short}"
                         ></drop-zone>

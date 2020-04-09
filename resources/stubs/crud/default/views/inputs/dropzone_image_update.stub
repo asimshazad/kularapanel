@@ -7,4 +7,5 @@
                             paginate="{{$media->paginate}}"
                             @endif
                             :add-to-editor="{add_dropzone_to_editor}"
+                            :short="{dropzone_add_image_short}"
                         ></drop-zone>
