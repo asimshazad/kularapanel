@@ -1,6 +1,6 @@
                         <crop-image
-                            crop-width="{{{crop_width}}}"
-                            ratio="{{{crop_ratio}}}"
+                            :crop-width="{{{crop_width}}}"
+                            :ratio="{{{crop_ratio}}}"
                             input-name="crop_image"
-                            return-base64="true"
+                            :return-base64="true"
                         ></crop-image>

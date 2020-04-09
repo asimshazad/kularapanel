@@ -1,0 +1,7 @@
+            <tinymce-editor
+                            name="{input_name}"
+                            content="{input_value}"
+                            content_css="{content_css}"
+                            height="{height}"
+                            language="{language}"
+                        ></tinymce-editor>

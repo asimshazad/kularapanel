@@ -29,5 +29,21 @@ class Kulara extends Eloquent
 
     }
 
+    /*
+     * replace image short code to image html tag
+     */
+    public function replShortWithImage($media, $html): string
+    {
+        $media->filter(function ($img) use (&$html) {
+            $from['[img]' . $img->file_name . '[/img]'] = ' <img src="' . $img->getUrl() . '" alt="' . $img->getCustomProperty('alt') . '" title="' . $img->getCustomProperty('title') . '">';
+
+            $html = preg_replace('/\[img\]' . $img->file_name . '\[\/img\]/', '', strtr($html, $from), -1, $count);
+
+        });
+        //delete empty short
+        $html = preg_replace('/\[img\](.+)\[\/img\]/', '', $html);
+
+        return $html;
+    }
 
 }

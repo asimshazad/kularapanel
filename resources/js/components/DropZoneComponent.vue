@@ -163,7 +163,7 @@
                     thumbnailWidth: 150,
                     thumbnailHeight: 150,
                     addRemoveLinks: true,
-                    maxFilesize: 1,
+                    maxFilesize: 2,
                     headers: {"My-Awesome-Header": "header value"},
                     removeType: 'server'
                 },
@@ -250,7 +250,7 @@
             },
             wrapImg(el) {
                 let wrap;
-                if (this.short === 'true') {
+                if (this.short === true) {
                     wrap = '<p class="publication-img text-center">[img]' + el.value + '[/img]</p>';
 
                 } else {

@@ -1,12 +1,12 @@
 <template>
-    <div class="tinymce-editor" :id="nameInput">
+    <div class="tinymce-editor" :id="name">
         <editor
             api-key="bzu319zydv26qozizxkocxv5yrdesjyq6er82n0ssmyqyy9r"
-            :name="nameInput"
+            :name="name"
             ref="tinymce"
             initialValue=""
             :init="config"
-            v-model="content"
+            v-model="content_editor"
 
         ></editor>
     </div>
@@ -17,21 +17,23 @@
 
     export default {
         name: "TinymceEditor",
-        props: [
-            'name',
-            'content'
-        ],
+        props: {
+            'name' :{default: 'editor'},
+            'content':{default: ''},
+            'content_css':{default: ''},
+            'height':{default: 400},
+            'language':{default: 'uk'},
+        },
         components: {
             'editor': Editor
         },
         data() {
             return {
-                nameInput: '',
-                inputValue: '',
+                content_editor: this.content,
                 config: {
-                    language: 'uk',
-                    language_url: '/lap/js/tinymce_uk.js',
-                    height: 400,
+                    language: this.language,
+                    language_url: '/kulara/js/tinymce_uk.js',
+                    height: this.height,
                     selector: '#' + this.nameInput,
                     plugins: [
                         'advlist autolink lists link image charmap print preview quickbars importcss mediaembed',
@@ -64,7 +66,7 @@
 
                     quickbars_selection_toolbar: 'bold italic | quicklink quickbold h2 h3 blockquote',
                     // Підключити свою css
-                    content_css: "/css/style.css",
+                    content_css: this.content_css,
                     branding: false,
                     //Додати в окрему вкладку набір символів
                     // charmap_append: [
@@ -106,18 +108,22 @@
         },
         methods: {
             getHTML: function () {
-                console.debug(tinymce.activeEditor.getContent());
+                // console.debug(tinymce.activeEditor.getContent());
             }
+
         },
         created: function () {
-            this.nameInput = this.name;
         }
     }
 </script>
 
-<style scoped>
+<style lang="scss">
     /*Tiny MCE Нотіфікація вимкнути (попередження про неоплату плагіну)*/
     .tox-notifications-container {
+        display: none;
+    }
+
+    .tox.tox-silver-sink.tox-tinymce-aux {
         display: none;
     }
 </style>

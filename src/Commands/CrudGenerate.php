@@ -286,7 +286,16 @@ class CrudGenerate extends Command
     public function inputContent($input, $method, $attribute, &$form_enctype)
     {
         $replaces = [];
-        if ($input['type'] == 'crop_image') {
+        if ($input['type'] == 'editor') {
+
+            $stub = $this->files->get($this->kulara['stubs'] . "/views/inputs/tinymce_editor.stub");
+            $replaces['{content_css}'] =  isset($input['content_css']) && $input['content_css'] ? $input['content_css'] : '';;
+            $replaces['{height}'] =  isset($input['height']) && $input['height'] ? $input['height'] : 400;
+            $replaces['{language}'] =  isset($input['language']) && $input['language'] ? $input['language'] : 'en';
+            $replaces['{input_name}'] = $attribute;
+            $replaces['{input_value}'] = $method == 'update' ? '{{$' . $this->replaces['{model_variable}'] . '->' . $attribute . '}}' : '';
+
+        } else if ($input['type'] == 'crop_image') {
             $this->useMediaLibrary();
 
             $stub = $this->files->get($this->kulara['stubs'] . "/views/inputs/crop_image_{$method}.stub");
