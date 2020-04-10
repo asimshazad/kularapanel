@@ -1,5 +1,5 @@
 @can('Read {model_strings}')
     <li class="{{ preg_match('/{view_prefix_name}{model_variables}.*/', request()->route()->getName())? 'active':'' }}">
-        <a href="{{ route('{view_prefix_name}{model_variables}') }}"><i class="fal fa-fw {model_icon} mr-3"></i>{{{l_model_strings}}}</a>
+        <a href="{{ route('{view_prefix_name}{model_variables}') }}"><i class="fal fa-fw {model_icon} mr-3"></i>{{{l_model_strings}}}</a>{hot_create_btn}
     </li>
 @endcan

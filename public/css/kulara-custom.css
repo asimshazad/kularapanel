@@ -237,9 +237,22 @@ img {
     50% 50%
     no-repeat;
 }
+
+.add-link-menu {
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+.sidebar.sidebar-light li {
+    position: relative;
+}
+
 body.loading .overlay {
     overflow: hidden;
 }
 body.loading .overlay {
     display: block;
 }
+
+

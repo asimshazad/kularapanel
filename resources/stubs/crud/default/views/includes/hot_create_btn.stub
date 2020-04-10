@@ -1,0 +1,1 @@
+<a href="{{ route('admin.{model_variables}.create') }}" class="add-link-menu"><i class="fa fa-plus-square text-success" aria-hidden="true"></i></a>

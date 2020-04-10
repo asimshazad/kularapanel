@@ -97,6 +97,10 @@ class CrudGenerate extends Command
 
         $this->replaces['{model_fillable_attribute}'] = $this->config['fillable'] === true ? '\'' . implode('\', \'', array_keys($this->config['attributes'])) . '\'' : $this->replaces['{model_fillable_attribute}'];
 
+        $hot_create_btn_file = $this->files->get($this->kulara['stubs'] . "/views/includes/hot_create_btn.stub");
+        $this->replaces['{hot_create_btn}'] = (!empty($this->config['hot_create_btn']) && $this->config['hot_create_btn']) ? "\r\n" . str_replace(array_keys($this->replaces), $this->replaces, str_replace(array_keys($this->replaces), $this->replaces, $hot_create_btn_file)) : '';
+
+
         //Default replaces
         $this->replaces["{update_crop_image_for_controller}"] = '';
         $this->replaces["{create_crop_image_for_controller}"] = '';
@@ -264,6 +268,8 @@ class CrudGenerate extends Command
         $this->replaces['{inputs_filter}'] = $inputs_filter ? trim(implode(PHP_EOL, $inputs_filter)) : '';
         $this->replaces['{controller_request_creates}'] = isset($this->controller_request_creates) && is_array($this->controller_request_creates) ? trim(implode(PHP_EOL, array_unique($this->controller_request_creates))) : '';
         $this->replaces['{controller_request_updates}'] = isset($this->controller_request_updates) && is_array($this->controller_request_updates) ? trim(implode(PHP_EOL, array_unique($this->controller_request_updates))) : '';
+
+
     }
 
     public function filterContent($filter, $input, $attribute)
