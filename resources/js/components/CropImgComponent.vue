@@ -1,5 +1,5 @@
 <template>
-    <div id="clipper" :class="{'btn-crop': show}">
+    <div :id="inputName" :class="{'btn-crop': show}">
         <div>
             <input :name="fileInputName" :id="fileInputName" class="btn btn-warning mb-2" type="file"
                    @change="upload($event)">
