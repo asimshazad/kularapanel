@@ -106,7 +106,7 @@
                     cropImgW: '',
 
                 },
-                inputNameBase64Name: this.inputName + '_base64',
+                inputNameBase64Name: this.inputName, //+ '_base64',
                 fileInputName: '',
                 base64Image: '',
 

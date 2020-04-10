@@ -1,9 +1,9 @@
 //Add crop image photo
-        if (request()->{input_name}_base64) {
-            ${model_variable}->addMediaFromBase64(request()->{input_name}_base64)
-                 ->usingFileName({media_collection_name} . uniqid() . '.' . getBase64Type(request()->{input_name}_base64, true))
+        if (request()->{input_name}) {
+            ${model_variable}->addMediaFromBase64(request()->{input_name})
+                 ->usingFileName({media_collection_name} . uniqid() . '.' . getBase64Type(request()->{input_name}, true))
                  ->toMediaCollection({media_collection_name});
 
-            request()->request->remove('{input_name}_base64');
+            request()->request->remove('{input_name}');
 
         }
