@@ -2,16 +2,14 @@
 
 namespace {model_namespace};
 
-use Khludev\KuLaraPanel\Models\Kulara as Eloquent;
-{use_softdeletes_trait}
-{use_user_timezones}
-{use_dinamicfilable_trait}
+use Illuminate\Database\Eloquent\Model as Eloquent;
+
 {use_class_media_library}
+    {use_model_traits}
 
 class {model_class} extends Eloquent {model_implements}
 {
-    use  UserTimezone{dinamicfilable_class_name}{softdeletes_class_name};
-    {use_trait_media_library}
+    {use_model_traits_name}
 
     protected $dates = [{dates_attributes}];
     protected $fillable = [{model_fillable_attribute}];

@@ -15,6 +15,7 @@ class CrudGenerate extends Command
     protected $replaces = [];
     protected $controller_request_creates = [];
     protected $controller_request_updates = [];
+    protected $model_traits = [];
 
     public function __construct(Filesystem $files)
     {
@@ -44,6 +45,7 @@ class CrudGenerate extends Command
         $this->line('Generating <info>' . $this->argument('model') . '</info> CRUD...');
         $this->makeDirectories();
         $this->createControllerFile();
+        $this->setModelTraitGenerateReplaces();
         $this->createModelFile();
         $this->createMigrationFile();
         $this->createViewFiles();
@@ -76,10 +78,6 @@ class CrudGenerate extends Command
             '{model_primary_attribute}' => 'id',
             '{model_icon}' => isset($this->config['icon']) ? $this->config['icon'] : 'fa-link',
             '{model_fillable_attribute}' => is_array($this->config['fillable']) ? '\'' . implode('\', \'', $this->config['fillable']) . '\'' : '',
-            '{use_dinamicfilable_trait}' => isset($this->config['fillable']) && !is_array($this->config['fillable']) ? 'use Khludev\KuLaraPanel\Traits\DynamicFillable;' : '',
-            '{dinamicfilable_class_name}' => isset($this->config['fillable']) && !is_array($this->config['fillable']) ? ', DynamicFillable' : '',
-            '{use_softdeletes_trait}' => isset($this->config['soft_deletes']) && $this->config['soft_deletes'] ? 'use Illuminate\Database\Eloquent\SoftDeletes;' : '',
-            '{softdeletes_class_name}' => isset($this->config['soft_deletes']) && $this->config['soft_deletes'] ? ', SoftDeletes' : '',
             '{softdeletes_migration}' => isset($this->config['soft_deletes']) && $this->config['soft_deletes'] ? '$table->softDeletes();' : '',
             '{dates_attributes}' => isset($this->config['soft_deletes']) && $this->config['soft_deletes'] ? '\'deleted_at\'' : '',
             '{timestamps_model}' => isset($this->config['timestamps']) && $this->config['timestamps'] ? '' : 'public $timestamps = false;',
@@ -113,6 +111,23 @@ class CrudGenerate extends Command
         $this->replaces["{add_dropzone_to_editor}"] = 'false';
         $this->replaces["{return_dropzone_base64_image}"] = 'false';
         $this->replaces["{dropzone_add_image_short}"] = 'false';
+
+    }
+
+    protected function setModelTraitGenerateReplaces()
+    {
+        if ($this->config['fillable'] && $this->config['fillable'] === false)
+            $this->model_traits['DynamicFillable'] = 'use Khludev\KuLaraPanel\Traits\DynamicFillable;';
+
+        if (isset($this->config['soft_deletes']) && $this->config['soft_deletes'])
+            $this->model_traits['SoftDeletes'] = 'use Illuminate\Database\Eloquent\SoftDeletes;';
+
+        if (!$this->model_traits)
+            return true;
+
+        $this->replaces["{use_model_traits}"] = implode("\r\n", $this->model_traits);
+        $this->replaces["{use_model_traits_name}"] = 'use ' . implode(", ", array_flip($this->model_traits)) . ';';
+
     }
 
     public function setAttributeReplaces()
@@ -254,7 +269,6 @@ class CrudGenerate extends Command
         $this->replaces['{relationships}'] = $relationships ? trim(implode(PHP_EOL, $relationships)) : '';
         $this->replaces['{relationships_query}'] = $relationships_query ? "->with('" . implode("', '", $relationships_query) . "')" : '';
         $this->replaces['{user_timezones}'] = $user_timezones ? trim(implode(PHP_EOL, $user_timezones)) : '';
-        $this->replaces['{use_user_timezones}'] = $user_timezones ? 'use Khludev\KuLaraPanel\Traits\UserTimezone;' : '';
         $this->replaces['{mutators}'] = str_replace(array_keys($this->replaces), $this->replaces, ($mutators ? trim(implode(PHP_EOL, $mutators)) : ''));
         $this->replaces['{migrations}'] = $validations ? trim(implode(PHP_EOL, $migrations)) : '';
         $this->replaces['{validations_create}'] = isset($validations['create']) ? trim(implode(PHP_EOL, $validations['create'])) : '';
@@ -269,6 +283,9 @@ class CrudGenerate extends Command
         $this->replaces['{controller_request_creates}'] = isset($this->controller_request_creates) && is_array($this->controller_request_creates) ? trim(implode(PHP_EOL, array_unique($this->controller_request_creates))) : '';
         $this->replaces['{controller_request_updates}'] = isset($this->controller_request_updates) && is_array($this->controller_request_updates) ? trim(implode(PHP_EOL, array_unique($this->controller_request_updates))) : '';
 
+
+//        if (!empty($values['user_timezone']) OR !empty($this->replaces['{dates_attributes}']))
+            $this->model_traits['UserTimezone'] = 'use Khludev\KuLaraPanel\Traits\UserTimezone;' ;
 
     }
 
@@ -741,11 +758,12 @@ EOT;
 
     protected function useMediaLibrary()
     {
-        $this->replaces['{use_class_media_library}'] = "\nuse Spatie\MediaLibrary\HasMedia\HasMedia;";
-        $this->replaces['{use_class_media_library}'] .= "\nuse Spatie\MediaLibrary\HasMedia\HasMediaTrait;";
-        $this->replaces['{use_class_media_library}'] .= "\nuse Spatie\MediaLibrary\Models\Media;";
+        $this->model_traits['HasMediaTrait'] = "\r\nuse Spatie\MediaLibrary\HasMedia\HasMediaTrait;";
+        $this->model_traits['HasMediaTrait'] .= "\r\nuse Spatie\MediaLibrary\HasMedia\HasMedia;";
+        $this->model_traits['KularaMedia'] = 'use Khludev\KuLaraPanel\Traits\Media as KularaMedia;';
+
         $this->replaces['{model_implements}'] = 'implements HasMedia';
-        $this->replaces['{use_trait_media_library}'] = 'use HasMediaTrait;';
+        $this->replaces['{use_trait_media_library}'] = 'use Spatie\MediaLibrary\Models\Media;';
         $stub_create_file = $this->files->get($this->kulara['stubs'] . "/views/includes/media_conversion_for_model.stub");
         $this->replaces["{media_conversion}"] = str_replace(array_keys($this->replaces), $this->replaces, str_replace(array_keys($this->replaces), $this->replaces, $stub_create_file));
 
