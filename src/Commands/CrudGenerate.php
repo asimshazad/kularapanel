@@ -46,6 +46,7 @@ class CrudGenerate extends Command
         $this->makeDirectories();
         $this->createControllerFile();
         $this->setModelTraitGenerateReplaces();
+        $this->setFillable();
         $this->createModelFile();
         $this->createMigrationFile();
         $this->createViewFiles();
@@ -77,7 +78,6 @@ class CrudGenerate extends Command
             '{l_model_strings}' => "__l('" . $model_variable . "', '" . $model_strings . "')",
             '{model_primary_attribute}' => 'id',
             '{model_icon}' => isset($this->config['icon']) ? $this->config['icon'] : 'fa-link',
-            '{model_fillable_attribute}' => is_array($this->config['fillable']) ? '\'' . implode('\', \'', $this->config['fillable']) . '\'' : '',
             '{softdeletes_migration}' => isset($this->config['soft_deletes']) && $this->config['soft_deletes'] ? '$table->softDeletes();' : '',
             '{dates_attributes}' => isset($this->config['soft_deletes']) && $this->config['soft_deletes'] ? '\'deleted_at\'' : '',
             '{timestamps_model}' => isset($this->config['timestamps']) && $this->config['timestamps'] ? '' : 'public $timestamps = false;',
@@ -93,7 +93,6 @@ class CrudGenerate extends Command
         $this->replaces['{dates_attributes}'] = ($dates && $this->replaces['{dates_attributes}']) ? $dates . ',' . $this->replaces['{dates_attributes}'] : $this->replaces['{dates_attributes}'];
         $this->replaces['{dates_attributes}'] = ($dates && !$this->replaces['{dates_attributes}']) ? $dates : $this->replaces['{dates_attributes}'];
 
-        $this->replaces['{model_fillable_attribute}'] = $this->config['fillable'] === true ? '\'' . implode('\', \'', array_keys($this->config['attributes'])) . '\'' : $this->replaces['{model_fillable_attribute}'];
 
         $hot_create_btn_file = $this->files->get($this->kulara['stubs'] . "/views/includes/hot_create_btn.stub");
         $this->replaces['{hot_create_btn}'] = (!empty($this->config['hot_create_btn']) && $this->config['hot_create_btn']) ? "\r\n" . str_replace(array_keys($this->replaces), $this->replaces, str_replace(array_keys($this->replaces), $this->replaces, $hot_create_btn_file)) : '';
@@ -116,7 +115,7 @@ class CrudGenerate extends Command
 
     protected function setModelTraitGenerateReplaces()
     {
-        if ($this->config['fillable'] && $this->config['fillable'] === false)
+        if ($this->config['fillable'] == false)
             $this->model_traits['DynamicFillable'] = 'use Khludev\KuLaraPanel\Traits\DynamicFillable;';
 
         if (isset($this->config['soft_deletes']) && $this->config['soft_deletes'])
@@ -285,7 +284,7 @@ class CrudGenerate extends Command
 
 
 //        if (!empty($values['user_timezone']) OR !empty($this->replaces['{dates_attributes}']))
-            $this->model_traits['UserTimezone'] = 'use Khludev\KuLaraPanel\Traits\UserTimezone;' ;
+        $this->model_traits['UserTimezone'] = 'use Khludev\KuLaraPanel\Traits\UserTimezone;';
 
     }
 
@@ -767,6 +766,32 @@ EOT;
         $stub_create_file = $this->files->get($this->kulara['stubs'] . "/views/includes/media_conversion_for_model.stub");
         $this->replaces["{media_conversion}"] = str_replace(array_keys($this->replaces), $this->replaces, str_replace(array_keys($this->replaces), $this->replaces, $stub_create_file));
 
+    }
+
+    protected function setFillable()
+    {
+        $fillable = '';
+        if (is_array($this->config['fillable'])) {
+            $fillable = '\'' . implode('\', \'', $this->config['fillable']) . '\'';
+
+        } else if ($this->config['fillable'] == true) {
+            $fields = collect($this->config['attributes'])->filter(function ($item, $key) {
+                $input_type = isset($item['input']['type']) ? $item['input']['type'] : '';
+
+                if ($input_type && in_array($input_type, ['crop_image', 'dropzone', 'file']))
+                    return false;
+                if (in_array($key, ['seq', 'created_by', 'created_at', 'updated_by', 'updated_at', 'deleted_at', 'tags']))
+                    return false;
+
+                return true;
+
+            })->keys()->toArray();
+
+
+            $fillable = '\'' . implode('\', \'', $fields) . '\'';
+
+        }
+        $this->replaces['{model_fillable_attribute}'] = $fillable;
     }
 
     protected function deleteBlankLines($file_path)
