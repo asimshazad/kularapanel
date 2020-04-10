@@ -1,0 +1,6 @@
+<tags-input
+    element-id="{input_id}"
+    inputName="{input_name}"
+    url=""
+    default-tags="{{$tags ? json_encode($tags->toArray()) : ''}}"
+></tags-input>

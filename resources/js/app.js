@@ -7,6 +7,7 @@ import VuejsClipper from 'vuejs-clipper'
 import CropImage from './components/CropImgComponent.vue';
 import DropZone from './components/DropZoneComponent.vue';
 import TinymceEditor from './components/TinymceEditorComponent';
+import TagsInput from './components/TagsComponent';
 
 const axios = require('axios').default;
 
@@ -27,6 +28,7 @@ if ($('#app-vue').length) {
             CropImage,
             DropZone,
             TinymceEditor,
+            TagsInput
         }
 
     });
