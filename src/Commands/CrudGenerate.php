@@ -227,9 +227,15 @@ class CrudGenerate extends Command
 
             // form inputs
             if (!empty($values['input'])) {
+
                 $input_stub = $this->files->get($this->kulara['stubs'] . '/views/layouts/input.stub');
                 $input_stub = str_replace('{attribute}', $attribute, $input_stub);
-                $input_stub = str_replace('{attribute_label}', "__l('{$attribute}','{$attribute_label}')", $input_stub);
+                $default_label = (isset($values['input']['default_label']) && $values['input']['default_label']) ? $values['input']['default_label'] : $attribute_label;
+
+                $input_stub = str_replace('{attribute_label}', "__l('{$attribute}','{$default_label}')", $input_stub);
+                $tooltip = (isset($values['input']['tooltip']) && $values['input']['tooltip']) ? "{!! tooltip('{$values['input']['tooltip']}') !!}" : '';
+
+                $input_stub = str_replace('{tooltip}', $tooltip, $input_stub);
 
                 $inputs_create[] = str_replace('{attribute_input}', $this->inputContent($values['input'], 'create', $attribute, $form_enctype), $input_stub) . PHP_EOL;
                 $inputs_update[] = str_replace('{attribute_input}', $this->inputContent($values['input'], 'update', $attribute, $form_enctype), $input_stub) . PHP_EOL;
@@ -289,9 +295,9 @@ class CrudGenerate extends Command
         if ($input['type'] == 'editor') {
 
             $stub = $this->files->get($this->kulara['stubs'] . "/views/inputs/tinymce_editor.stub");
-            $replaces['{content_css}'] =  isset($input['content_css']) && $input['content_css'] ? $input['content_css'] : '';;
-            $replaces['{height}'] =  isset($input['height']) && $input['height'] ? $input['height'] : 400;
-            $replaces['{language}'] =  isset($input['language']) && $input['language'] ? $input['language'] : 'en';
+            $replaces['{content_css}'] = isset($input['content_css']) && $input['content_css'] ? $input['content_css'] : '';;
+            $replaces['{height}'] = isset($input['height']) && $input['height'] ? $input['height'] : 400;
+            $replaces['{language}'] = isset($input['language']) && $input['language'] ? $input['language'] : 'en';
             $replaces['{input_name}'] = $attribute;
             $replaces['{input_value}'] = $method == 'update' ? '{{$' . $this->replaces['{model_variable}'] . '->' . $attribute . '}}' : '';
 
