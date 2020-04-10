@@ -167,3 +167,12 @@ function dropImage($item, $delete_url)
         'upload' => ['uuid' => $item->id],
     ];
 }
+
+//get fillable string by table name
+function getFillable($table_name)
+{
+    return 'protected $fillable = [' . implode(', ', collect(Schema::getColumnListing($table_name))->map(function ($key) {
+            return '\'' . $key . '\'';
+
+        })->toArray()) . '];';
+}

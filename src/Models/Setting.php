@@ -3,12 +3,12 @@
 namespace Khludev\KuLaraPanel\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Khludev\KuLaraPanel\Traits\DynamicFillable;
 use Khludev\KuLaraPanel\Traits\UserTimezone;
 
 class Setting extends Model
 {
-    use DynamicFillable, UserTimezone;
+    use  UserTimezone;
+    protected $fillable = ['id', 'key', 'value', 'created_at', 'updated_at', 'no_edit_val', 'no_edit_key',];
 
     public function getValueAttribute($value)
     {

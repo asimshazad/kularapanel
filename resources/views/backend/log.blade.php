@@ -8,7 +8,7 @@
 </div>
 <div class="card shadow">
     <div class="card-body row">
-        <div class="col sidebar mb-3">
+        <div class="col  mb-3">
             <div class="list-group div-scroll">
                 @foreach($folders as $folder)
                 <div class="list-group-item">
@@ -147,7 +147,7 @@ word-wrap: break-word;
 padding-top: 15px;
 }
 .div-scroll {
-height: 80vh;
+/*height: 80vh;*/
 overflow: hidden auto;
 }
 .nowrap {

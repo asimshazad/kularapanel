@@ -3,12 +3,13 @@
 namespace Khludev\KuLaraPanel\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Khludev\KuLaraPanel\Traits\DynamicFillable;
 use Khludev\KuLaraPanel\Traits\UserTimezone;
 
 class ActivityLog extends Model
 {
-    use DynamicFillable, UserTimezone;
+    use UserTimezone;
+
+    protected $fillable = ['id', 'user_id', 'model_id', 'model_class', 'message', 'data', 'created_at'];
 
     const UPDATED_AT = null;
 

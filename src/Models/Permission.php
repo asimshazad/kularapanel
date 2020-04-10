@@ -3,13 +3,13 @@
 namespace Khludev\KuLaraPanel\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Khludev\KuLaraPanel\Traits\DynamicFillable;
 use Khludev\KuLaraPanel\Traits\UserTimezone;
 
 class Permission extends Model
 {
-    use DynamicFillable, UserTimezone;
+    use  UserTimezone;
 
+    protected $fillable =['id', 'group', 'name'];
     // roles relationship
     public function roles()
     {
