@@ -81,6 +81,8 @@ class SimpleControlPanelServiceProvider extends ServiceProvider
             __DIR__ . '/../resources/views/auth' => resource_path('views/vendor/kulara/auth'),
             __DIR__ . '/../resources/views/backend' => resource_path('views/vendor/kulara/backend'),
             __DIR__ . '/../resources/views/users' => resource_path('views/vendor/kulara/users'),
+            __DIR__ . '/../config/simplecontrolpanel.php' => config_path('kulara.php'),
+            __DIR__ . '/../config/kulara_const.php' => config_path('kulara_const.php')
         ], 'kulara.general');
 
         // install all views
