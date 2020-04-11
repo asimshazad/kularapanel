@@ -37,7 +37,7 @@
                         <select name="status" id="status" class="selectpicker form-control filterInput" data-style="border bg-white" data-live-search="true" multiple>
                             <option value="">{{__l('please_select', 'Please Select')}}</option>
                             @foreach (config('kulara_const.status') as $key => $val)
-                            <option value="{{ $key }}" {{ is_array(old('filter.status')) && in_array($key,old('filter.status'))? 'selected':'' }}>{{ $val }}</option>
+                            <option value="{{ $key }}" {{ is_array(old('filter.status')) && in_array($key,old('filter.status'))? 'selected':'' }}>{{ __l($val, $val) }}</option>
                             @endforeach
                         </select>
                     </div>

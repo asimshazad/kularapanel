@@ -1,13 +1,11 @@
 ## Simple Control Panel
 
-Forked from [GitHub](https://github.com/kjjdion/laravel-admin-panel)
+Forked from [GitHub](https://github.com/wikichua/simplecontrolpanel)
 
 Laravel Admin Panel ("kulara") is a drop-in admin panel package for Laravel which promotes rapid scaffolding & development.
 
-- [Demo](https://kulara.kjjdion.com/admin)
 - [Screenshots](https://imgur.com/a/12mGWNW)
-- [Documentation](https://kulara.kjjdion.com/docs)
-- [GitHub](https://github.com/kjjdion/laravel-admin-panel)
+- [GitHub](https://github.com/Khludev/kularapanel)
 
 Features:
 
@@ -76,15 +74,14 @@ Publish admin route files:
 
     php artisan vendor:publish --tag=kulara.admin.route
 
-Add the `AdminUser`, `DynamicFillable`, and `UserTimezone` traits to your `User` model:
+Add the `AdminUser` and `UserTimezone` traits to your `User` model:
 
     use Khludev\KuLaraPanel\Traits\AdminUser;
-    use Khludev\KuLaraPanel\Traits\DynamicFillable;
     use Khludev\KuLaraPanel\Traits\UserTimezone;
     
     class User extends Authenticatable
     {
-        use Notifiable, AdminUser, DynamicFillable, UserTimezone;
+        use Notifiable, AdminUser, UserTimezone;
 
 Add this in your controller.php
     use \Khludev\KuLaraPanel\Traits\Controller;
@@ -107,7 +104,7 @@ Install laravel:
 
 Create directories in terminal:
 
-    cd appName; mkdir packages; cd packages; mkdir wikichua; cd wikichua; git clone https://github.com/khludev/kularapanel.git
+    cd appName; mkdir packages; cd packages; mkdir khludev; cd khludev; git clone https://github.com/khludev/kularapanel.git
 
 Add this in your composer.json under scripts section:
 

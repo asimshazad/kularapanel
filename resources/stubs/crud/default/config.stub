@@ -2,15 +2,20 @@
 
 return [
 
-    // menu icon (fontawesome class) Icon link -> https://fontawesome.com/v4.7.0/icons/
+    /*
+     * Menu icon (fontawesome class) Icon link -> https://fontawesome.com/v4.7.0/icons/
+     */
     'icon' => 'fa-link',
+    'need_seo' => false, //Include SEO
+    'hot_create_btn'=>true, //Add create btn to menu list
+    'fillable' => true, //example true or false or ['field1', 'field2']
+    'dates' => [], //$dates fields
+    'timestamps' => false, //timestamps true or false
+    'soft_deletes' => false, // SoftDeletes true or false
 
-    'need_seo' => false,
-
-    // model attributes
+    // Model attributes
     'attributes' => [
-
-        'seq' => [
+        'seq' => [ //Ordered field
             'primary' => false,
             'migrations' => [
                 'integer:seq|nullable|default:1',
@@ -23,11 +28,10 @@ return [
                 'data' => 'seq',
             ],
         ],
-
-        'name' => [
+        'title' => [
             'primary' => false,
             'migrations' => [
-                'string:name|nullable',
+                'string:title|nullable',
             ],
             'validations' => [
                 'create' => 'required',
@@ -35,9 +39,9 @@ return [
             ],
             'datatable' => [
                 'title' => 'Title',
-                'data' => 'name',
+                'data' => 'title',
             ],
-            'exporttable' => 'name',
+            'exporttable' => 'title',
             'input' => [
                 'type' => 'text',
             ],
@@ -45,12 +49,14 @@ return [
 
         /* Add on begins here */
 
+        //
+
         /* Add on stop here */
 
         'status' => [
             'primary' => false,
             'migrations' => [
-                'string:status|nullable|default:null',
+                'tinyInteger:status|nullable',
             ],
             'validations' => [
                 'create' => 'required|in:" . implode(\',\', array_flip(config(\'kulara_const.status\'))) . "',
@@ -63,16 +69,17 @@ return [
             'exporttable' => 'status',
             'input' => [
                 'type' => 'select',
-                'required'=>false,
+                'multiple' => false,
+                'required' => true,
                 'option_return' => 'array', // array / object
-                'options' =>'config("kulara_const.status")',
+                'options' => 'config("kulara_const.status")',
             ],
         ],
 
         'created_by' => [
             'primary' => false,
             'migrations' => [
-                'integer:created_by|default:null|nullable',
+                'integer:created_by|nullable',
             ],
             'datatable' => [
                 'title' => 'Created By',
@@ -86,7 +93,7 @@ return [
         'updated_by' => [
             'primary' => false,
             'migrations' => [
-                'integer:updated_by|default:null|nullable',
+                'integer:updated_by|nullable',
             ],
             'exporttable' => 'updated_by',
             'relationship' => [

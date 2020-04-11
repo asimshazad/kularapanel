@@ -108,7 +108,7 @@ class CrudGenerate extends Command
         $this->replaces["{auto_create_model}"] = '';
         $this->replaces["{media_conversion}"] = '';
         $this->replaces["{add_dropzone_to_editor}"] = 'false';
-        $this->replaces["{return_dropzone_base64_image}"] = 'false';
+        $this->replaces["{save_dropzone_base64_image}"] = '';
         $this->replaces["{dropzone_add_image_short}"] = 'false';
 
     }
@@ -359,7 +359,7 @@ class CrudGenerate extends Command
             }
 
             $stub_create_file = $this->files->get($this->kulara['stubs'] . "/views/includes/save_base64_image_from_controller.stub");
-            $this->replaces['{return_dropzone_base64_image}'] = str_replace(array_keys($this->replaces), $this->replaces, str_replace(array_keys($replaces), $replaces, $stub_create_file));;
+            $this->replaces['{save_dropzone_base64_image}'] = str_replace(array_keys($this->replaces), $this->replaces, str_replace(array_keys($replaces), $replaces, $stub_create_file));;
 
         } else if (in_array($input['type'], ['checkbox', 'radio'])) {
             $stub = $this->files->get($this->kulara['stubs'] . '/views/inputs/checkbox_radio.stub');
