@@ -34,7 +34,7 @@ class CrudConfig extends Command
         }
 
         // create crud config file
-        $config_file = $config_path . '/' . $this->argument('model') . '.php';
+        $config_file = $config_path . '/' . $this->argument('model') . 'Config.php';
         $this->files->copy($config_stubs_patch, $config_file);
         $this->line('Config file created: <info>' . $config_file . '</info>');
     }

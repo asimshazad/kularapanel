@@ -27,7 +27,7 @@ class CrudGenerate extends Command
     public function handle()
     {
         // ensure config file exists
-        $config_file = 'config/crud/' . $this->argument('model') . '.php';
+        $config_file = 'config/crud/' . $this->argument('model') . 'Config.php';
 
         if (!$this->files->exists($config_file)) {
             $this->error('Config file not found: <info>' . $config_file . '</info>');
@@ -42,7 +42,7 @@ class CrudGenerate extends Command
         $this->setAttributeReplaces();
 
         // generate crud
-        $this->line('Generating <info>' . $this->argument('model') . '</info> CRUD...');
+        $this->line('Generating <info>' . $this->argument('model') . 'Config' . '</info> CRUD...');
         $this->makeDirectories();
         $this->createControllerFile();
         $this->setModelTraitGenerateReplaces();
@@ -52,7 +52,7 @@ class CrudGenerate extends Command
         $this->createViewFiles();
         $this->insertMenuItem();
         $this->insertRoutes();
-        $this->line('CRUD generation for <info>' . $this->argument('model') . '</info> complete!');
+        $this->line('CRUD generation for <info>' . $this->argument('model') . 'Config' . '</info> complete!');
 
         // ask to migrate
         // if ($this->confirm('Migrate now?')) {

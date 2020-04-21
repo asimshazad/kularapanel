@@ -24,7 +24,7 @@ class CrudWidget extends Command
     public function handle()
     {
         // ensure config file exists
-        $config_file = 'config/crud/' . $this->argument('model') . '.php';
+        $config_file = 'config/crud/' . $this->argument('model') . 'Config.php';
         if (!$this->files->exists($config_file)) {
             $this->error('Config file not found: <info>' . $config_file . '</info>');
             return;
