@@ -8,55 +8,17 @@ Publish install files:
 
     php artisan vendor:publish --tag=kulara.general
 
-General install including:
-
-- public
-- lang
-- layouts
-- auth
-- backend
-- users
-
-Publish advanced files (1 by 1):
-
-    php artisan vendor:publish --tag=kulara.config
-    php artisan vendor:publish --tag=kulara.seo.config
-    php artisan vendor:publish --tag=kulara.public
-    php artisan vendor:publish --tag=kulara.lang
-    php artisan vendor:publish --tag=kulara.layouts
-    php artisan vendor:publish --tag=kulara.auth.view
-    php artisan vendor:publish --tag=kulara.backend.view
-    php artisan vendor:publish --tag=kulara.users.view
-
-Publish all migrations files:
-
-    php artisan vendor:publish --tag=kulara.migrations
-
-Publish all stubs files:
-
-    php artisan vendor:publish --tag=kulara.stubs
-
-Publish all views files:
-
-    php artisan vendor:publish --tag=kulara.all.view
-
-Publish admin route files:
-
-    php artisan vendor:publish --tag=kulara.admin.route
-
-Add the `AdminUser`, `DynamicFillable`, and `UserTimezone` traits to your `User` model:
+Add the `AdminUser` and `UserTimezone` traits to your `User` model:
 
     use Khludev\KuLaraPanel\Traits\AdminUser;
-    use Khludev\KuLaraPanel\Traits\DynamicFillable;
     use Khludev\KuLaraPanel\Traits\UserTimezone;
     
     class User extends Authenticatable
     {
-        use Notifiable, AdminUser, DynamicFillable, UserTimezone;
+        use Notifiable, AdminUser, UserTimezone;
 
 Add this in your controller.php
-    use \Khludev\KuLaraPanel\Traits\Controller;
-
+   
     class Controller extends BaseController
     {
         use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
@@ -75,38 +37,17 @@ Install laravel:
 
 Create directories in terminal:
 
-    cd appName; mkdir packages; cd packages; mkdir wikichua; cd wikichua; git clone https://github.com/khludev/kularapanel.git
+    mkdir packages; cd packages; mkdir khludev; cd khludev; git clone https://github.com/Khludev/kularapanel.git
 
 Add this in your composer.json under scripts section:
 
-    "require-dev": {
-        "khludev/kularapanel": "*"
-    },
-    
     "repositories": {
-        "wikichua-simplecontrolpanel": {
+        "khludev/kularapanel": {
             "type": "path",
-            "url": "/path/to/your/appName/packages/khludev/kularapanel"
+            "url": "packages/khludev/kularapanel"
         }
-    }
-
-### Alternative installation 2:
-
-Need packager to ease your work
-
-    $ composer require jeroen-g/laravel-packager --dev
-
-Import package from github
-
-    $ php artisan packager:git git@github.com:khludev/kularapanel.git
-
-Add this in your composer.json under scripts section:
-
-    "require-dev": {
-        "khludev/kularapanel": "*"
     },
 
-Run composer update
 
 ### Logging In
 
@@ -119,34 +60,48 @@ The default admin login is:
 
 ### CRUD Configuration manual
 
-### Console
+####Generate config file
+    php artisan crud:config ModelClassName
+	
+####Generate crud files from  config file
+     php artisan crud:generate ModelClassName
 
-Create Config file 
-    
-    $ php artisan crud:config <Model>
 
-This create a config file in your directory. Make sure you adjust accordingly by referring to Attributes section below.
+#####  Use the **--force** flag for rough substitution
 
-Generate files 
-
-    $ php artisan crud:generate <Model>
-
-Generate all files, but you will need to do migration yourself
-
-Generate Widget file
-
-    $ php artisan crud:widget <Model> 
-
-Yes, I added small feature on this. Basically generate widget files. You may just call @widget(<Model>)
-The widget view located in your crud directory. You may adjust it yourself accordingly, to charts, table or maybe menu?
-
-Integrated with https://github.com/LaravelDaily/laravel-charts in widget
+    php artisan crud:generate ModelClassName  --force
 
 #### Icon
+    'icon' => 'fa-link'
 
 This is simply the FontAwesome 5 icon class to use for the menu item e.g. fa-cogs.
 
-#### Attributes
+#### Include Seo
+    'need_seo' => true,
+
+####Create button in sitebar
+    'hot_create_btn'=>true,
+
+####Fillable
+There are three uses.
+
+    'fillable' => true, // Automatic generation from attribute keys
+	//OR
+	'fillable' => ['field1', 'field2'], //Prescribe manually
+	//OR
+	'fillable' => false, //use DynamicFillable trait
+
+#### Dates fields
+    'dates' => [],
+
+####Timestamps
+
+    'timestamps' => true,
+
+####SoftDeletes
+    'soft_deletes' => true,
+
+### Attributes
 
 This is where most of your attention is needed. From this array, you can set all of the attributes the model will have. The default CRUD stubs already contain scaffolding for id, created_at, and updated_at, so you won't need to enter these attributes if using the default package stubs.
 
@@ -240,6 +195,8 @@ Specifies the form input to use for the attribute.
 
     'input' => [
         'type' => 'select',
+		'tooltip'=>'Select Images',//tooltip info
+        'default_label'=>'Gallery Images',//label
         'options' => ['Red', 'Green', 'Blue'],
     ],
 
@@ -256,17 +213,6 @@ options using code methods: return as in object
         ],
     ],
 
-**Get array from configuration file** (config ("conf_file_name.key_name"))
-
-```php
-'option_return' => 'array',
-'options' => [
-    'config:<conf_file_name.key_name>' => [
-        'key' => 'val',
-    ],
-],
-```
-
 options using code methods: return as in array
     
     'option_return' => 'array',
@@ -275,6 +221,17 @@ options using code methods: return as in array
             'key' => 'val',
         ],
     ],
+
+options using data from config
+
+    'input' => [
+                    'type' => 'select',
+                    'multiple' => false,
+                    'required' => true,
+                    'option_return' => 'array', // array / object
+                    'options' => 'config("kulara_const.status")',
+                ],
+
 
 Notice the key in the format of method|method:param|method:param,param. Also, the input options will defined as 'value' => 'label', which represents the attribute for the object returned e.g. $user->id => $user->name.
 
@@ -301,26 +258,7 @@ Multiple attribute available in input type select, file & checkbox.
     
     'input' => [
         'type' => 'select', // select/checkbox/file
-        'multiple' => true,
-        'live_search' => false, //option to select. Default true 
-    ],
-
-Tags! Sometime we need to able to tags data into json in ur db.
-
-    'tags' => [
-        'primary' => false,
-        'migrations' => [
-            'json:tags|nullable',
-        ],
-        'validations' => [
-            'create' => 'required',
-            'update' => 'required',
-        ],
-        'casts' => 'array',
-        'input' => [
-            'tags' => true,
-            'type' => 'text',
-        ],
+        'multiple' => true
     ],
 
 Mutator
@@ -348,14 +286,6 @@ Summernote
         'class' => 'summernote'
     ],
 
-Advanced Filter Inputs
-
-    'filters' => [
-        'type' => 'text', // select, text, date, date_range
-    ]
-
-At the moment, just support select, text, date, date_range.
-
 If you need editor. Just add summernote to your class.
 
 Date Picker
@@ -376,81 +306,183 @@ Appends
 
     'appends' => true,
 
-    'appends' => 'custom_name',
-
 To append the field name
+###Additional types of inputs
+**Editor tinyMCE**
+- 'content_css' => site css style
+- 'height' =>  default height 400px
+- 'language' => uk or en. Default en
 
-Desktop/Web Push
-    
-    pushered([
-        'title' => 'General Notification', 
-        'message' => 'Hello World!',
-        'icon' => '',
-        'link' => '',
-        'timeout' => '',
-    ]);
 
-Simply include this section to where you want to fire notification in your controller.
+	'input' => [
+                'type' => 'editor',//when using this type, you need to connect the "laravel-medialibrary" library
+                'content_css'=>'', //site css style
+                'height'=>'', //default height 400px
+                'language'=>'uk', //uk or en. Default en
+            ],
 
-### Use
-**Generate config file**
-```php
-    artisan crud:config NameNewModel
-```
+**Connect libraries to work with images:**
+Include base64-validation https://github.com/crazybooot/base64-validation
+include laravel-medialibrary https://github.com/spatie/laravel-medialibrary
 
-**Generate crud files**
-```php
-artisan crud:generate NameNewModel
-```
+**Crop Image**
+-** 'collection'** => string OR name constant.  Default MAIN_COLLECTION_NAME constant
 
-**Or with the flag --force when re-generating**
-```php
-artisan crud:generate NameNewModel --force
-```
-## Optional steps; This is for my own usage.
+    'logo' => [
+                'validations' => [
+                    'create' => 'required|base64image', 
+                    'update' => 'base64image',
+                ],
+                'input' => [
+                    'type' => 'crop_image',
+                    'width' => 400,
+                    'ratio' => 1.6,
+                    'collection' => 'MAIN_COLLECTION_NAME' 
+                ],
+            ],
 
-### exception
+**Dropzone image input type**
+- **'add_to_editor'** => Insert image into tinyMCE editor
+- **'short' **Insert image or short image code  into tinyMCE editor. Use model method replShortWithImage() for replace short to image tag
 
-In case using API, just add this into Exceptions/Handler.php,
 
-    use \Khludev\KuLaraPanel\Traits\ApiException;
-    
-    public function render($request, Exception $exception)
-    {
-        if ($request->route() && $request->route()->getPrefix() == 'api') {
-            if ($exception) {
-                if ($exception->getCode()) {
-                    return $this->handleApiException($request, $exception);
-                }             
-                return response()->json(['status' => 'failed', 'error' => 'Exception Error', 'message' => $exception->getMessage()]);
-            }
-            return response()->json(['status' => 'failed', 'error' => 'Intruder detected!']);
-        }
-        return parent::render($request, $exception);
-    }
+	'gallery' => [
+            'validations' => [],
+            'input' => [
+                'type' => 'dropzone',
+                'collection' => '',
+                'add_to_editor' => true, 
+                'short' => true,
+            ],
+        ],
 
-### always https
+Sample:
 
-Add this into boot method in Providers/AppServiceProvider.php
+    'content' => [
+            'primary' => false,
+            'migrations' => [
+                'string:content|nullable',
+            ],
+            'validations' => [
+                'create' => 'required',
+                'update' => 'required',
+            ],
+            'datatable' => [
+                'title' => 'Content',
+                'data' => 'content',
+            ],
+            'exporttable' => 'content',
+            'input' => [
+                'type' => 'textarea',
+                'class' => 'summernote',
+            ],
+        ],
 
-    if (env('APP_ENV') == 'production') {
-        \URL::forceScheme('https');
-    }
+        'testdate' => [
+            'primary' => false,
+            'migrations' => [
+                'datetime:testdate|nullable',
+            ],
+            'validations' => [
+                'create' => '',
+                'update' => '',
+            ],
+            'datatable' => [
+                'title' => 'date',
+                'data' => 'testdate',
+            ],
+            'exporttable' => 'testdate',
+            'input' => [
+                'type' => 'text',
+                'class' => 'datepicker'
+            ],
+            'casts' => 'datetime:Y-m-d',
+            'mutators' => [
+                // 'get' => 'return \Carbon\Carbon::parse($value);',
+                'set' => '$this->attributes[\'testdate\'] = \Carbon\Carbon::parse($value);',
+            ]
+        ],
 
-### extend ApiController.php
+        'testdaterange_start' => [
+            'primary' => false,
+            'migrations' => [
+                'datetime:testdaterange_start|nullable',
+            ],
+            'validations' => [
+                'create' => '',
+                'update' => '',
+            ],
+            // 'datatable' => [
+            //     'title' => 'date',
+            //     'data' => 'testdaterange_start',
+            // ],
+            // 'exporttable' => 'testdaterange_start',
+            'input' => [
+                'type' => 'text',
+                'class' => 'rangedatepicker'
+            ],
+            'casts' => 'datetime:Y-m-d',
+            'mutators' => [
+                'get' => 'return $this->attributes[\'testdaterange_start\'] ." - ".$this->attributes[\'testdaterange_end\'];',
+                'set' => '
+                    list($start,$end) = explode(\' - \',$value);
+                    $this->attributes[\'testdaterange_start\'] = \Carbon\Carbon::parse(trim($start));
+                    $this->attributes[\'testdaterange_end\'] = \Carbon\Carbon::parse(trim($end));
+                ',
+            ]
+        ],
 
-This is optional. Bootstrapped for my own usage.
+        'testdaterange_end' => [
+            'primary' => false,
+            'migrations' => [
+                'datetime:testdaterange_end|nullable',
+            ],
+            // 'validations' => [
+            //     'create' => '',
+            //     'update' => '',
+            // ],
+            // 'datatable' => [
+            //     'title' => 'date',
+            //     'data' => 'testdaterange_end',
+            // ],
+            // 'exporttable' => 'testdaterange_end',
+            // 'input' => [
+            //     'type' => 'text',
+            //     'class' => 'rangedatepicker'
+            // ],
+            'casts' => 'datetime:Y-m-d',
+            'mutators' => [
+                'get' => 'return $this->attributes[\'testdaterange_start\'] ." - ".$this->attributes[\'testdaterange_end\'];',
+                'set' => '
+                    list($start,$end) = explode(\' - \',$value);
+                    $this->attributes[\'testdaterange_start\'] = \Carbon\Carbon::parse(trim($start));
+                    $this->attributes[\'testdaterange_end\'] = \Carbon\Carbon::parse(trim($end));
+                ',
+            ]
+        ],
 
-    YourAPIControllerName extends \Khludev\KuLaraPanel\Controllers\ApiController {
-        // api route name
-        public $noNeedAuthorization = [
-            'api.auth',
-            'api.register'
-        ];
-    }
-
-and your api.php route
-
-    Route::middleware('auth:api')->group(function() {
-        Route::any('/', 'ApiController@index')->name('api.verify');
-    }
+        'testdaterange' => [
+            'primary' => false,
+            // 'migrations' => [
+            //     'datetime:testdaterange_start|nullable',
+            //     'datetime:testdaterange_end|nullable',
+            // ],
+            // 'validations' => [
+            //     'create' => '',
+            //     'update' => '',
+            // ],
+            'datatable' => [
+                'title' => 'date',
+                'data' => 'testdaterange',
+            ],
+            // 'exporttable' => 'testdaterange',
+            // 'input' => [
+            //     'type' => 'text',
+            //     'class' => 'rangedatepicker'
+            // ],
+            'appends' => true,
+            'mutators' => [
+                'get' => 'return $this->attributes[\'testdaterange_start\'] ." - ".$this->attributes[\'testdaterange_end\'];',
+                
+            ]
+        ],
