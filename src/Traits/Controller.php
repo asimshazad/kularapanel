@@ -56,6 +56,10 @@ trait Controller
         $seotool = app(config('kulara.models.seotool'))
             ->query()->where('model', $model_name)
             ->where('model_id', $model_id)->first();
+
+        if (!$seotool)
+            return false;
+
         $model = app($model_name)->find($model_id);
         SEOMeta::setTitle($seotool->title);
         SEOMeta::setDescription($seotool->description);
