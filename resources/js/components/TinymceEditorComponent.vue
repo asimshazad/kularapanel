@@ -123,7 +123,7 @@
         display: none;
     }
 
-    .tox.tox-silver-sink.tox-tinymce-aux {
-        display: none;
-    }
+    /*.tox.tox-silver-sink.tox-tinymce-aux {*/
+    /*    display: none;*/
+    /*}*/
 </style>

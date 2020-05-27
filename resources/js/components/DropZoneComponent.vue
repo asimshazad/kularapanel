@@ -139,6 +139,9 @@
         },
         mounted() {
 
+            if (this.addToEditor === true)
+                this.addEventEditor();
+
             if (!this.images || !this.images.length)
                 return console.log('No default img dropzone');
 
@@ -150,10 +153,6 @@
                 this.paginateJson = JSON.parse(this.paginate);
                 this.setPaginate();
             }
-
-
-            if (this.addToEditor === true)
-                this.addEventEditor();
 
         },
         data: function () {
@@ -174,6 +173,7 @@
                 paginateItems: 5, //К-сть по право і ліво
                 paginateStart: 0,
                 paginateEnd: 0,
+                lastResponse: {}
             }
         },
         methods: {
@@ -220,9 +220,11 @@
                     return true;
                 }
 
-
                 file.remove_link = response.remove_link;
                 file.hash_name = response.hash_name;
+                file.originalUrl = response.originalUrl;
+
+                this.fileAddedEvent(file);
 
             },
             allImageToEditor() {
@@ -236,22 +238,26 @@
             },
             addEventEditor() {
                 let self = this;
-
                 //Додати вибрані
-                document.querySelectorAll('.to-editor-input').forEach(function (el) {
-                    el.addEventListener('click', function (el) {
-                        el.originalTarget.checked = true;
+                document.querySelector('#dropzone').addEventListener('click', function (el) {
+                    el.stopPropagation();
+                    el.preventDefault();
 
-                        window.ssds = el;
-                        tinymce.activeEditor.selection.setContent(self.wrapImg(el.originalTarget));
+                    if (el.target.getAttribute('hashname')) {
+                        tinymce.activeEditor.selection.setContent(self.wrapImg(el.target));
 
-                    })
-                });
+
+                        return false;
+                    }
+
+
+                })
+                ;
             },
             wrapImg(el) {
                 let wrap;
                 if (this.short === true) {
-                    wrap = '<p class="publication-img text-center">[img]' + el.value + '[/img]</p>';
+                    wrap = '<p class="publication-img text-center">[img]' + el.getAttribute('hashname') + '[/img]</p>';
 
                 } else {
                     wrap = '<img src="' + el.getAttribute('originalurl') + '" alt="">';
@@ -265,10 +271,8 @@
                 if (this.addToEditor === true) {
                     file._removeLink.insertAdjacentHTML("beforeBegin",
                         "<div class=\"custom-control add-editor-check  custom-checkbox\">\n" +
-                        "                    <input type=\"checkbox\" originalUrl=\"" + file.originalUrl + "\" name=\"img_to_editor[]\" id=\"id-" + file.upload.uuid + "\" class=\"custom-control-input to-editor-input\"" +
-                        " value='" + file.hash_name + "'" +
-                        ">\n" +
-                        "                    <label for=\"id-" + file.upload.uuid + "\" class=\"custom-control-label\">В редактор</label>\n" +
+
+                        "                    <button hashName='" + file.hash_name + "' originalUrl=\"" + file.originalUrl + "\" class=\"to-editor-input pointer\">В редактор</button>\n" +
                         "                </div>"
                     );
                 }
@@ -318,6 +322,10 @@
 
         .dz-remove {
             background: #dc3545;
+        }
+
+        .pointer {
+            cursor: pointer;
         }
 
     }
