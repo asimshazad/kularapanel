@@ -39,6 +39,10 @@ return [
     'created_by' => 'Created by',
     'updated_by' => 'Updated by',
     'seq' => 'Seq',
+    'to_site' => 'To site',
+    'logout' => 'Logout',
+    'update_profile' => 'Update Profile',
+    'change_password' => 'Change Password',
     //Other input fields start
 
     //Other inputs fields end

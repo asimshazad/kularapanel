@@ -8,16 +8,21 @@
 
         <div class="navbar-collapse collapse">
             <ul class="navbar-nav ml-auto">
+                <li class="nav-item font-weight-bold">
+                    <a target="_blank" href="{{url('')}}" class="nav-link">
+                        <i class="fal fa-share-square"></i> <span class="d-none d-md-inline">{{__l('to_site', 'To site')}}</span>
+                    </a>
+                </li>
                 <li class="nav-item dropdown font-weight-bold">
                     <a href="#" id="userDropdown" class="nav-link dropdown-toggle" data-toggle="dropdown">
                         <i class="fal fa-user-circle"></i> <span class="d-none d-md-inline">{{ auth()->user()->name }}</span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-                        <a href="{{ route('admin.profile') }}" class="dropdown-item{{ request()->is('admin/profile') ? ' active' : '' }}">Update Profile</a>
-                        <a href="{{ route('admin.password.change') }}" class="dropdown-item{{ request()->is('admin/password/change') ? ' active' : '' }}">Change Password</a>
+                        <a href="{{ route('admin.profile') }}" class="dropdown-item{{ request()->is('admin/profile') ? ' active' : '' }}">{{__l('update_profile', 'Update Profile')}}</a>
+                        <a href="{{ route('admin.password.change') }}" class="dropdown-item{{ request()->is('admin/password/change') ? ' active' : '' }}">{{__l('change_password', 'Change Password')}}</a>
                         <form method="POST" action="{{ route('admin.logout') }}">
                             @csrf
-                            <a href="#" id="logout_link" class="dropdown-item">Logout</a>
+                            <a href="#" id="logout_link" class="dropdown-item">{{__l('logout', 'Logout')}}</a>
                         </form>
                     </div>
                 </li>
