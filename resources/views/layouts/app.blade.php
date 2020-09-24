@@ -16,7 +16,9 @@
 </head>
 <body class="@yield('body-class')"{!! session('flash') ? ' data-flash-class="'.session('flash.0').'" data-flash-message="'.session('flash.1').'"' : '' !!}>
 
-@yield('parent-content')
+<div id="app-vue" >
+    @yield('parent-content')
+</div>
 
 <div class="overlay"></div>
 <script type="text/javascript" src="{{ asset('kulara/js/kulara-all.min.js') }}"></script>
