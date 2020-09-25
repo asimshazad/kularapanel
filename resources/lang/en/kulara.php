@@ -43,10 +43,13 @@ return [
     'logout' => 'Logout',
     'update_profile' => 'Update Profile',
     'change_password' => 'Change Password',
+    'status_off' => 'Off',
+    'status_on' => 'On',
+    'yes' => 'Yes',
+    'no' => 'No',
     //Other input fields start
 
     //Other inputs fields end
-
 
 
 ];

@@ -1,0 +1,5 @@
+                        <div class="form-control-plaintext">
+                            @foreach({input_options} as {input_option})
+                                <input type="checkbox"  id="{input_id}" name="{input_name}"  {input_option_checked} value="{input_option_value}" data-toggle="toggle" data-on="{{__l('{on_lang}', '{on}')}}" data-off="{{__l('{off_lang}', '{off}')}}" data-onstyle="{onstyle}" data-offstyle="{offstyle}">
+                            @endforeach
+                        </div>

@@ -248,7 +248,7 @@ class CrudGenerate extends Command
 
                 $input_stub = $this->files->get($this->kulara['stubs'] . '/views/layouts/input.stub');
                 $input_stub = str_replace('{attribute}', $attribute, $input_stub);
-                $default_label = (isset($values['input']['default_label']) && $values['input']['default_label']) ? $values['input']['default_label'] : $attribute_label;
+                $default_label = $values['input']['label'] ?? $values['input']['default_label'] ?? $attribute_label;
 
                 $input_stub = str_replace('{attribute_label}', "__l('{$attribute}','{$default_label}')", $input_stub);
                 $tooltip = (isset($values['input']['tooltip']) && $values['input']['tooltip']) ? "{!! tooltip('{$values['input']['tooltip']}') !!}" : '';
@@ -351,7 +351,7 @@ class CrudGenerate extends Command
             $replaces['{input_name}'] = $attribute;
             $replaces['{input_id}'] = $attribute;
 
-            if (isset($input['add_to_editor']) AND $input['add_to_editor'] && $method == 'create') {
+            if (isset($input['add_to_editor']) and $input['add_to_editor'] && $method == 'create') {
                 $stub_autocreate_model = $this->files->get($this->kulara['stubs'] . "/views/includes/autocreate_model.stub");
                 $this->replaces['{auto_create_model}'] = str_replace(array_keys($this->replaces), $this->replaces, str_replace(array_keys($replaces), $replaces, $stub_autocreate_model));;
                 $this->replaces['{add_dropzone_to_editor}'] = isset($input['add_to_editor']) && $input['add_to_editor'] ? 'true' : 'false';
@@ -367,6 +367,20 @@ class CrudGenerate extends Command
             $replaces['{input_name}'] = $attribute . ($input['type'] == 'checkbox' && !empty($input['options']) ? '[]' : '');
             $replaces['{input_id}'] = $attribute . '_{{ $loop->index }}';
             $replaces = $this->inputCheckOptions($attribute, $input, $method, $replaces);
+
+        } else if ($input['type'] == 'toggle') {
+
+            $stub = $this->files->get($this->kulara['stubs'] . '/views/inputs/toggle.stub');
+            $replaces['{on}'] = $input['toggle_data']['on'] ?? 'On';
+            $replaces['{off}'] = $input['toggle_data']['off'] ?? 'Off';
+            $replaces['{on_lang}'] = strtolower($replaces['{on}']);
+            $replaces['{off_lang}'] = strtolower($replaces['{off}']);
+            $replaces['{onstyle}'] = $input['toggle_data']['onstyle'] ?? 'success';
+            $replaces['{offstyle}'] = $input['toggle_data']['offstyle'] ?? 'danger';
+            $replaces['{input_name}'] = $attribute . ($input['type'] == 'checkbox' && !empty($input['options']) ? '[]' : '');
+            $replaces['{input_id}'] = $attribute . '_{{ $loop->index }}';
+            $replaces = $this->inputCheckOptions($attribute, $input, $method, $replaces);
+
         } else if ($input['type'] == 'file') {
             $form_enctype = ' enctype="multipart/form-data"';
             if ($method == 'update') {
@@ -458,7 +472,8 @@ EOT;
             $replaces['{input_option_value}'] = '{{ $option }}';
             $replaces['{input_option_label}'] = !empty($input['label']) ? $input['label'] : ucwords(str_replace('_', ' ', $attribute));
             $replaces['{input_option_checked}'] = $this->inputOptionChecked($method, $input, $attribute, '$option');
-        } else if (is_string($input['options'])) {
+        }
+        else if (is_string($input['options'])) {
             // relationship checks
             $replaces['{input_options}'] = $input['options'];
             $replaces['{input_option}'] = '$key => $val';

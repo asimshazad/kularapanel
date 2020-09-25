@@ -25,6 +25,7 @@ mix.combine([
     'resources/css/ekko-lightbox.css',
     'resources/css/summernote.css',
     'resources/css/easymde.min.css',
+    'resources/css/bootstrap4-toggle.min.css',
     'resources/lib/datatimepicker/jquery.datetimepicker.css',
     'bower_components/kdev-sendform/dist/css/kdev-sendForm.css',
 
@@ -52,6 +53,7 @@ mix.combine([
     'resources/js/push.min.js',
     'resources/js/serviceWorker.min.js',
     'resources/js/easymde.min.js',
+    'resources/js/bootstrap4-toggle.min.js',
     'resources/lib/datatimepicker/jquery.datetimepicker.full.js',
     'bower_components/kdev-sendform/dist/js/kdev-sendForm.js',
 

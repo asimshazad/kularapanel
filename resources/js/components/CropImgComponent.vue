@@ -1,51 +1,63 @@
 <template>
-    <div :id="inputName" :class="{'btn-crop': show}">
-        <div>
-            <input :name="fileInputName" :id="fileInputName" class="btn btn-warning mb-2" type="file"
-                   @change="upload($event)">
-            <button
-                v-if="imgURL"
-                @click.prevent="getResult"
-                class="btn btn-success mb-2"
-            >Обрізати зображення
-            </button>
-            <button
-                v-if="imgURL"
-                @click.prevent="show = show !== true"
-                class="btn btn-info mb-2"
-            >{{resultURL ? texts.toggleNextCropie : texts.toggleDefault}}
-            </button>
-            <div
-                v-if="!returnBase64"
-                class="cropie-param">
-                <input type="hidden" name="crop_image_x" v-model="form.cropImgX">
-                <input type="hidden" name="crop_image_y" v-model="form.cropImgY">
-                <input type="hidden" name="crop_image_h" v-model="form.cropImgH">
-                <input type="hidden" name="crop_image_w" v-model="form.cropImgW">
-            </div>
-
-        </div>
-        <transition name="fade">
+    <div :id="inputName" class="crop-image-cmp" :class="{'btn-crop': show}">
+        <div class="crop-image-body">
             <div v-if="show">
-                <clipper-basic
-                    class="vy-clipper"
-                    ref="clipper"
-                    :min-scale="0.5"
-                    :src="imgURL"
-                    :ratio="ratio"
-                    :initWidth="cropWidth"
-                >
-                    <div class="placeholder" slot="placeholder"></div>
-                </clipper-basic>
+                <button
+                    @click.prevent="show = show !== true"
+                    class="btn btn-danger m-2 pull-right"><i class="fa fa-window-close" aria-hidden="true"></i>
+                </button>
+                <button
+                    v-if="imgURL"
+                    @click.prevent="getResult"
+                    class="btn btn-success m-2  pull-right"
+                ><i class="fa fa-crop" aria-hidden="true"></i>
+                </button>
+                <button
+                    @click.prevent="openFile"
+                    class="btn btn-warning m-2  pull-right"><i class="fa fa-folder-open" aria-hidden="true"></i>
+                </button>
             </div>
-        </transition>
-        <div v-if="resultURL">
-            <div>Результат:</div>
-            <img class="result" :src="resultURL" alt="">
+            <transition name="fade">
+                <div v-if="show">
+                    <clipper-basic
+                        class="vy-clipper"
+                        ref="clipper"
+                        :min-scale="0.5"
+                        :area="100"
+                        :bg-color="'white'"
+                        :src="imgURL"
+                        :ratio="ratio"
+                        :initWidth="cropWidth"
+                    >
+                        <div class="placeholder" slot="placeholder"></div>
+                    </clipper-basic>
+                    <input class="input-img-info" type="text" v-model="imageAlt" placeholder="Image Alt"><br>
+                    <input class="input-img-info" type="text" v-model="imageTitle" placeholder="Image Title">
+                </div>
+            </transition>
+
+            <input type="hidden" :name="inputNameBase64Name" :value="this.base64Image">
         </div>
-        <input
-            v-if="returnBase64"
-            type="hidden" :name="inputNameBase64Name" :value="this.base64Image">
+        <div v-if="resultURL && !show" class="row">
+            <div class="col-sm-12 col-md-6">
+                <img
+                    @click.prevent="toggleModule"
+                    class="result" :src="resultURL" alt="">
+            </div>
+            <div class="col-sm-12 col-md-6">
+                <label v-if="defaultImagePath !== resultURL" class="input-img-info">
+                    Image Alt
+                    <input v-model="imageAlt" type="text" :name="inputName + '_alt'" placeholder="Image Alt"><br>
+                </label>
+                <label v-if="defaultImagePath !== resultURL" class="input-img-info">
+                    Image Title
+                    <input v-model="imageTitle" type="text" :name="inputName + '_title'" placeholder="Image Title">
+                </label>
+            </div>
+        </div>
+        <input :name="returnBase64 ?'': inputName " id="crop-image-input" class="btn btn-warning mb-2 hide" type="file"
+               @change="upload($event)">
+
     </div>
 </template>
 
@@ -97,34 +109,35 @@
                     toggleNextCropie: 'Повторити обрізку'
                 },
                 imgURL: '',
+                defaultImagePath: '/kulara/no_img_ico.png',
                 resultURL: '',
                 show: false,
-                form: {
-                    cropImgY: '',
-                    cropImgX: '',
-                    cropImgH: '',
-                    cropImgW: '',
-
-                },
                 inputNameBase64Name: this.inputName, //+ '_base64',
-                fileInputName: '',
                 base64Image: '',
+                imageAlt: '',
+                imageTitle: '',
 
 
             }
         },
         methods: {
+            toggleModule() {
+                this.show = this.show !== true
+
+                if (this.resultURL && !this.imgURL)
+                    this.imgURL = this.resultURL;
+
+                if (this.show && this.imgURL === this.defaultImagePath)
+                    this.openFile()
+            },
+            openFile() {
+                document.getElementById('crop-image-input').click()
+            },
             getResult: function () {
                 const canvas = this.$refs.clipper.clip({
                     wPixel: this.cropWidth
                 });//call component's clip method
                 this.base64Image = this.resultURL = canvas.toDataURL("image/jpeg", 1);//canvas->image
-
-                //Кординати
-                this.form.cropImgX = Math.round(this.$refs.clipper.getDrawPos().pos.sx);
-                this.form.cropImgY = Math.round(this.$refs.clipper.getDrawPos().pos.sy);
-                this.form.cropImgH = Math.round(this.$refs.clipper.getDrawPos().pos.sheight);
-                this.form.cropImgW = Math.round(this.$refs.clipper.getDrawPos().pos.swidth);
 
                 this.show = false;
             },
@@ -136,15 +149,19 @@
             }
         },
         created: function () {
-            this.resultURL = this.image;
+            if (this.image)
+                this.resultURL = this.image;
 
+            if (!this.resultURL)
+                this.resultURL = this.defaultImagePath
             //Якщо base64 то не відпрявляєм inputFile
-            this.fileInputName = this.returnBase64 ? '' : this.fileInputName;
+            console.log('this.inputName', this.inputName);
+
         },
         watch: {
             imgURL: function () {
                 this.show = true;
-                this.resultURL = '';
+                // this.resultURL = '';
             }
         }
 
@@ -152,12 +169,7 @@
 </script>
 
 <style lang="scss">
-    #clipper {
-
-        .my-clipper {
-            width: 100%;
-            max-width: 700px;
-        }
+    .crop-image-cmp {
 
         .placeholder {
             text-align: center;
@@ -166,7 +178,7 @@
         }
 
         .result {
-            width: 100%;
+            cursor: pointer;
             max-width: 320px;
             vertical-align: inherit;
         }
@@ -183,11 +195,41 @@
 
     }
 
-    .btn-crop {
-        position: fixed;
-        top: 0;
-        z-index: 600;
-        background: white;
+    .hide {
+        display: none;
     }
+
+    .pull-right {
+        float: right
+    }
+
+    .btn-crop .crop-image-body {
+        max-width: 600px;
+        background: #d6d9e6;
+        margin: 0 auto;
+        padding: 30px;
+        border: 1px #baf1fe solid;
+    }
+
+    .btn-crop.crop-image-cmp {
+        background: rgba(52, 58, 64, .6);
+        padding: 30px;
+        position: fixed;
+        z-index: 600;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+    }
+
+    .input-img-info {
+        width: 100%;
+        margin: 1px 0;
+    }
+
+    .input-img-info input {
+        width: 100%;
+    }
+
 
 </style>
