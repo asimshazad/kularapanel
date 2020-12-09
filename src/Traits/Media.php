@@ -15,7 +15,7 @@ trait Media
             ->paginate(8);
 
         $data = collect();
-        $media->withPath(route("admin." . str_plural($model_string) . "get_images", ['model_id' => $this->id, 'collect' => $collection_name]));
+        $media->withPath(route("admin." . str_plural($model_string) . ".get_images", ['model_id' => $this->id, 'collect' => $collection_name]));
 
         $data->paginate = $media->toJson();
         $data->dropzone = collect($media->map(function ($item) use ($model_string) {
