@@ -19,7 +19,8 @@
             </div>
             <transition name="fade">
                 <div v-if="show">
-                    <clipper-basic
+                    <component
+                        v-bind:is="openModule"
                         class="vy-clipper"
                         ref="clipper"
                         :min-scale="0.5"
@@ -28,9 +29,14 @@
                         :src="imgURL"
                         :ratio="ratio"
                         :initWidth="cropWidth"
+                        :top="0"
+                        :left="0"
+                        :width="100"
+                        :height="100"
                     >
                         <div class="placeholder" slot="placeholder"></div>
-                    </clipper-basic>
+                    </component>
+
                     <input class="input-img-info" type="text" v-model="imageAlt" placeholder="Image Alt"><br>
                     <input class="input-img-info" type="text" v-model="imageTitle" placeholder="Image Title">
                 </div>
@@ -74,7 +80,7 @@
      *              - Якщо false то відправимо файл з параметрами обрізки
      */
 
-    import {clipperFixed, clipperPreview} from 'vuejs-clipper'
+    import {clipperFixed, clipperPreview, clipperBasic} from 'vuejs-clipper'
     import {clipperUpload} from 'vuejs-clipper'
 
     export default {
@@ -84,7 +90,7 @@
                 default: true
             },
             ratio: {
-                default: 1.7
+                default: null
             },
             inputName: {
                 default: 'crop_image'
@@ -99,14 +105,25 @@
             }
         },
         components: {
-            'clipper-basic': clipperFixed,
-            'clipper-upload': clipperUpload,
+            clipperFixed,
+            clipperUpload,
+            clipperBasic,
+            clipperPreview,
         },
         data() {
             return {
+                openModule: 'clipper-fixed',
                 texts: {
                     toggleDefault: 'Сховати/Показати',
                     toggleNextCropie: 'Повторити обрізку'
+                },
+                clipperConf: {
+                    imgURL: '',
+                    defaultImagePath: '/kulara/no_img_ico.png',
+                    resultURL: '',
+                    show: false,
+                    ratio: 1,
+                    inputNameBase64Name: this.inputName, //+ '_base64',
                 },
                 imgURL: '',
                 defaultImagePath: '/kulara/no_img_ico.png',
@@ -149,6 +166,12 @@
             }
         },
         created: function () {
+            if (!this.ratio)
+                this.openModule = 'clipper-basic'
+
+            //зливаэмо настройки
+            this.clipperConf = {...this.clipperConf, ...this.options}
+
             if (this.image)
                 this.resultURL = this.image;
 
@@ -157,6 +180,17 @@
             //Якщо base64 то не відпрявляєм inputFile
             console.log('this.inputName', this.inputName);
 
+            console.log('options', this.options);
+            console.log('clipperConf', this.clipperConf);
+
+            console.log('merge',);
+        },
+        computed: {
+            options() {
+                return Object.keys(this.$options.props).reduce((acc, key) =>
+                        Object.assign(acc, this[key] !== undefined ? {[key]: this[key]} : {}),
+                    {})
+            }
         },
         watch: {
             imgURL: function () {

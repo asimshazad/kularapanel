@@ -47,6 +47,8 @@ return [
     'status_on' => 'On',
     'yes' => 'Yes',
     'no' => 'No',
+    'error_data' => 'The given data was invalid.',
+
     //Other input fields start
 
     //Other inputs fields end
