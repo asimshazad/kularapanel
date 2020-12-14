@@ -2,7 +2,7 @@
                             url="{{route('admin.{model_variables}.upload_images', ['collect'=>{dropzone_collection_name}, 'model_id'=>${model_variable}->id])}}"
                             _token="{{ csrf_token() }}"
                             id="{{ ${model_variable}->id }}"
-                            @if ($media = $test->getDropZoneMedia({dropzone_collection_name}))
+                            @if ($media = ${model_variable}->getDropZoneMedia({dropzone_collection_name}))
                             images="{{$media->dropzone->count() ? $media->dropzone->toJson() : ''}}"
                             paginate="{{$media->paginate}}"
                             @endif
