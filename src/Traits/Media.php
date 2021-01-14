@@ -15,11 +15,11 @@ trait Media
             ->paginate(8);
 
         $data = collect();
-        $media->withPath(route("admin." . str_plural($model_string) . ".get_images", ['model_id' => $this->id, 'collect' => $collection_name]));
+        $media->withPath(route(config('kulara.route_prefix') . "." . str_plural($model_string) . ".get_images", ['model_id' => $this->id, 'collect' => $collection_name]));
 
         $data->paginate = $media->toJson();
         $data->dropzone = collect($media->map(function ($item) use ($model_string) {
-            return dropImage($item, route("admin." . str_plural($model_string) . ".remove_image", $item->id));
+            return dropImage($item, route(config('kulara.route_prefix') . "." . str_plural($model_string) . ".remove_image", $item->id));
         }));
 
         return $data;
