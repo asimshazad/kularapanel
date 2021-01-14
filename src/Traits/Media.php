@@ -19,7 +19,7 @@ trait Media
 
         $data->paginate = $media->toJson();
         $data->dropzone = collect($media->map(function ($item) use ($model_string) {
-            return dropImage($item, route("admin.{$model_string}s.remove_image", $item->id));
+            return dropImage($item, route("admin." . str_plural($model_string) . ".remove_image", $item->id));
         }));
 
         return $data;
