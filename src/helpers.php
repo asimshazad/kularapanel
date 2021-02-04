@@ -160,7 +160,7 @@ function dropImage($item, $delete_url)
         'name' => $item->file_name,
         'hash_name' => $item->file_name,
         'mime_type' => $item->mime_type,
-        'url' => $item->getUrl('thumb'),
+        'url' => $item->getUrl(config('kulara.media.thumb') ?? ''),
         'originalUrl' => $item->getUrl(),
         'id' => $item->id,
         'remove_link' => $delete_url,

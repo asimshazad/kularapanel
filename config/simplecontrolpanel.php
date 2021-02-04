@@ -45,7 +45,9 @@ return [
         'route' => 'routes/admin',
         'routes' => 'routes/web.php',
     ],
-
+    'media' => [
+        'thumb' => ''// empty or name thumb conversion
+    ],
     'modules' => [
         'Admin Panel',
         'Roles',
