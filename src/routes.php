@@ -91,6 +91,9 @@ Route::group(['middleware' => ['web','https_protocol'],'prefix' => config('kular
     Route::get('seotools/update/{seotool}', config('kulara.controllers.seotool') . '@updateForm')->name('admin.seotools.update');
     Route::patch('seotools/update/{seotool}', config('kulara.controllers.seotool') . '@update');
     Route::delete('seotools/delete/{seotool}', config('kulara.controllers.seotool') . '@delete')->name('admin.seotools.delete');
+
+    //Gallery
+    Route::post('media/update-attrs', '\App\Http\Controllers\Controller' . '@saveImgAttributes');
 });
 
 Route::get('docs/{id?}/{slug?}', config('kulara.controllers.doc') . '@frontend')->name('docs');

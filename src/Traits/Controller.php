@@ -174,4 +174,25 @@ trait Controller
             'paginate' => $media->paginate,
         ]);
     }
+
+    /*
+ * Оновлення атрибутів зображення
+ */
+    public function saveImgAttributes()
+    {
+        if (!$dzImgAttrs = request()->get('dzImgAttrs'))
+            return false;
+
+        $images = Media::select('id', 'custom_properties')->whereIn('id', array_keys($dzImgAttrs))->get();
+
+        $images->map(function ($img) use (&$dzImgAttrs) {
+            if (isset($dzImgAttrs[$img->id]['alt'])) $img->setCustomProperty('alt', $dzImgAttrs[$img->id]['alt']);
+            if (isset($dzImgAttrs[$img->id]['title'])) $img->setCustomProperty('title', $dzImgAttrs[$img->id]['title']);
+            if (isset($dzImgAttrs[$img->id]['source'])) $img->setCustomProperty('source', $dzImgAttrs[$img->id]['source']);
+            $img->save();
+        });
+
+        return response('200');
+
+    }
 }

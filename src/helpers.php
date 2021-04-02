@@ -165,6 +165,11 @@ function dropImage($item, $delete_url)
         'id' => $item->id,
         'remove_link' => $delete_url,
         'upload' => ['uuid' => $item->id],
+        'img_attrs' => [
+            'title' => $item->getCustomProperty('title'),
+            'alt' => $item->getCustomProperty('alt'),
+            'source' => $item->getCustomProperty('source'),
+        ]
     ];
 }
 
