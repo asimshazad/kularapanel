@@ -204,9 +204,14 @@
                 let imgAttrs = document.getElementById(this.dropZoneId).querySelectorAll('.img-attrs input');
                 imgAttrs.forEach((el) => {
                     el.addEventListener('change', (el) => {
-                        el.target.parentElement.classList.add('changed');
-                        let formData = new FormData(el.target.parentElement);
+                        let form = document.createElement('form');
+                        let formData = new FormData(form);
                         formData.append('_token', this._token);
+
+                        let inputs = el.target.parentNode.querySelectorAll('input').forEach(inp => {
+                            formData.append(inp.name, inp.value);
+                        });
+
                         let xhr = new XMLHttpRequest();
                         xhr.open("POST", "/admin/media/update-attrs");
                         xhr.send(formData);
@@ -295,17 +300,17 @@
                 /*
                  * Если нет ID не добавляєм так як цей метод був визваний при відповіді сервера після відправки зображення
                  */
-                if(!file.id)
+                if (!file.id)
                     return true
 
                 let alt = (file.img_attrs && file.img_attrs.alt) ? file.img_attrs.alt : '';
                 let title = (file.img_attrs && file.img_attrs.title) ? file.img_attrs.title : '';
                 let source = (file.img_attrs && file.img_attrs.source) ? file.img_attrs.source : '';
-                let insertHtml = "<form class='img-attrs'>" +
-                    "<span>Alt </span><input type='text' value='" + alt + "' name='dzImgAttrs[" + file.id + "][alt]'><br>" +
-                    "<span>Title </span><input type='text'  value='" + title + "'  name='dzImgAttrs[" + file.id + "][title]'><br>" +
-                    "<span>Джерело</span><input type='text'  value='" + source + "'  name='dzImgAttrs[" + file.id + "][source]'><br>" +
-                    "</form>";
+                let insertHtml = "<div class='img-attrs'>" +
+                    "<div><span>Alt </span><input type='text' value='" + alt + "' name='dzImgAttrs[" + file.id + "][alt]'></div>" +
+                    "<div><span>Title </span><input type='text'  value='" + title + "'  name='dzImgAttrs[" + file.id + "][title]'></div>" +
+                    "<div><span>Джерело</span><input type='text'  value='" + source + "'  name='dzImgAttrs[" + file.id + "][source]'></div>" +
+                    "</div>";
 
                 if (this.addToEditor === true) {
                     insertHtml += "<a hashName='" + file.hash_name + "' originalUrl=\"" + file.originalUrl + "\" class=\"to-editor-input pointer\">В редактор</a>";
@@ -418,7 +423,7 @@
                     color: white;
                     transition: opacity .2s linear;
                     text-align: center;
-
+                    opacity: 0 !important;
                 }
             }
 
@@ -534,10 +539,6 @@
     }
 
     .dropzone-container.fixed .dropzone-pagination {
-
-    }
-
-    .dropzone-container.fixed .dropzone-pagination {
         position: fixed;
         bottom: 0;
         z-index: 1001;
@@ -579,5 +580,33 @@
         align-content: center;
         align-items: center;
         justify-content: center;
+    }
+
+    @media(max-width: 720px) {
+        .dropzone-container.fixed .dropzone {
+            width: 150px;
+
+            .dz-preview .dz-image {
+                width: 100%;
+                height: 86px;
+                margin-bottom: 10px;
+            }
+
+            .img-attrs span {
+                display: block;
+                width: 100%;
+            }
+
+            .img-attrs input {
+                display: block;
+                width: 100%;
+
+            }
+
+            .dz-image-preview > a {
+                display: block;
+                width: 100%;
+            }
+        }
     }
 </style>
