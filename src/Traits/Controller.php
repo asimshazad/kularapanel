@@ -1,6 +1,6 @@
 <?php
 
-namespace Khludev\KuLaraPanel\Traits;
+namespace asimshazad\simplepanel\Traits;
 
 use Artesaos\SEOTools\Facades\SEOTools;
 use Artesaos\SEOTools\Facades\SEOMeta;
@@ -53,7 +53,7 @@ trait Controller
 
     protected function initSeo($model_name, $model_id)
     {
-        $seotool = app(config('kulara.models.seotool'))
+        $seotool = app(config('asimshazad.models.seotool'))
             ->query()->where('model', $model_name)
             ->where('model_id', $model_id)->first();
 

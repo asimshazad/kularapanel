@@ -1,6 +1,6 @@
 <?php
 
-namespace Khludev\KuLaraPanel\Controllers;
+namespace asimshazad\simplepanel\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
@@ -29,7 +29,7 @@ class UserController extends Controller
                     return $user->roles->sortBy('name')->implode('name', ', ');
                 })
                 ->editColumn('actions', function ($user) {
-                    return view('kulara::users.datatable.actions', compact('user'));
+                    return view('asimshazad::users.datatable.actions', compact('user'));
                 })
                 ->rawColumns(['actions']);
 
@@ -45,7 +45,7 @@ class UserController extends Controller
         ]);
         $html->setTableAttribute('id', 'users_datatable');
 
-        return view('kulara::users.index', compact('html'));
+        return view('asimshazad::users.index', compact('html'));
     }
 
     public function create()
@@ -102,31 +102,31 @@ class UserController extends Controller
 
     public function createForm()
     {
-        $roles = app(config('kulara.models.role'))->all()->sortBy('name');
+        $roles = app(config('asimshazad.models.role'))->all()->sortBy('name');
 
-        return view('kulara::users.create', compact('roles'));
+        return view('asimshazad::users.create', compact('roles'));
     }
 
     public function read($id)
     {
         $user = app(config('auth.providers.users.model'))->findOrFail($id);
 
-        return view('kulara::users.read', compact('user'));
+        return view('asimshazad::users.read', compact('user'));
     }
 
     public function updateForm($id)
     {
         $user = app(config('auth.providers.users.model'))->findOrFail($id);
-        $roles = app(config('kulara.models.role'))->all()->sortBy('name');
+        $roles = app(config('asimshazad.models.role'))->all()->sortBy('name');
 
-        return view('kulara::users.update', compact('user', 'roles'));
+        return view('asimshazad::users.update', compact('user', 'roles'));
     }
 
     public function passwordForm($id)
     {
         $user = app(config('auth.providers.users.model'))->findOrFail($id);
 
-        return view('kulara::users.password', compact('user'));
+        return view('asimshazad::users.password', compact('user'));
     }
 
     public function password($id)

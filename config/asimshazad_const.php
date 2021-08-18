@@ -11,7 +11,7 @@ if (!defined("GALLERY_COLLECTION_NAME")) define("GALLERY_COLLECTION_NAME", "gall
 if (!defined("DEFAULT_COLLECTION_NAME")) define("DEFAULT_COLLECTION_NAME", "default");
 
 /*
- * The key is equal to the key of the translation file kulara.php
+ * The key is equal to the key of the translation file asimshazad.php
  */
 return [
     'status' => [

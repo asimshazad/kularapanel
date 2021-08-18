@@ -32,7 +32,7 @@
                 content_editor: this.content,
                 config: {
                     language: this.language,
-                    language_url: '/kulara/js/tinymce_uk.js',
+                    language_url: '/asimshazad/js/tinymce_uk.js',
                     height: this.height,
                     selector: '#' + this.nameInput,
                     plugins: [

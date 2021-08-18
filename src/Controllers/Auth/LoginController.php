@@ -1,6 +1,6 @@
 <?php
 
-namespace Khludev\KuLaraPanel\Controllers\Auth;
+namespace asimshazad\simplepanel\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
@@ -17,7 +17,7 @@ class LoginController extends Controller
 
     public function loginForm()
     {
-        return view('kulara::auth.login');
+        return view('asimshazad::auth.login');
     }
 
     protected function authenticated(Request $request, $user)

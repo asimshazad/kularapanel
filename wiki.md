@@ -2,16 +2,16 @@
 
 Require via composer:
 
-    composer require khludev/kularapanel
+    composer require asimshazad/simplepanel
 
 Publish install files:
 
-    php artisan vendor:publish --tag=kulara.general
+    php artisan vendor:publish --tag=asimshazad.general
 
 Add the `AdminUser` and `UserTimezone` traits to your `User` model:
 
-    use Khludev\KuLaraPanel\Traits\AdminUser;
-    use Khludev\KuLaraPanel\Traits\UserTimezone;
+    use asimshazad\simplepanel\Traits\AdminUser;
+    use asimshazad\simplepanel\Traits\UserTimezone;
     
     class User extends Authenticatable
     {
@@ -22,7 +22,7 @@ Add this in your controller.php
     class Controller extends BaseController
     {
         use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
-        use \Khludev\KuLaraPanel\Traits\Controller;
+        use \asimshazad\simplepanel\Traits\Controller;
 
 Run the migrations:
 
@@ -37,14 +37,14 @@ Install laravel:
 
 Create directories in terminal:
 
-    mkdir packages; cd packages; mkdir khludev; cd khludev; git clone https://github.com/Khludev/kularapanel.git
+    mkdir packages; cd packages; mkdir asimshazad; cd asimshazad; git clone https://github.com/asimshazad/simplepanel.git
 
 Add this in your composer.json under scripts section:
 
     "repositories": {
-        "khludev/kularapanel": {
+        "asimshazad/simplepanel": {
             "type": "path",
-            "url": "packages/khludev/kularapanel"
+            "url": "packages/asimshazad/simplepanel"
         }
     },
 
@@ -229,7 +229,7 @@ options using data from config
                     'multiple' => false,
                     'required' => true,
                     'option_return' => 'array', // array / object
-                    'options' => 'config("kulara_const.status")',
+                    'options' => 'config("asimshazad_const.status")',
                 ],
 
 

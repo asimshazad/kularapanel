@@ -1,6 +1,6 @@
 <?php
 
-namespace Khludev\KuLaraPanel\Middleware;
+namespace asimshazad\simplepanel\Middleware;
 
 class GuestAdmin
 {

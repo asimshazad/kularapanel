@@ -1,4 +1,4 @@
-@extends('kulara::layouts.auth')
+@extends('asimshazad::layouts.auth')
 
 @section('title', 'Update Permission')
 @section('child-content')
@@ -22,7 +22,7 @@
                     <div class="col-md-8">
                         <select name="group" id="group" class="selectpicker form-control" data-style="border bg-white" data-live-search="true">
                         <option value="0">Please Select</option>
-                            @foreach (config('kulara.modules') as $group)
+                            @foreach (config('asimshazad.modules') as $group)
                             <option value="{{ $group }}" {{ $permission->group == $group? 'selected':'' }}>{{ $group }}</option>
                             @endforeach
                         </select>

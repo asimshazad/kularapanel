@@ -17,18 +17,18 @@ class CreateSettingsTable extends Migration
         });
 
         // create example setting
-        app(config('kulara.models.setting'))->create([
+        app(config('asimshazad.models.setting'))->create([
             'key' => 'string',
             'value' => 'Hello World',
         ]);
 
-        app(config('kulara.models.setting'))->create([
+        app(config('asimshazad.models.setting'))->create([
             'key' => 'array',
             'value' => ['Hi','Hello','Aloha'],
         ]);
 
         // add permissions
-        app(config('kulara.models.permission'))->createGroup('Settings', ['Update Settings']);
+        app(config('asimshazad.models.permission'))->createGroup('Settings', ['Update Settings']);
     }
 
     public function down()
@@ -37,6 +37,6 @@ class CreateSettingsTable extends Migration
         Schema::dropIfExists('settings');
 
         // delete permissions
-        app(config('kulara.models.permission'))->where('group', 'Settings')->delete();
+        app(config('asimshazad.models.permission'))->where('group', 'Settings')->delete();
     }
 }

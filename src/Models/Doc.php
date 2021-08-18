@@ -1,10 +1,10 @@
 <?php
 
-namespace Khludev\KuLaraPanel\Models;
+namespace asimshazad\simplepanel\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Kalnoy\Nestedset\NodeTrait;
-use Khludev\KuLaraPanel\Traits\UserTimezone;
+use asimshazad\simplepanel\Traits\UserTimezone;
 use Parsedown;
 
 class Doc extends Model

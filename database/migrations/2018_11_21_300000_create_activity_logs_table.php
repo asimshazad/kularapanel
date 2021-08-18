@@ -20,7 +20,7 @@ class CreateActivityLogsTable extends Migration
         });
 
         // add permissions
-        app(config('kulara.models.permission'))->createGroup('Activity Logs', ['Read Activity Logs']);
+        app(config('asimshazad.models.permission'))->createGroup('Activity Logs', ['Read Activity Logs']);
     }
 
     public function down()
@@ -29,6 +29,6 @@ class CreateActivityLogsTable extends Migration
         Schema::dropIfExists('activity_logs');
 
         // delete permissions
-        app(config('kulara.models.permission'))->where('group', 'Activity Logs')->delete();
+        app(config('asimshazad.models.permission'))->where('group', 'Activity Logs')->delete();
     }
 }

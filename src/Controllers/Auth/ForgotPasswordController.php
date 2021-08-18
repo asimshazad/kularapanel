@@ -1,6 +1,6 @@
 <?php
 
-namespace Khludev\KuLaraPanel\Controllers\Auth;
+namespace asimshazad\simplepanel\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
@@ -17,7 +17,7 @@ class ForgotPasswordController extends Controller
 
     public function emailForm()
     {
-        return view('kulara::auth.passwords.email');
+        return view('asimshazad::auth.passwords.email');
     }
 
     protected function sendResetLinkResponse(Request $request, $response)

@@ -1,6 +1,6 @@
 <?php
 
-namespace Khludev\KuLaraPanel\Traits;
+namespace asimshazad\simplepanel\Traits;
 
 trait ApiException
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Khludev\KuLaraPanel\Facades;
+namespace asimshazad\simplepanel\Facades;
 
 use Illuminate\Support\Facades\Facade;
 

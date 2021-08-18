@@ -31,7 +31,7 @@ class CreatePermissionsTable extends Migration
         });
 
         // create permissions
-        app(config('kulara.models.permission'))->createGroup('Admin Panel', ['Access Admin Panel']);
+        app(config('asimshazad.models.permission'))->createGroup('Admin Panel', ['Access Admin Panel']);
     }
 
     public function down()

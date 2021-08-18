@@ -1,6 +1,6 @@
 <?php
 
-namespace Khludev\KuLaraPanel\Controllers;
+namespace asimshazad\simplepanel\Controllers;
 
 use App\Http\Controllers\Controller;
 use Yajra\DataTables\Html\Builder;
@@ -20,27 +20,27 @@ class DocController extends Controller
     public function frontend($id = null, $slug = null)
     {
         if (!$id) {
-            $doc = app(config('kulara.models.doc'))->where('type', 'Index')->first();
+            $doc = app(config('asimshazad.models.doc'))->where('type', 'Index')->first();
         }
-        else if (!$doc = app(config('kulara.models.doc'))->where('type', '!=', '404')->find($id)) {
-            $doc = app(config('kulara.models.doc'))->where('type', '404')->first();
+        else if (!$doc = app(config('asimshazad.models.doc'))->where('type', '!=', '404')->find($id)) {
+            $doc = app(config('asimshazad.models.doc'))->where('type', '404')->first();
         }
 
-        $docs = app(config('kulara.models.doc'))->withDepth()->where('type', '!=', '404')->defaultOrder()->get()->toFlatTree();
+        $docs = app(config('asimshazad.models.doc'))->withDepth()->where('type', '!=', '404')->defaultOrder()->get()->toFlatTree();
 
-        return view('kulara::layouts.docs', compact('doc', 'docs'));
+        return view('asimshazad::layouts.docs', compact('doc', 'docs'));
     }
 
     public function index(Builder $builder)
     {
         if (request()->ajax()) {
-            $docs = app(config('kulara.models.doc'))->withDepth()->defaultOrder()->get()->toFlatTree();
+            $docs = app(config('asimshazad.models.doc'))->withDepth()->defaultOrder()->get()->toFlatTree();
             $datatable = datatables($docs)
                 ->editColumn('title', function ($doc) {
-                    return view('kulara::docs.datatable.title', compact('doc'));
+                    return view('asimshazad::docs.datatable.title', compact('doc'));
                 })
                 ->editColumn('actions', function ($doc) {
-                    return view('kulara::docs.datatable.actions', compact('doc'));
+                    return view('asimshazad::docs.datatable.actions', compact('doc'));
                 })
                 ->rawColumns(['title', 'actions']);
 
@@ -55,14 +55,14 @@ class DocController extends Controller
         $html->setTableAttribute('id', 'docs_datatable');
         $html->ordering(false);
 
-        return view('kulara::docs.index', compact('html'));
+        return view('asimshazad::docs.index', compact('html'));
     }
 
     public function createForm()
     {
-        $docs = app(config('kulara.models.doc'))->withDepth()->where('system', false)->defaultOrder()->get();
+        $docs = app(config('asimshazad.models.doc'))->withDepth()->where('system', false)->defaultOrder()->get();
 
-        return view('kulara::docs.create', compact('docs'));
+        return view('asimshazad::docs.create', compact('docs'));
     }
 
     public function create()
@@ -74,7 +74,7 @@ class DocController extends Controller
         ]);
 
         $data = array_merge(request()->all(), ['slug' => str_slug(request()->input('title'))]);
-        $doc = app(config('kulara.models.doc'))->create($data);
+        $doc = app(config('asimshazad.models.doc'))->create($data);
 
         activity('Created Doc: ' . $doc->title, request()->all(), $doc);
         flash(['success', 'Doc created!']);
@@ -89,17 +89,17 @@ class DocController extends Controller
 
     public function read($id)
     {
-        $doc = app(config('kulara.models.doc'))->findOrFail($id);
+        $doc = app(config('asimshazad.models.doc'))->findOrFail($id);
 
-        return view('kulara::docs.read', compact('doc'));
+        return view('asimshazad::docs.read', compact('doc'));
     }
 
     public function updateForm($id)
     {
-        $doc = app(config('kulara.models.doc'))->findOrFail($id);
-        $docs = app(config('kulara.models.doc'))->withDepth()->where('system', false)->defaultOrder()->get();
+        $doc = app(config('asimshazad.models.doc'))->findOrFail($id);
+        $docs = app(config('asimshazad.models.doc'))->withDepth()->where('system', false)->defaultOrder()->get();
 
-        return view('kulara::docs.update', compact('doc', 'docs'));
+        return view('asimshazad::docs.update', compact('doc', 'docs'));
     }
 
     public function update($id)
@@ -110,7 +110,7 @@ class DocController extends Controller
         ]);
 
         $data = array_merge(request()->all(), ['slug' => str_slug(request()->input('title'))]);
-        $doc = app(config('kulara.models.doc'))->findOrFail($id);
+        $doc = app(config('asimshazad.models.doc'))->findOrFail($id);
         $doc->update($data);
 
         activity('Updated Doc: ' . $doc->title, request()->all(), $doc);
@@ -126,7 +126,7 @@ class DocController extends Controller
 
     public function move($id)
     {
-        $doc = app(config('kulara.models.doc'))->findOrFail($id);
+        $doc = app(config('asimshazad.models.doc'))->findOrFail($id);
 
         if (request()->input('_submit') == 'up') {
             $doc->up();
@@ -140,7 +140,7 @@ class DocController extends Controller
 
     public function delete($id)
     {
-        $doc = app(config('kulara.models.doc'))->findOrFail($id);
+        $doc = app(config('asimshazad.models.doc'))->findOrFail($id);
         $doc->delete();
 
         activity('Deleted Doc: ' . $doc->title, $doc->toArray());

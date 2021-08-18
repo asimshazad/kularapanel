@@ -1,6 +1,6 @@
 <?php
 
-namespace Khludev\KuLaraPanel\Notifications;
+namespace asimshazad\simplepanel\Notifications;
 
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Notifications\Notification;

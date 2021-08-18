@@ -1,9 +1,9 @@
 <?php
 
-namespace Khludev\KuLaraPanel\Models;
+namespace asimshazad\simplepanel\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Khludev\KuLaraPanel\Traits\UserTimezone;
+use asimshazad\simplepanel\Traits\UserTimezone;
 
 class Permission extends Model
 {
@@ -13,7 +13,7 @@ class Permission extends Model
     // roles relationship
     public function roles()
     {
-        return $this->belongsToMany(config('kulara.models.role'));
+        return $this->belongsToMany(config('asimshazad.models.role'));
     }
 
     // users relationship

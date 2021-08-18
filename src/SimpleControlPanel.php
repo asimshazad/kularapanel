@@ -1,6 +1,6 @@
 <?php
 
-namespace Khludev\KuLaraPanel;
+namespace asimshazad\simplepanel;
 
 class SimpleControlPanel
 {

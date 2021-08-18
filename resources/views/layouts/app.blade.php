@@ -5,11 +5,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link rel="shortcut icon" href="{{ asset('kulara/favicon.ico') }}" type="image/x-icon">
-    <link rel="icon" href="{{ asset('kulara/favicon.ico') }}" type="image/x-icon">
+    <link rel="shortcut icon" href="{{ asset('asimshazad/favicon.ico') }}" type="image/x-icon">
+    <link rel="icon" href="{{ asset('asimshazad/favicon.ico') }}" type="image/x-icon">
     <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Nunito:regular,bold">
-    <link rel="stylesheet" href="{{ asset('kulara/css/kulara-all.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('kulara/css/kulara-custom.css') }}">
+    <link rel="stylesheet" href="{{ asset('asimshazad/css/asimshazad-all.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('asimshazad/css/asimshazad-custom.css') }}">
 
     <title>@yield('title') | {{ config('app.name') }}</title>
     @stack('styles')
@@ -21,9 +21,9 @@
 </div>
 
 <div class="overlay"></div>
-<script type="text/javascript" src="{{ asset('kulara/js/kulara-all.min.js') }}"></script>
-<script type="text/javascript" src="{{ asset('kulara/js/kulara-components.min.js') }}"></script>
-<script type="text/javascript" src="{{ asset('kulara/js/kulara-custom.js') }}"></script>
+<script type="text/javascript" src="{{ asset('asimshazad/js/asimshazad-all.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('asimshazad/js/asimshazad-components.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('asimshazad/js/asimshazad-custom.js') }}"></script>
 
 @routes
 <script type="text/javascript">
@@ -34,7 +34,7 @@ $(function() {
       forceTLS: true
     });
     let pusher_callback = function(data) {
-        let icon = '{{ asset('kulara/logo.png') }}';
+        let icon = '{{ asset('asimshazad/logo.png') }}';
         if (data.icon != '') {
             icon = data.icon;
         }

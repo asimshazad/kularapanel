@@ -3,4 +3,4 @@
 </li>
 {{-- menu inject start --}}
 {{-- menu inject end --}}
-@include('kulara::layouts.menu.admin_menu')
+@include('asimshazad::layouts.menu.admin_menu')

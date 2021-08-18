@@ -1,6 +1,6 @@
 <?php
 
-namespace Khludev\KuLaraPanel\Controllers\Auth;
+namespace asimshazad\simplepanel\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 
@@ -13,7 +13,7 @@ class ProfileController extends Controller
 
     public function updateForm()
     {
-        return view('kulara::auth.profile');
+        return view('asimshazad::auth.profile');
     }
 
     protected function update()

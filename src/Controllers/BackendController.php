@@ -1,6 +1,6 @@
 <?php
 
-namespace Khludev\KuLaraPanel\Controllers;
+namespace asimshazad\simplepanel\Controllers;
 
 use App\Http\Controllers\Controller;
 
@@ -22,7 +22,7 @@ class BackendController extends Controller
     }
     public function dashboard()
     {
-        return view('kulara::backend.dashboard');
+        return view('asimshazad::backend.dashboard');
     }
     public function summernoteImageUpload()
     {
@@ -56,5 +56,5 @@ class BackendController extends Controller
 
 class LogViewerController extends \Rap2hpoutre\LaravelLogViewer\LogViewerController
 {
-    protected $view_log = 'kulara::backend.log';
+    protected $view_log = 'asimshazad::backend.log';
 }

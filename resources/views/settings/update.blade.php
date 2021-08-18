@@ -1,4 +1,4 @@
-@extends('kulara::layouts.auth')
+@extends('asimshazad::layouts.auth')
 
 @section('title', 'Update Setting')
 @section('child-content')
@@ -76,5 +76,5 @@
 @endsection
 
 @push('scripts')
-@include('kulara::settings.multipleTypes')
+@include('asimshazad::settings.multipleTypes')
 @endpush

@@ -59,8 +59,8 @@ return [
                 'tinyInteger:status|nullable',
             ],
             'validations' => [
-                'create' => 'required|in:" . implode(\',\', array_flip(config(\'kulara_const.status\'))) . "',
-                'update' => 'required|in:" . implode(\',\', array_flip(config(\'kulara_const.status\'))) . "',
+                'create' => 'required|in:" . implode(\',\', array_flip(config(\'asimshazad_const.status\'))) . "',
+                'update' => 'required|in:" . implode(\',\', array_flip(config(\'asimshazad_const.status\'))) . "',
             ],
             'datatable' => [
                 'title' => 'Status',
@@ -72,7 +72,7 @@ return [
                 'multiple' => false,
                 'required' => true,
                 'option_return' => 'array', // array / object
-                'options' => 'config("kulara_const.status")',
+                'options' => 'config("asimshazad_const.status")',
             ],
         ],
 

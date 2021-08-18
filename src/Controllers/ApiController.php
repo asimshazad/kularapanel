@@ -1,6 +1,6 @@
 <?php
 
-namespace Khludev\KuLaraPanel\Controllers;
+namespace asimshazad\simplepanel\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;

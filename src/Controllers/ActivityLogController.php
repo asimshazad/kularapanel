@@ -1,6 +1,6 @@
 <?php
 
-namespace Khludev\KuLaraPanel\Controllers;
+namespace asimshazad\simplepanel\Controllers;
 
 use App\Http\Controllers\Controller;
 use Yajra\DataTables\Html\Builder;
@@ -15,10 +15,10 @@ class ActivityLogController extends Controller
     public function index(Builder $builder)
     {
         if (request()->ajax()) {
-            $activity_logs = app(config('kulara.models.activity_log'))->with('user');
+            $activity_logs = app(config('asimshazad.models.activity_log'))->with('user');
             $datatable = datatables($activity_logs)
                 ->editColumn('actions', function ($activity_log) {
-                    return view('kulara::activity_logs.datatable.actions', compact('activity_log'));
+                    return view('asimshazad::activity_logs.datatable.actions', compact('activity_log'));
                 })
                 ->rawColumns(['actions']);
 
@@ -34,13 +34,13 @@ class ActivityLogController extends Controller
         $html->orderBy(0, 'desc');
         $html->setTableAttribute('id', 'activity_logs_datatable');
 
-        return view('kulara::activity_logs.index', compact('html'));
+        return view('asimshazad::activity_logs.index', compact('html'));
     }
 
     public function read($id)
     {
-        $activity_log = app(config('kulara.models.activity_log'))->findOrFail($id);
+        $activity_log = app(config('asimshazad.models.activity_log'))->findOrFail($id);
 
-        return view('kulara::activity_logs.read', compact('activity_log'));
+        return view('asimshazad::activity_logs.read', compact('activity_log'));
     }
 }

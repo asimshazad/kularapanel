@@ -1,4 +1,4 @@
-@extends('kulara::layouts.guest')
+@extends('asimshazad::layouts.guest')
 
 @section('title', 'Login')
 @section('child-content')

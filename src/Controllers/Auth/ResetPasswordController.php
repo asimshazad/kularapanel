@@ -1,6 +1,6 @@
 <?php
 
-namespace Khludev\KuLaraPanel\Controllers\Auth;
+namespace asimshazad\simplepanel\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ResetsPasswords;
@@ -17,7 +17,7 @@ class ResetPasswordController extends Controller
 
     public function resetForm($token = null)
     {
-        return view('kulara::auth.passwords.reset', compact('token'));
+        return view('asimshazad::auth.passwords.reset', compact('token'));
     }
 
     protected function sendResetResponse(Request $request, $response)

@@ -64,7 +64,7 @@ if (!function_exists('activity')) {
         }
 
         // create model
-        app(config('kulara.models.activity_log'))->create([
+        app(config('asimshazad.models.activity_log'))->create([
             'user_id' => auth()->check() ? auth()->user()->id : null,
             'model_id' => $model ? $model->id : null,
             'model_class' => $model ? get_class($model) : null,
@@ -74,12 +74,12 @@ if (!function_exists('activity')) {
     }
 }
 
-// Equivalent to trans () function with default value only (Only works for lang.kulara file)
+// Equivalent to trans () function with default value only (Only works for lang.asimshazad file)
 if (!function_exists('__l')) {
     function __l($key, $default = '', $replace = [], $locale = null)
     {
-        if (Lang::has('kulara.' . $key, $locale))
-            return __('kulara.' . $key, $replace, $locale);
+        if (Lang::has('asimshazad.' . $key, $locale))
+            return __('asimshazad.' . $key, $replace, $locale);
 
         if (Lang::has($key, $locale))
             return __($key, $replace, $locale);
@@ -160,7 +160,7 @@ function dropImage($item, $delete_url)
         'name' => $item->file_name,
         'hash_name' => $item->file_name,
         'mime_type' => $item->mime_type,
-        'url' => $item->getUrl(config('kulara.media.thumb') ?? ''),
+        'url' => $item->getUrl(config('asimshazad.media.thumb') ?? ''),
         'originalUrl' => $item->getUrl(),
         'id' => $item->id,
         'remove_link' => $delete_url,

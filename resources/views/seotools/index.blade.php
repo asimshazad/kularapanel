@@ -1,4 +1,4 @@
-@extends('kulara::layouts.auth')
+@extends('asimshazad::layouts.auth')
 
 @section('title', 'Seotools')
 @section('child-content')
@@ -45,7 +45,7 @@
 
 @push('scripts')
 {!! $html->scripts() !!}
-@include('kulara::layouts.datatable_scripts',compact('dtid','export_url'))
+@include('asimshazad::layouts.datatable_scripts',compact('dtid','export_url'))
 <script type="text/javascript">
 (function(window, $) {
     $('#created_at_range').daterangepicker({

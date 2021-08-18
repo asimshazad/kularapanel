@@ -1,28 +1,28 @@
 <?php
 
-namespace Khludev\KuLaraPanel\Traits;
+namespace asimshazad\simplepanel\Traits;
 
 use Illuminate\Auth\Notifications\ResetPassword;
-use Khludev\KuLaraPanel\Notifications\ResetAdminPassword;
+use asimshazad\simplepanel\Notifications\ResetAdminPassword;
 
 trait AdminUser
 {
     // roles relationship
     public function roles()
     {
-        return $this->belongsToMany(config('kulara.models.role'));
+        return $this->belongsToMany(config('asimshazad.models.role'));
     }
 
     // permissions relationship
     public function permissions()
     {
-        return $this->belongsToMany(config('kulara.models.permission'));
+        return $this->belongsToMany(config('asimshazad.models.permission'));
     }
 
     // activity logs relationship
     public function activity_logs()
     {
-        return $this->hasMany(config('kulara.models.activity_log'));
+        return $this->hasMany(config('asimshazad.models.activity_log'));
     }
 
     // combined user + role permissions

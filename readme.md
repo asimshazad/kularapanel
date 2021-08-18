@@ -2,10 +2,10 @@
 
 Forked from [GitHub](https://github.com/wikichua/simplecontrolpanel)
 
-Laravel Admin Panel ("kulara") is a drop-in admin panel package for Laravel which promotes rapid scaffolding & development.
+Laravel Admin Panel ("asimshazad") is a drop-in admin panel package for Laravel which promotes rapid scaffolding & development.
 
 - [Screenshots](https://imgur.com/a/12mGWNW)
-- [GitHub](https://github.com/Khludev/kularapanel)
+- [GitHub](https://github.com/asimshazad/simplepanel)
 
 Features:
 
@@ -32,11 +32,11 @@ Assets used:
 
 Require via composer:
 
-    composer require khludev/kularapanel master-dev
+    composer require asimshazad/simplepanel master-dev
 
 Publish install files:
 
-    php artisan vendor:publish --tag=kulara.general
+    php artisan vendor:publish --tag=asimshazad.general
 
 General install including:
 
@@ -49,47 +49,47 @@ General install including:
 
 Publish advanced files (1 by 1):
 
-    php artisan vendor:publish --tag=kulara.config
-    php artisan vendor:publish --tag=kulara.seo.config
-    php artisan vendor:publish --tag=kulara.public
-    php artisan vendor:publish --tag=kulara.lang
-    php artisan vendor:publish --tag=kulara.layouts
-    php artisan vendor:publish --tag=kulara.auth.view
-    php artisan vendor:publish --tag=kulara.backend.view
-    php artisan vendor:publish --tag=kulara.users.view
+    php artisan vendor:publish --tag=asimshazad.config
+    php artisan vendor:publish --tag=asimshazad.seo.config
+    php artisan vendor:publish --tag=asimshazad.public
+    php artisan vendor:publish --tag=asimshazad.lang
+    php artisan vendor:publish --tag=asimshazad.layouts
+    php artisan vendor:publish --tag=asimshazad.auth.view
+    php artisan vendor:publish --tag=asimshazad.backend.view
+    php artisan vendor:publish --tag=asimshazad.users.view
 
 Publish all migrations files:
 
-    php artisan vendor:publish --tag=kulara.migrations
+    php artisan vendor:publish --tag=asimshazad.migrations
 
 Publish all stubs files:
 
-    php artisan vendor:publish --tag=kulara.stubs
+    php artisan vendor:publish --tag=asimshazad.stubs
 
 Publish all views files:
 
-    php artisan vendor:publish --tag=kulara.all.view
+    php artisan vendor:publish --tag=asimshazad.all.view
 
 Publish admin route files:
 
-    php artisan vendor:publish --tag=kulara.admin.route
+    php artisan vendor:publish --tag=asimshazad.admin.route
 
 Add the `AdminUser` and `UserTimezone` traits to your `User` model:
 
-    use Khludev\KuLaraPanel\Traits\AdminUser;
-    use Khludev\KuLaraPanel\Traits\UserTimezone;
+    use asimshazad\simplepanel\Traits\AdminUser;
+    use asimshazad\simplepanel\Traits\UserTimezone;
     
     class User extends Authenticatable
     {
         use Notifiable, AdminUser, UserTimezone;
 
 Add this in your controller.php
-    use \Khludev\KuLaraPanel\Traits\Controller;
+    use \asimshazad\simplepanel\Traits\Controller;
 
     class Controller extends BaseController
     {
         use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
-        use \Khludev\KuLaraPanel\Traits\Controller;
+        use \asimshazad\simplepanel\Traits\Controller;
 
 Run the migrations:
 
@@ -104,18 +104,18 @@ Install laravel:
 
 Create directories in terminal:
 
-    cd appName; mkdir packages; cd packages; mkdir khludev; cd khludev; git clone https://github.com/khludev/kularapanel.git
+    cd appName; mkdir packages; cd packages; mkdir asimshazad; cd asimshazad; git clone https://github.com/asimshazad/simplepanel.git
 
 Add this in your composer.json under scripts section:
 
     "require-dev": {
-        "khludev/kularapanel": "*"
+        "asimshazad/simplepanel": "*"
     },
 
     "repositories": {
-        "khludev/kularapanel": {
+        "asimshazad/simplepanel": {
             "type": "path",
-            "url": "/path/to/your/appName/packages/khludev/kularapanel"
+            "url": "/path/to/your/appName/packages/asimshazad/simplepanel"
         }
     }
 
@@ -127,12 +127,12 @@ Need packager to ease your work
 
 Import package from github
 
-    $ php artisan packager:git git@github.com:khludev/kularapanel.git
+    $ php artisan packager:git git@github.com:asimshazad/simplepanel.git
 
 Add this in your composer.json under scripts section:
 
     "require-dev": {
-        "khludev/kularapanel": "*"
+        "asimshazad/simplepanel": "*"
     },
 
 Run composer update

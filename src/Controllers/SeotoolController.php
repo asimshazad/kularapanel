@@ -1,6 +1,6 @@
 <?php
 
-namespace Khludev\KuLaraPanel\Controllers;
+namespace asimshazad\simplepanel\Controllers;
 
 use App\Http\Controllers\Controller;
 use Yajra\DataTables\Html\Builder;
@@ -21,11 +21,11 @@ class SeotoolController extends Controller
     public function index(Builder $builder)
     {
         if (request()->ajax()) {
-            $seotools = app(config('kulara.models.seotool'))->query()->with('creator', 'modifier');
+            $seotools = app(config('asimshazad.models.seotool'))->query()->with('creator', 'modifier');
             $datatable = datatables($seotools)
                 ->setRowClass('sortable_row')
                 ->editColumn('actions', function ($seotool) {
-                    return view('kulara::seotools.datatable.actions', compact('seotool'));
+                    return view('asimshazad::seotools.datatable.actions', compact('seotool'));
                 })
                 ->rawColumns(['actions'])
                 ->filter(function ($query) use($seotools) {
@@ -59,12 +59,12 @@ class SeotoolController extends Controller
         ]);
         $export_url = '';
         $reorder_url = '';
-        return view('kulara::seotools.index', compact('html','dtid','export_url','reorder_url'));
+        return view('asimshazad::seotools.index', compact('html','dtid','export_url','reorder_url'));
     }
 
     public function createForm($model_id,$model_name)
     {
-        return view('kulara::seotools.create',compact('model_id','model_name'));
+        return view('asimshazad::seotools.create',compact('model_id','model_name'));
     }
 
     public function create($model_id,$model_name)
@@ -97,7 +97,7 @@ class SeotoolController extends Controller
             'model_id' => $model_id,
         ]);
 
-        $seotool = app(config('kulara.models.seotool'))->create(request()->all());
+        $seotool = app(config('asimshazad.models.seotool'))->create(request()->all());
 
         activity('Created Seotool: ' . $seotool->id, request()->all(), $seotool);
         flash(['success', 'Seotool created!']);
@@ -112,19 +112,19 @@ class SeotoolController extends Controller
 
     public function read($id)
     {
-        $seotool = app(config('kulara.models.seotool'))->find($id);
-        return view('kulara::seotools.read', compact('seotool'));
+        $seotool = app(config('asimshazad.models.seotool'))->find($id);
+        return view('asimshazad::seotools.read', compact('seotool'));
     }
 
     public function updateForm($id)
     {
-        $seotool = app(config('kulara.models.seotool'))->find($id);
-        return view('kulara::seotools.update', compact('seotool'));
+        $seotool = app(config('asimshazad.models.seotool'))->find($id);
+        return view('asimshazad::seotools.update', compact('seotool'));
     }
 
     public function update($id)
     {
-        $seotool = app(config('kulara.models.seotool'))->find($id);
+        $seotool = app(config('asimshazad.models.seotool'))->find($id);
         $model = app($seotool->getOriginal('model'))->find($seotool->model_id);
         $this->validate(request(), []);
 
@@ -165,7 +165,7 @@ class SeotoolController extends Controller
 
     public function delete($id)
     {
-        $seotool = app(config('kulara.models.seotool'))->find($id);
+        $seotool = app(config('asimshazad.models.seotool'))->find($id);
         $seotool->delete();
 
         activity('Deleted Seotool: ' . $seotool->id, $seotool->toArray());
@@ -190,7 +190,7 @@ class SeotoolController extends Controller
         $seqs = collect(request()->get('seqs'))->pluck('seq');
 
         foreach ($ids as $i => $id) {
-            $tag = app(config('kulara.models.seotool'))->find($id);
+            $tag = app(config('asimshazad.models.seotool'))->find($id);
             $tag->timestamps = false; // To disable update_at field
             $tag->update(['seq' => $seqs[$i]]);
         }

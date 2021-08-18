@@ -1,6 +1,6 @@
 <?php
 // {model_variables}
-Route::group(['middleware' => ['web', 'https_protocol'], 'prefix' => config('kulara.route_prefix')], function () {
+Route::group(['middleware' => ['web', 'https_protocol'], 'prefix' => config('asimshazad.route_prefix')], function () {
     //index
     Route::get('{model_variables}', '{controller_route}{model_class}Controller@index')->name('{view_prefix_name}{model_variables}');
     //create

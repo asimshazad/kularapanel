@@ -1,4 +1,4 @@
-@extends('kulara::layouts.auth')
+@extends('asimshazad::layouts.auth')
 
 @section('title', __l('update', 'Update') .' '. {l_model_string})
 @section('child-content')

@@ -13,7 +13,7 @@ const mix = require('laravel-mix');
 
 mix.js([
     'resources/js/app.js'
-], 'public/js/kulara-components.min.js');
+], 'public/js/asimshazad-components.min.js');
 
 mix.combine([
     'resources/css/fontawesome.min.css',
@@ -29,7 +29,7 @@ mix.combine([
     'resources/lib/datatimepicker/jquery.datetimepicker.css',
     'bower_components/kdev-sendform/dist/css/kdev-sendForm.css',
 
-], 'public/css/kulara-all.min.css');
+], 'public/css/asimshazad-all.min.css');
 
 mix.combine([
     'resources/js/jquery.min.js',
@@ -57,5 +57,5 @@ mix.combine([
     'resources/lib/datatimepicker/jquery.datetimepicker.full.js',
     'bower_components/kdev-sendform/dist/js/kdev-sendForm.js',
 
-], 'public/js/kulara-all.min.js');
+], 'public/js/asimshazad-all.min.js');
 

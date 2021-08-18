@@ -1,4 +1,4 @@
-@extends('kulara::layouts.app')
+@extends('asimshazad::layouts.app')
 
 @section('title', $doc->title . (!$doc->ancestors->isEmpty() ? ' | ' . $doc->ancestors->reverse()->implode('title', ' | ') : ''))
 @section('body-class', 'bg-white')

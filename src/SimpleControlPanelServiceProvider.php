@@ -1,6 +1,6 @@
 <?php
 
-namespace Khludev\KuLaraPanel;
+namespace asimshazad\simplepanel;
 
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Gate;
@@ -20,16 +20,16 @@ class SimpleControlPanelServiceProvider extends ServiceProvider
     public function boot()
     {
         // alias middleware
-        $this->app['router']->aliasMiddleware('auth_admin', 'Khludev\KuLaraPanel\Middleware\AuthAdmin');
-        $this->app['router']->aliasMiddleware('guest_admin', 'Khludev\KuLaraPanel\Middleware\GuestAdmin');
-        $this->app['router']->aliasMiddleware('intend_url', 'Khludev\KuLaraPanel\Middleware\IntendUrl');
-        $this->app['router']->aliasMiddleware('not_admin_role', 'Khludev\KuLaraPanel\Middleware\NotAdminRole');
-        $this->app['router']->aliasMiddleware('not_system_doc', 'Khludev\KuLaraPanel\Middleware\NotSystemDoc');
-        $this->app['router']->aliasMiddleware('api_logger', 'Khludev\KuLaraPanel\Middleware\ApiLogger');
-        $this->app['router']->aliasMiddleware('https_protocol', 'Khludev\KuLaraPanel\Middleware\HttpsProtocol');
+        $this->app['router']->aliasMiddleware('auth_admin', 'asimshazad\simplepanel\Middleware\AuthAdmin');
+        $this->app['router']->aliasMiddleware('guest_admin', 'asimshazad\simplepanel\Middleware\GuestAdmin');
+        $this->app['router']->aliasMiddleware('intend_url', 'asimshazad\simplepanel\Middleware\IntendUrl');
+        $this->app['router']->aliasMiddleware('not_admin_role', 'asimshazad\simplepanel\Middleware\NotAdminRole');
+        $this->app['router']->aliasMiddleware('not_system_doc', 'asimshazad\simplepanel\Middleware\NotSystemDoc');
+        $this->app['router']->aliasMiddleware('api_logger', 'asimshazad\simplepanel\Middleware\ApiLogger');
+        $this->app['router']->aliasMiddleware('https_protocol', 'asimshazad\simplepanel\Middleware\HttpsProtocol');
 
-        $this->mergeConfigFrom(__DIR__.'/../config/simplecontrolpanel.php', 'kulara');
-        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'kulara');
+        $this->mergeConfigFrom(__DIR__.'/../config/simplecontrolpanel.php', 'asimshazad');
+        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'asimshazad');
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
         $this->loadRoutesFrom(__DIR__.'/routes.php');
         $this->gatePermissions();
@@ -53,7 +53,7 @@ class SimpleControlPanelServiceProvider extends ServiceProvider
         $this->app->singleton('simplecontrolpanel', function ($app) {
             return new SimpleControlPanel;
         });
-        $this->app->register(\Khludev\KuLaraPanel\WidgetServiceProvider::class);
+        $this->app->register(\asimshazad\simplepanel\WidgetServiceProvider::class);
     }
 
     /**
@@ -75,47 +75,47 @@ class SimpleControlPanelServiceProvider extends ServiceProvider
     {
         // install general
         $this->publishes([
-            __DIR__ . '/../public' => public_path('kulara'),
+            __DIR__ . '/../public' => public_path('asimshazad'),
             __DIR__ . '/../resources/lang' => resource_path('lang'),
-            __DIR__ . '/../resources/views/layouts' => resource_path('views/vendor/kulara/layouts'),
-            __DIR__ . '/../resources/views/auth' => resource_path('views/vendor/kulara/auth'),
-            __DIR__ . '/../resources/views/backend' => resource_path('views/vendor/kulara/backend'),
-            __DIR__ . '/../resources/views/users' => resource_path('views/vendor/kulara/users'),
-            __DIR__ . '/../config/simplecontrolpanel.php' => config_path('kulara.php'),
-            __DIR__ . '/../config/kulara_const.php' => config_path('kulara_const.php')
-        ], 'kulara.general');
+            __DIR__ . '/../resources/views/layouts' => resource_path('views/vendor/asimshazad/layouts'),
+            __DIR__ . '/../resources/views/auth' => resource_path('views/vendor/asimshazad/auth'),
+            __DIR__ . '/../resources/views/backend' => resource_path('views/vendor/asimshazad/backend'),
+            __DIR__ . '/../resources/views/users' => resource_path('views/vendor/asimshazad/users'),
+            __DIR__ . '/../config/simplecontrolpanel.php' => config_path('asimshazad.php'),
+            __DIR__ . '/../config/asimshazad_const.php' => config_path('asimshazad_const.php')
+        ], 'asimshazad.general');
 
         // install all views
-        $this->publishes([__DIR__ . '/../resources/views' => resource_path('views/vendor/kulara')], 'kulara.all.view');
+        $this->publishes([__DIR__ . '/../resources/views' => resource_path('views/vendor/asimshazad')], 'asimshazad.all.view');
 
         // in case want to customized the routes
-        $this->publishes([__DIR__ . '/routes.php' => resource_path('../'.config('kulara.crud_paths.route').'/routes.php')], 'kulara.admin.route');
+        $this->publishes([__DIR__ . '/routes.php' => resource_path('../'.config('asimshazad.crud_paths.route').'/routes.php')], 'asimshazad.admin.route');
 
         // advanced. if u know what to do, install 1 by 1
-        $this->publishes([__DIR__.'/../config/simplecontrolpanel.php' => config_path('kulara.php')], 'kulara.config');
-        $this->publishes([__DIR__ . '/../config/kulara_const.php' => config_path('kulara_const.php')], 'kulara.config');
-        $this->publishes([__DIR__.'/../config/seotools.php' => config_path('seotools.php')], 'kulara.seo.config');
-        $this->publishes([__DIR__ . '/../public' => public_path('kulara')], 'kulara.public');
-        $this->publishes([__DIR__ . '/../resources/lang' => resource_path('lang')], 'kulara.lang');
-        $this->publishes([__DIR__ . '/../resources/views/layouts' => resource_path('views/vendor/kulara/layouts')], 'kulara.layouts');
-        $this->publishes([__DIR__ . '/../resources/views/auth' => resource_path('views/vendor/kulara/auth')], 'kulara.auth.view');
-        $this->publishes([__DIR__ . '/../resources/views/backend' => resource_path('views/vendor/kulara/backend')], 'kulara.backend.view');
-        $this->publishes([__DIR__ . '/../resources/views/users' => resource_path('views/vendor/kulara/users')], 'kulara.users.view');
+        $this->publishes([__DIR__.'/../config/simplecontrolpanel.php' => config_path('asimshazad.php')], 'asimshazad.config');
+        $this->publishes([__DIR__ . '/../config/asimshazad_const.php' => config_path('asimshazad_const.php')], 'asimshazad.config');
+        $this->publishes([__DIR__.'/../config/seotools.php' => config_path('seotools.php')], 'asimshazad.seo.config');
+        $this->publishes([__DIR__ . '/../public' => public_path('asimshazad')], 'asimshazad.public');
+        $this->publishes([__DIR__ . '/../resources/lang' => resource_path('lang')], 'asimshazad.lang');
+        $this->publishes([__DIR__ . '/../resources/views/layouts' => resource_path('views/vendor/asimshazad/layouts')], 'asimshazad.layouts');
+        $this->publishes([__DIR__ . '/../resources/views/auth' => resource_path('views/vendor/asimshazad/auth')], 'asimshazad.auth.view');
+        $this->publishes([__DIR__ . '/../resources/views/backend' => resource_path('views/vendor/asimshazad/backend')], 'asimshazad.backend.view');
+        $this->publishes([__DIR__ . '/../resources/views/users' => resource_path('views/vendor/asimshazad/users')], 'asimshazad.users.view');
 
         $files = new Filesystem;
-        if (!$files->exists(config('kulara.crud_paths.route'))) {
-            $files->makeDirectory(config('kulara.crud_paths.route'), 0755, true);
+        if (!$files->exists(config('asimshazad.crud_paths.route'))) {
+            $files->makeDirectory(config('asimshazad.crud_paths.route'), 0755, true);
         }
-        if (file_exists(resource_path('../'.config('kulara.crud_paths.route').'/routes.php'))) {
-            $routes = $files->get(config('kulara.crud_paths.routes'));
-            $route_content = PHP_EOL . "include_once(resource_path('../".config('kulara.crud_paths.route')."/routes.php'));";
+        if (file_exists(resource_path('../'.config('asimshazad.crud_paths.route').'/routes.php'))) {
+            $routes = $files->get(config('asimshazad.crud_paths.routes'));
+            $route_content = PHP_EOL . "include_once(resource_path('../".config('asimshazad.crud_paths.route')."/routes.php'));";
             if (strpos($routes, $route_content) === false) {
-                $files->append(config('kulara.crud_paths.routes'), $route_content);
+                $files->append(config('asimshazad.crud_paths.routes'), $route_content);
             }
         }
 
-        $this->publishes([__DIR__ . '/../database/migrations' => database_path('migrations')], 'kulara.migrations');
-        $this->publishes([__DIR__ . '/../resources/stubs/crud/default' => resource_path('stubs/crud/default')], 'kulara.stubs');
+        $this->publishes([__DIR__ . '/../database/migrations' => database_path('migrations')], 'asimshazad.migrations');
+        $this->publishes([__DIR__ . '/../resources/stubs/crud/default' => resource_path('stubs/crud/default')], 'asimshazad.stubs');
 
         // Registering package commands.
         $this->commands([
@@ -144,7 +144,7 @@ class SimpleControlPanelServiceProvider extends ServiceProvider
     public function configSettings()
     {
         if (Schema::hasTable('settings')) {
-            foreach (app(config('kulara.models.setting'))->all() as $setting) {
+            foreach (app(config('asimshazad.models.setting'))->all() as $setting) {
                 Config::set('settings.' . $setting->key, $setting->value);
             }
         }

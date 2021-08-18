@@ -1,6 +1,6 @@
 <?php
 
-namespace Khludev\KuLaraPanel\Commands;
+namespace asimshazad\simplepanel\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
@@ -28,7 +28,7 @@ class CrudConfig extends Command
 
         //Ability to override config.stub file
         //It also provides compatibility checks with previous versions of the package.
-        $config_stubs_patch = config('kulara.crud_paths.stubs') . '/config.stub';
+        $config_stubs_patch = config('asimshazad.crud_paths.stubs') . '/config.stub';
         if (!$this->files->exists($config_stubs_patch)) {
             $config_stubs_patch = __DIR__ . '/../../resources/stubs/crud/config.stub';
         }

@@ -5,13 +5,13 @@
     "authors": [
         {
             "name": "Vasil Khlud",
-            "email": "khludev@gmail.com",
-            "homepage": "https://github.com/khludev/",
+            "email": "asimshazad@gmail.com",
+            "homepage": "https://github.com/asimshazad/",
             "role": "Forker"
         }
     ],
-    "homepage": "https://github.com/Khludev/kularapanel",
-    "keywords": ["Laravel", "KuLaraPanel"],
+    "homepage": "https://github.com/asimshazad/simplepanel",
+    "keywords": ["Laravel", "asimshazad"],
     "require": {
         "erusev/parsedown": "^1.7",
         "yajra/laravel-datatables-oracle": "^9.6",
@@ -33,27 +33,27 @@
     },
     "autoload": {
         "psr-4": {
-            "Khludev\\KuLaraPanel\\": "src/"
+            "asimshazad\\simplepanel\\": "src/"
         },
         "files": [
             "src/helpers.php",
-            "config/kulara_const.php"
+            "config/asimshazad_const.php"
         ]
     },
     "autoload-dev": {
         "psr-4": {
-            "Khludev\\KuLaraPanel\\Tests\\": "tests"
+            "asimshazad\\simplepanel\\Tests\\": "tests"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "Khludev\\KuLaraPanel\\SimpleControlPanelServiceProvider",
-                "Khludev\\KuLaraPanel\\WidgetServiceProvider"
+                "asimshazad\\simplepanel\\SimpleControlPanelServiceProvider",
+                "asimshazad\\simplepanel\\WidgetServiceProvider"
             ],
             "aliases": {
-                "SimpleControlPanel": "Khludev\\KuLaraPanel\\Facades\\SimpleControlPanel",
-                "Widget": "Khludev\\KuLaraPanel\\Facades\\Widget"
+                "SimpleControlPanel": "asimshazad\\simplepanel\\Facades\\SimpleControlPanel",
+                "Widget": "asimshazad\\simplepanel\\Facades\\Widget"
             }
         }
     }

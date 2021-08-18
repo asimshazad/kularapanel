@@ -1,4 +1,4 @@
-@extends('kulara::layouts.auth')
+@extends('asimshazad::layouts.auth')
 @section('title', 'Log Viewer')
 @section('child-content')
 <div class="row mb-3">

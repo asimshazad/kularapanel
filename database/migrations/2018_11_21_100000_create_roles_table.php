@@ -24,13 +24,13 @@ class CreateRolesTable extends Migration
         });
 
         // create default admin role
-        app(config('kulara.models.role'))->create([
+        app(config('asimshazad.models.role'))->create([
             'name' => 'Admin',
             'admin' => true,
         ]);
 
         // create permissions
-        app(config('kulara.models.permission'))->createGroup('Roles', ['Create Roles', 'Read Roles', 'Update Roles', 'Delete Roles']);
+        app(config('asimshazad.models.permission'))->createGroup('Roles', ['Create Roles', 'Read Roles', 'Update Roles', 'Delete Roles']);
     }
 
     public function down()
@@ -40,6 +40,6 @@ class CreateRolesTable extends Migration
         Schema::dropIfExists('role_user');
 
         // delete permissions
-        app(config('kulara.models.permission'))->where('group', 'Roles')->delete();
+        app(config('asimshazad.models.permission'))->where('group', 'Roles')->delete();
     }
 }

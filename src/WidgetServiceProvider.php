@@ -1,6 +1,6 @@
 <?php
 
-namespace Khludev\KuLaraPanel;
+namespace asimshazad\simplepanel;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Blade;
@@ -39,7 +39,7 @@ class WidgetServiceProvider extends ServiceProvider
             return new Widget;
         });
         AliasLoader::getInstance([
-            'Widget' => '\Khludev\KuLaraPanel\Widget'
+            'Widget' => '\asimshazad\simplepanel\Widget'
         ]);
     }
 

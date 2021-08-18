@@ -18,7 +18,7 @@ class Create{model_class}Table extends Migration
         });
 
         // add permissions
-        app(config('kulara.models.permission'))->createGroup('{model_strings}', ['Create {model_strings}', 'Read {model_strings}', 'Update {model_strings}', 'Delete {model_strings}']);
+        app(config('asimshazad.models.permission'))->createGroup('{model_strings}', ['Create {model_strings}', 'Read {model_strings}', 'Update {model_strings}', 'Delete {model_strings}']);
     }
 
     public function down()
@@ -26,6 +26,6 @@ class Create{model_class}Table extends Migration
         // drop table
         Schema::dropIfExists('{model_variables}');
         // delete permissions
-        app(config('kulara.models.permission'))->where('group', '{model_strings}')->delete();
+        app(config('asimshazad.models.permission'))->where('group', '{model_strings}')->delete();
     }
 }

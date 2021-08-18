@@ -1,9 +1,9 @@
 <?php
 
-namespace Khludev\KuLaraPanel\Models;
+namespace asimshazad\simplepanel\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Khludev\KuLaraPanel\Traits\UserTimezone;
+use asimshazad\simplepanel\Traits\UserTimezone;
 
 class Setting extends Model
 {

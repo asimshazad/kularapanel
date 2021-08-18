@@ -37,7 +37,7 @@ class CreateSeotoolTable extends Migration
         });
 
         // add permissions
-        app(config('kulara.models.permission'))->createGroup('Seotools', ['Create Seotools', 'Read Seotools', 'Update Seotools', 'Delete Seotools']);
+        app(config('asimshazad.models.permission'))->createGroup('Seotools', ['Create Seotools', 'Read Seotools', 'Update Seotools', 'Delete Seotools']);
     }
 
     public function down()
@@ -45,6 +45,6 @@ class CreateSeotoolTable extends Migration
         // drop table
         Schema::dropIfExists('seotools');
         // delete permissions
-        app(config('kulara.models.permission'))->where('group', 'Seotools')->delete();
+        app(config('asimshazad.models.permission'))->where('group', 'Seotools')->delete();
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Khludev\KuLaraPanel\Controllers\Auth;
+namespace asimshazad\simplepanel\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
@@ -14,7 +14,7 @@ class ChangePasswordController extends Controller
 
     public function changeForm()
     {
-        return view('kulara::auth.passwords.change');
+        return view('asimshazad::auth.passwords.change');
     }
 
     protected function change()

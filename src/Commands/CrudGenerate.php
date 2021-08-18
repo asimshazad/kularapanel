@@ -1,6 +1,6 @@
 <?php
 
-namespace Khludev\KuLaraPanel\Commands;
+namespace asimshazad\simplepanel\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
@@ -36,7 +36,7 @@ class CrudGenerate extends Command
 
         // set class values
         $this->config = include $config_file;
-        $this->kulara = config('kulara.crud_paths');
+        $this->asimshazad = config('asimshazad.crud_paths');
 
         $this->setSimpleReplaces();
         $this->setAttributeReplaces();
@@ -56,7 +56,7 @@ class CrudGenerate extends Command
 
         // ask to migrate
         // if ($this->confirm('Migrate now?')) {
-        //     Artisan::call('migrate', ['--path' => $this->kulara['migrations']]);
+        //     Artisan::call('migrate', ['--path' => $this->asimshazad['migrations']]);
         //     $this->info('Migration complete!');
         // }
     }
@@ -66,9 +66,9 @@ class CrudGenerate extends Command
 
         // set simple replacement searches for stubs
         $this->replaces = [
-            '{controller_namespace}' => $controller_namespace = ucfirst(str_replace('/', '\\', $this->kulara['controller'])),
+            '{controller_namespace}' => $controller_namespace = ucfirst(str_replace('/', '\\', $this->asimshazad['controller'])),
             '{controller_route}' => ltrim(str_replace('App\\Http\\Controllers', '', $controller_namespace) . '\\', '\\'),
-            '{model_namespace}' => $model_namespace = ucfirst(str_replace('/', '\\', $this->kulara['model'])),
+            '{model_namespace}' => $model_namespace = ucfirst(str_replace('/', '\\', $this->asimshazad['model'])),
             '{model_class}' => $model_class = $this->argument('model'),
             '{model_string}' => $model_string = trim(preg_replace('/(?!^)[A-Z]{2,}(?=[A-Z][a-z])|[A-Z][a-z]/', ' $0', $model_class)),
             '{model_strings}' => $model_strings = str_plural($model_string),
@@ -83,7 +83,7 @@ class CrudGenerate extends Command
             '{timestamps_model}' => isset($this->config['timestamps']) && $this->config['timestamps'] ? '' : 'public $timestamps = false;',
             '{timestamps_migration}' => isset($this->config['timestamps']) && $this->config['timestamps'] ? '$table->timestamps();' : '',
 
-            '{view_prefix_url}' => $view_prefix_url = ltrim(str_replace('resources/views', '', $this->kulara['views']) . '/', '/'),
+            '{view_prefix_url}' => $view_prefix_url = ltrim(str_replace('resources/views', '', $this->asimshazad['views']) . '/', '/'),
             '{view_prefix_name}' => $view_prefix_name = str_replace('/', '.', $view_prefix_url),
             '{seo_action}' => isset($this->config['need_seo']) && $this->config['need_seo'] ? "@include('{$view_prefix_name}{$model_variables}.datatable.seo_action')" : '',
             '{seo_init}' => isset($this->config['need_seo']) && $this->config['need_seo'] ? '$this->initSeo(\'' . $model_namespace . '\\' . $model_class . '\', $' . $model_variable . '->id);' : '',
@@ -94,7 +94,7 @@ class CrudGenerate extends Command
         $this->replaces['{dates_attributes}'] = ($dates && !$this->replaces['{dates_attributes}']) ? $dates : $this->replaces['{dates_attributes}'];
 
 
-        $hot_create_btn_file = $this->files->get($this->kulara['stubs'] . "/views/includes/hot_create_btn.stub");
+        $hot_create_btn_file = $this->files->get($this->asimshazad['stubs'] . "/views/includes/hot_create_btn.stub");
         $this->replaces['{hot_create_btn}'] = (!empty($this->config['hot_create_btn']) && $this->config['hot_create_btn']) ? "\r\n" . str_replace(array_keys($this->replaces), $this->replaces, str_replace(array_keys($this->replaces), $this->replaces, $hot_create_btn_file)) : '';
 
 
@@ -116,7 +116,7 @@ class CrudGenerate extends Command
     protected function setModelTraitGenerateReplaces()
     {
         if ($this->config['fillable'] == false)
-            $this->model_traits['DynamicFillable'] = 'use Khludev\KuLaraPanel\Traits\DynamicFillable;';
+            $this->model_traits['DynamicFillable'] = 'use asimshazad\simplepanel\Traits\DynamicFillable;';
 
         if (isset($this->config['soft_deletes']) && $this->config['soft_deletes'])
             $this->model_traits['SoftDeletes'] = 'use Illuminate\Database\Eloquent\SoftDeletes;';
@@ -236,7 +236,7 @@ class CrudGenerate extends Command
             // read attributes
             $attribute_label = ucwords(str_replace('_', ' ', $attribute));
             $attribute_value = '$' . $this->replaces['{model_variable}'] . '->' . $attribute;
-            $read_stub = $this->files->get($this->kulara['stubs'] . '/views/layouts/read.stub');
+            $read_stub = $this->files->get($this->asimshazad['stubs'] . '/views/layouts/read.stub');
             $read_stub = str_replace('{attribute_label}', "__l('{$attribute}','{$attribute_label}')", $read_stub);
 
             $read_stub = str_replace('{attribute_value}', '{{ ' . (isset($values['casts']) && $values['casts'] == 'array' ? "is_array($attribute_value)? implode(', ', $attribute_value):''" : $attribute_value) . ' }}', $read_stub);
@@ -246,7 +246,7 @@ class CrudGenerate extends Command
             // form inputs
             if (!empty($values['input'])) {
 
-                $input_stub = $this->files->get($this->kulara['stubs'] . '/views/layouts/input.stub');
+                $input_stub = $this->files->get($this->asimshazad['stubs'] . '/views/layouts/input.stub');
                 $input_stub = str_replace('{attribute}', $attribute, $input_stub);
                 $default_label = $values['input']['label'] ?? $values['input']['default_label'] ?? $attribute_label;
 
@@ -284,7 +284,7 @@ class CrudGenerate extends Command
 
 
 //        if (!empty($values['user_timezone']) OR !empty($this->replaces['{dates_attributes}']))
-        $this->model_traits['UserTimezone'] = 'use Khludev\KuLaraPanel\Traits\UserTimezone;';
+        $this->model_traits['UserTimezone'] = 'use asimshazad\simplepanel\Traits\UserTimezone;';
 
     }
 
@@ -293,11 +293,11 @@ class CrudGenerate extends Command
         $replaces = [];
         $replaces['{input_label}'] = ucwords(str_replace('_', ' ', $attribute));
         if (in_array($filter['type'], ['text', 'date', 'date_range'])) {
-            $stub = $this->files->get($this->kulara['stubs'] . '/views/filters/' . trim(strtolower($filter['type'])) . '.stub');
+            $stub = $this->files->get($this->asimshazad['stubs'] . '/views/filters/' . trim(strtolower($filter['type'])) . '.stub');
             $replaces['{input_name}'] = $attribute;
             $replaces['{input_id}'] = $attribute;
         } elseif ($filter['type'] == 'select') {
-            $stub = $this->files->get($this->kulara['stubs'] . '/views/filters/select.stub');
+            $stub = $this->files->get($this->asimshazad['stubs'] . '/views/filters/select.stub');
             if (!empty($input['multiple'])) {
                 $replaces['{input_name_sign}'] = '[]';
             }
@@ -316,7 +316,7 @@ class CrudGenerate extends Command
         $replaces = [];
         if ($input['type'] == 'editor') {
 
-            $stub = $this->files->get($this->kulara['stubs'] . "/views/inputs/tinymce_editor.stub");
+            $stub = $this->files->get($this->asimshazad['stubs'] . "/views/inputs/tinymce_editor.stub");
             $replaces['{content_css}'] = isset($input['content_css']) && $input['content_css'] ? $input['content_css'] : '';;
             $replaces['{height}'] = isset($input['height']) && $input['height'] ? $input['height'] : 400;
             $replaces['{language}'] = isset($input['language']) && $input['language'] ? $input['language'] : 'en';
@@ -326,7 +326,7 @@ class CrudGenerate extends Command
         } else if ($input['type'] == 'crop_image') {
             $this->useMediaLibrary();
 
-            $stub = $this->files->get($this->kulara['stubs'] . "/views/inputs/crop_image_{$method}.stub");
+            $stub = $this->files->get($this->asimshazad['stubs'] . "/views/inputs/crop_image_{$method}.stub");
             $colection = (isset($input['collection']) && !empty($input['collection']) ? (defined($input['collection']) ? $input['collection'] : "'{$input['collection']}'") : 'MAIN_COLLECTION_NAME');
 
             $this->replaces['{media_collection_name}'] = $colection;
@@ -338,31 +338,31 @@ class CrudGenerate extends Command
             $this->replaces['{model_const}'] = "\n\tconst MAIN_IMAGE_WIDTH = " . (isset($input['width']) ? $input['width'] : 1080) . ';';
             $this->replaces['{model_const}'] .= "\n\tconst MAIN_IMAGE_RATIO = " . (isset($input['ratio']) ? $input['ratio'] : 1.6) . ';';
 
-            $stub_create_file = $this->files->get($this->kulara['stubs'] . "/views/includes/{$method}_crop_image_for_controller.stub");
+            $stub_create_file = $this->files->get($this->asimshazad['stubs'] . "/views/includes/{$method}_crop_image_for_controller.stub");
             $this->replaces["{{$method}_crop_image_for_controller}"] = str_replace(array_keys($this->replaces), $this->replaces, str_replace(array_keys($replaces), $replaces, $stub_create_file));
 
 
         } else if ($input['type'] == 'dropzone') {
             $this->useMediaLibrary();
 
-            $stub = $this->files->get($this->kulara['stubs'] . "/views/inputs/dropzone_image_{$method}.stub");
+            $stub = $this->files->get($this->asimshazad['stubs'] . "/views/inputs/dropzone_image_{$method}.stub");
             $colection = (isset($input['collection']) && !empty($input['collection']) ? (defined($input['collection']) ? $input['collection'] : "'{$input['collection']}'") : 'GALLERY_COLLECTION_NAME');
             $this->replaces['{dropzone_collection_name}'] = $colection;
             $replaces['{input_name}'] = $attribute;
             $replaces['{input_id}'] = $attribute;
 
             if (isset($input['add_to_editor']) and $input['add_to_editor'] && $method == 'create') {
-                $stub_autocreate_model = $this->files->get($this->kulara['stubs'] . "/views/includes/autocreate_model.stub");
+                $stub_autocreate_model = $this->files->get($this->asimshazad['stubs'] . "/views/includes/autocreate_model.stub");
                 $this->replaces['{auto_create_model}'] = str_replace(array_keys($this->replaces), $this->replaces, str_replace(array_keys($replaces), $replaces, $stub_autocreate_model));;
                 $this->replaces['{add_dropzone_to_editor}'] = isset($input['add_to_editor']) && $input['add_to_editor'] ? 'true' : 'false';
                 $this->replaces['{dropzone_add_image_short}'] = isset($input['short']) && $input['short'] ? 'true' : 'false';
             }
 
-            $stub_create_file = $this->files->get($this->kulara['stubs'] . "/views/includes/save_base64_image_from_controller.stub");
+            $stub_create_file = $this->files->get($this->asimshazad['stubs'] . "/views/includes/save_base64_image_from_controller.stub");
             $this->replaces['{save_dropzone_base64_image}'] = str_replace(array_keys($this->replaces), $this->replaces, str_replace(array_keys($replaces), $replaces, $stub_create_file));;
 
         } else if (in_array($input['type'], ['checkbox', 'radio'])) {
-            $stub = $this->files->get($this->kulara['stubs'] . '/views/inputs/checkbox_radio.stub');
+            $stub = $this->files->get($this->asimshazad['stubs'] . '/views/inputs/checkbox_radio.stub');
             $replaces['{input_type}'] = $input['type'];
             $replaces['{input_name}'] = $attribute . ($input['type'] == 'checkbox' && !empty($input['options']) ? '[]' : '');
             $replaces['{input_id}'] = $attribute . '_{{ $loop->index }}';
@@ -370,7 +370,7 @@ class CrudGenerate extends Command
 
         } else if ($input['type'] == 'toggle') {
 
-            $stub = $this->files->get($this->kulara['stubs'] . '/views/inputs/toggle.stub');
+            $stub = $this->files->get($this->asimshazad['stubs'] . '/views/inputs/toggle.stub');
             $replaces['{on}'] = $input['toggle_data']['on'] ?? 'On';
             $replaces['{off}'] = $input['toggle_data']['off'] ?? 'Off';
             $replaces['{on_lang}'] = strtolower($replaces['{on}']);
@@ -384,14 +384,14 @@ class CrudGenerate extends Command
         } else if ($input['type'] == 'file') {
             $form_enctype = ' enctype="multipart/form-data"';
             if ($method == 'update') {
-                $stub = $this->files->get($this->kulara['stubs'] . '/views/inputs/file_update_single.stub');
+                $stub = $this->files->get($this->asimshazad['stubs'] . '/views/inputs/file_update_single.stub');
                 if (!empty($input['multiple'])) {
-                    $stub = $this->files->get($this->kulara['stubs'] . '/views/inputs/file_update_multiple.stub');
+                    $stub = $this->files->get($this->asimshazad['stubs'] . '/views/inputs/file_update_multiple.stub');
                 }
             } else {
-                $stub = $this->files->get($this->kulara['stubs'] . '/views/inputs/file_create_single.stub');
+                $stub = $this->files->get($this->asimshazad['stubs'] . '/views/inputs/file_create_single.stub');
                 if (!empty($input['multiple'])) {
-                    $stub = $this->files->get($this->kulara['stubs'] . '/views/inputs/file_create_multiple.stub');
+                    $stub = $this->files->get($this->asimshazad['stubs'] . '/views/inputs/file_create_multiple.stub');
                 }
             }
             $replaces['{input_name}'] = $attribute;
@@ -428,7 +428,7 @@ EOT;
             }
 
         } else if ($input['type'] == 'select') {
-            $stub = $this->files->get($this->kulara['stubs'] . '/views/inputs/select.stub');
+            $stub = $this->files->get($this->asimshazad['stubs'] . '/views/inputs/select.stub');
 
             $replaces['{input_name_sign}'] = (!empty($input['multiple']) && $input['multiple']) ? '[]' : '';
             $replaces['{empty_option}'] = (!empty($input['required']) && $input['required']) ? '' : '<option value="">{{__l(\'no_select\',\'Not chosen\')}}</option>';
@@ -437,15 +437,15 @@ EOT;
             $replaces['{input_id}'] = $attribute;
             $replaces = $this->inputSelectOptions($attribute, $input, $method, $replaces);
         } else if ($input['type'] == 'textarea') {
-            $stub = $this->files->get($this->kulara['stubs'] . '/views/inputs/textarea.stub');
+            $stub = $this->files->get($this->asimshazad['stubs'] . '/views/inputs/textarea.stub');
             $replaces['{input_name}'] = $attribute;
             $replaces['{input_id}'] = $attribute;
             $replaces['{input_value}'] = $method == 'update' ? '{{ $' . $this->replaces['{model_variable}'] . '->' . $attribute . ' }}' : '';
             $replaces['{input_class}'] = isset($input['class']) && $input['class'] != '' ? ' ' . $input['class'] : '';
         } else {
-            $stub = $this->files->get($this->kulara['stubs'] . '/views/inputs/text.stub');
+            $stub = $this->files->get($this->asimshazad['stubs'] . '/views/inputs/text.stub');
             if (isset($input['tags']) && $input['tags']) {
-                $stub = $this->files->get($this->kulara['stubs'] . '/views/inputs/tags.stub');
+                $stub = $this->files->get($this->asimshazad['stubs'] . '/views/inputs/tags.stub');
             }
             $replaces['{input_type}'] = $input['type'];
             $replaces['{input_name}'] = $attribute;
@@ -589,12 +589,12 @@ EOT;
     {
         // create directories recursively if they don't already exist
         $directories = [
-            $this->kulara['controller'],
-            $this->kulara['model'],
-            $this->kulara['migrations'],
-            $this->kulara['menu'],
-            $this->kulara['route'],
-            $this->kulara['views'] . '/' . $this->replaces['{model_variables}'] . '/datatable',
+            $this->asimshazad['controller'],
+            $this->asimshazad['model'],
+            $this->asimshazad['migrations'],
+            $this->asimshazad['menu'],
+            $this->asimshazad['route'],
+            $this->asimshazad['views'] . '/' . $this->replaces['{model_variables}'] . '/datatable',
         ];
 
         foreach ($directories as $directory) {
@@ -607,9 +607,9 @@ EOT;
     public function createControllerFile()
     {
         // create controller file
-        $controller_file = $this->kulara['controller'] . '/' . $this->replaces['{model_class}'] . 'Controller.php';
+        $controller_file = $this->asimshazad['controller'] . '/' . $this->replaces['{model_class}'] . 'Controller.php';
         if ($this->prompt($controller_file)) {
-            $controller_stub = $this->files->get($this->kulara['stubs'] . '/controller.stub');
+            $controller_stub = $this->files->get($this->asimshazad['stubs'] . '/controller.stub');
             $this->files->put($controller_file, $this->replace($controller_stub));
             $this->deleteBlankLines($controller_file);
             $this->line('Controller file created: <info>' . $controller_file . '</info>');
@@ -619,9 +619,9 @@ EOT;
     public function createModelFile()
     {
         // create model file
-        $model_file = $this->kulara['model'] . '/' . $this->replaces['{model_class}'] . '.php';
+        $model_file = $this->asimshazad['model'] . '/' . $this->replaces['{model_class}'] . '.php';
         if ($this->prompt($model_file)) {
-            $model_stub = $this->files->get($this->kulara['stubs'] . '/model.stub');
+            $model_stub = $this->files->get($this->asimshazad['stubs'] . '/model.stub');
             $this->files->put($model_file, $this->replace($model_stub));
             $this->deleteBlankLines($model_file);
             $this->line('Model file created: <info>' . $model_file . '</info>');
@@ -631,9 +631,9 @@ EOT;
     public function createMigrationFile()
     {
         // create migration file
-        $migrations_file = $this->kulara['migrations'] . '/' . date('Y_00_00_000000') . '_create_' . $this->replaces['{model_variable}'] . '_table.php';
+        $migrations_file = $this->asimshazad['migrations'] . '/' . date('Y_00_00_000000') . '_create_' . $this->replaces['{model_variable}'] . '_table.php';
         if ($this->prompt($migrations_file)) {
-            $migrations_stub = $this->files->get($this->kulara['stubs'] . '/migrations.stub');
+            $migrations_stub = $this->files->get($this->asimshazad['stubs'] . '/migrations.stub');
             $this->files->put($migrations_file, $this->replace($migrations_stub));
             $this->line('Migration file created: <info>' . $migrations_file . '</info>');
 
@@ -644,8 +644,8 @@ EOT;
     public function createViewFiles()
     {
         // create view files
-        $view_path = $this->kulara['views'] . '/' . $this->replaces['{model_variables}'];
-        foreach ($this->files->allFiles($this->kulara['stubs'] . '/views/models') as $file) {
+        $view_path = $this->asimshazad['views'] . '/' . $this->replaces['{model_variables}'];
+        foreach ($this->files->allFiles($this->asimshazad['stubs'] . '/views/models') as $file) {
             if ($file->getFilename() != 'widget.stub') {
                 $new_file = $view_path . '/' . ltrim($file->getRelativePath() . '/' . str_replace('.stub', '.blade.php', $file->getFilename()), '/');
                 if ($file->getFilename() == 'seo_action.stub') {
@@ -668,19 +668,19 @@ EOT;
     public function insertMenuItem()
     {
         // create menu item file
-        $menu_file = $this->kulara['menu'] . '/' . $this->replaces['{model_variable}'] . '.blade.php';
+        $menu_file = $this->asimshazad['menu'] . '/' . $this->replaces['{model_variable}'] . '.blade.php';
         if ($this->prompt($menu_file)) {
-            $menu_stub = $this->files->get($this->kulara['stubs'] . '/views/layouts/menu.stub');
+            $menu_stub = $this->files->get($this->asimshazad['stubs'] . '/views/layouts/menu.stub');
             $this->files->put($menu_file, $this->replace($menu_stub));
             $this->line('Menu item file created: <info>' . $menu_file . '</info>');
 
-            $layout_menu = $this->files->get($this->kulara['layout_menu']);
-            $menu_content = PHP_EOL . '@include(\'kulara::layouts.menu.' . $this->replaces['{model_variable}'] . '\')';
+            $layout_menu = $this->files->get($this->asimshazad['layout_menu']);
+            $menu_content = PHP_EOL . '@include(\'asimshazad::layouts.menu.' . $this->replaces['{model_variable}'] . '\')';
             if (strpos($layout_menu, $menu_content) === false) {
                 $search = '{{-- menu inject start --}}';
                 $index = strpos($layout_menu, $search);
-                $this->files->put($this->kulara['layout_menu'], substr_replace($layout_menu, $search . $menu_content, $index, strlen($search)));
-                $this->line('Menu item included: <info>' . $this->kulara['layout_menu'] . '</info>');
+                $this->files->put($this->asimshazad['layout_menu'], substr_replace($layout_menu, $search . $menu_content, $index, strlen($search)));
+                $this->line('Menu item included: <info>' . $this->asimshazad['layout_menu'] . '</info>');
             }
         }
 
@@ -689,17 +689,17 @@ EOT;
     public function insertRoutes()
     {
         // create menu item file
-        $route_file = $this->kulara['route'] . '/' . $this->replaces['{model_variable}'] . '.php';
+        $route_file = $this->asimshazad['route'] . '/' . $this->replaces['{model_variable}'] . '.php';
         if ($this->prompt($route_file)) {
-            $routes_stub = $this->files->get($this->kulara['stubs'] . '/routes.stub');
+            $routes_stub = $this->files->get($this->asimshazad['stubs'] . '/routes.stub');
             $this->files->put($route_file, $this->replace($routes_stub));
             $this->line('Route file created: <info>' . $route_file . '</info>');
 
-            $routes = $this->files->get($this->kulara['routes']);
+            $routes = $this->files->get($this->asimshazad['routes']);
             $route_content = PHP_EOL . "include_once(resource_path('../{$route_file}'));";
             if (strpos($routes, $route_content) === false) {
-                $this->files->append($this->kulara['routes'], $route_content);
-                $this->line('Route included: <info>' . $this->kulara['routes'] . '</info>');
+                $this->files->append($this->asimshazad['routes'], $route_content);
+                $this->line('Route included: <info>' . $this->asimshazad['routes'] . '</info>');
             }
 
             $this->deleteBlankLines($route_file);
@@ -774,11 +774,11 @@ EOT;
     {
         $this->model_traits['HasMediaTrait'] = "\r\nuse Spatie\MediaLibrary\HasMedia\HasMediaTrait;";
         $this->model_traits['HasMediaTrait'] .= "\r\nuse Spatie\MediaLibrary\HasMedia\HasMedia;";
-        $this->model_traits['KularaMedia'] = 'use Khludev\KuLaraPanel\Traits\Media as KularaMedia;';
+        $this->model_traits['asimshazadMedia'] = 'use asimshazad\simplepanel\Traits\Media as asimshazadMedia;';
 
         $this->replaces['{model_implements}'] = 'implements HasMedia';
         $this->replaces['{use_trait_media_library}'] = 'use Spatie\MediaLibrary\Models\Media;';
-        $stub_create_file = $this->files->get($this->kulara['stubs'] . "/views/includes/media_conversion_for_model.stub");
+        $stub_create_file = $this->files->get($this->asimshazad['stubs'] . "/views/includes/media_conversion_for_model.stub");
         $this->replaces["{media_conversion}"] = str_replace(array_keys($this->replaces), $this->replaces, str_replace(array_keys($this->replaces), $this->replaces, $stub_create_file));
 
     }
