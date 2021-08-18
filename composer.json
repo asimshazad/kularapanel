@@ -18,7 +18,7 @@
         "tightenco/ziggy": "^0.8.0",
         "kalnoy/nestedset": "^5.0",
         "laravel/helpers": "^1.1",
-        "artesaos/seotools": "^0.16.0",
+        "artesaos/seotools": "^0.20.1",
         "yajra/laravel-datatables": "^1.5",
         "phpoffice/phpspreadsheet": "^1.9",
         "rap2hpoutre/fast-excel": "^1.3",
