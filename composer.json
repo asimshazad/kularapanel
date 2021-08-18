@@ -17,7 +17,6 @@
         "yajra/laravel-datatables-oracle": "^9.6",
         "tightenco/ziggy": "^0.8.0",
         "kalnoy/nestedset": "^5.0",
-        "justbetter/laravel-pagination-with-havings": "^1.2",
         "laravel/helpers": "^1.1",
         "artesaos/seotools": "^0.16.0",
         "yajra/laravel-datatables": "^1.5",
