@@ -87,7 +87,7 @@ return [
             ],
             'exporttable' => 'created_by',
             'relationship' => [
-                'creator' => 'belongsTo:App\User,created_by,id',
+                'creator' => 'belongsTo:App\Models\User,created_by,id',
             ],
         ],
         'updated_by' => [
@@ -97,7 +97,7 @@ return [
             ],
             'exporttable' => 'updated_by',
             'relationship' => [
-                'modifier' => 'belongsTo:App\User,updated_by,id',
+                'modifier' => 'belongsTo:App\Models\User,updated_by,id',
             ],
         ],
 

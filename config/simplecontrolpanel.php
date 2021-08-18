@@ -37,7 +37,7 @@ return [
     'crud_paths' => [
         'stubs' => 'vendor/asimshazad/simplepanel/resources/stubs/crud/default',
         'controller' => 'app/Http/Controllers/Admin',
-        'model' => 'app',
+        'model' => 'app/Models',
         'migrations' => 'database/migrations',
         'views' => 'resources/views/admin',
         'menu' => 'resources/views/vendor/asimshazad/layouts/menu',

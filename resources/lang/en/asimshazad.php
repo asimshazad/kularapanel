@@ -30,7 +30,7 @@ return [
     'create_seo' => 'Create SEO',
     'update_seo' => 'Update SEO',
     //models.create
-    'save_and_go_back' => 'Save &amp; Go Back',
+    'save_and_go_back' => 'Save & Go Back',
     'save' => 'Save',
     //models input fields
     'id' => 'ID',
